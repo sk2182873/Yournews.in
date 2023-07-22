@@ -56,6 +56,13 @@
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="../assets/vendor/css/pages/page-auth.css" />
+    <style>
+      .errordiv{
+        font-size: 13px;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
     <!-- Helpers -->
     <script src="../assets/vendor/js/helpers.js"></script>
 
@@ -137,12 +144,13 @@
               <!-- /Logo -->
               
               <div class="w-100 text-center">
-              <h4 class="mb-2">Adventure starts here 🚀</h4>
-              <p class="mb-4">Make your app management easy and fun!</p>
-              </div>
+              <h4 class="mb-2 text-warning">Adventure starts here 🚀</h4>
+              <p class="mb-4 text-danger" id="msg"></p>
+              <p class="mb-4 text-success" id="sussmsg"></p>
               
+              </div>
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3" >
                 <div class="mb-3">
                   <label for="username" class="form-label">Username</label>
                   <input
@@ -154,10 +162,17 @@
                     autofocus
                   />
                 </div>
+                 
+                <p class="errordiv text-danger" id="userErr"></p>
+
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
                   <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" />
                 </div>
+
+                <!-- error field -->
+                <p class="errordiv text-danger" id="mailErr"></p>
+
                 <div class="mb-3 form-password-toggle">
                   <label class="form-label" for="password">Password</label>
                   <div class="input-group input-group-merge">
@@ -173,6 +188,9 @@
                   </div>
                 </div>
 
+                <!-- error field -->
+                <p class="errordiv text-danger" id="passErr"></p>
+
                 <div class="mb-3">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
@@ -182,7 +200,7 @@
                     </label>
                   </div>
                 </div>
-                <button class="btn btn-primary d-grid w-100">Sign up</button>
+                <button class="btn btn-primary d-grid w-100" id="Signup">Sign up</button>
               </form>
 
               <p class="text-center">
@@ -199,10 +217,12 @@
     </div>
 
     <!-- / Content -->
-
+  
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+   
+  <script src="../assets/vendor/libs/jquery/jquery.js"></script>
     <script src="../assets/vendor/libs/popper/popper.js"></script>
     <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
@@ -216,6 +236,36 @@
     <script src="../assets/js/main.js"></script>
 
     <!-- Page JS -->
+    <script>
+      $(document).ready(function(){
+          $('#formAuthentication').submit(function(event){
+            event.preventDefault();
+
+            $('#userErr').html('');
+              $('#mailErr').html('');
+              $('#passErr').html('');
+              $('#msg').html('');
+
+            $.ajax({
+            url: '<?php echo base_url('authenticate/register'); ?>',
+            method: 'Post',
+            data: $('#formAuthentication').serializeArray(),
+            success: function(res){
+              var error = JSON.parse(res);
+              $('#userErr').html(error['username']);
+              $('#mailErr').html(error['email']);
+              $('#passErr').html(error['password']);
+              $('#msg').html(error['msg']);
+              $('#sussmsg').html(error['sussmsg']);
+            }
+          });
+          $('#formAuthentication')[0].reset();
+          })
+      })
+
+      
+
+  </script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

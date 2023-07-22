@@ -52,7 +52,7 @@
                           </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Add</button>
-                        <a href="<?php echo base_url('Views/addUser'); ?>" class="btn btn-outline-secondary">Back</a>
+                        <a href="<?php echo base_url('admin/addUser'); ?>" class="btn btn-outline-secondary">Back</a>
                       </form>
                     </div>
                   </div>

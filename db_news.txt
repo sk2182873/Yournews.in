@@ -1,0 +1,37 @@
+database design for news website
+create categories
+create sub categories
+
+User table
+id
+username
+email
+password
+user_status
+
+article table
+id
+title
+shortDescription
+Content
+imagesurl
+timestamp
+tags
+userId
+
+Category table
+id
+title
+Shortdescp
+userId
+datetime
+
+blog Table
+id
+title
+shortDecp
+content
+imageurl
+timestamp
+tags
+userId

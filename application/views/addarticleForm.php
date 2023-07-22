@@ -76,7 +76,7 @@
                                     <div class="row justify-content-end">
                                         <div class="col-sm-10">
                                             <button type="submit" class="btn btn-primary">Save</button>
-                                            <a href="<?php echo base_url('Views/addArticle'); ?>" type="button" class="btn btn-outline-secondary">Back</a>
+                                            <a href="<?php echo base_url('admin/addArticle'); ?>" type="button" class="btn btn-outline-secondary">Back</a>
                                         </div>
                                     </div>
                                 </form>

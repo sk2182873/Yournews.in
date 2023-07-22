@@ -137,10 +137,12 @@
               <!-- /Logo -->
               <div class="w-100 text-center">
               <h4 class="mb-2">Welcome to aznews! 👋</h4>
-              <p class="mb-4">Please sign-in to your account.</p>
+              <p class="mb-1">Please sign-in to your account.</p>
+              <p class="alert text-danger m-0 mb-1 p-0" id="wrongData"></p>
+              <p class="alert text-danger m-0 mb-1 p-0" id="usernot"></p>
               </div>
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3">
                 <div class="mb-3">
                   <label for="email" class="form-label">Email or Username</label>
                   <input
@@ -152,6 +154,13 @@
                     autofocus
                   />
                 </div>
+                <!-- Error Div -->
+                <div class="error">
+                  <div class="alert text-danger py-0" role="alert">
+                    <p id="userErr"></p>
+                  </div>
+                </div>
+                <!-- Error div end -->
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Password</label>
@@ -171,6 +180,13 @@
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
                 </div>
+                <!-- Error Div -->
+                <div class="error">
+                  <div class="alert text-danger py-0" role="alert">
+                    <p id="passErr"></p>
+                  </div>
+                </div>
+                <!-- Error div end -->
                 <div class="mb-3">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="remember-me" />
@@ -196,7 +212,7 @@
     </div>
 
     <!-- / Content -->
-
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="../assets/vendor/libs/jquery/jquery.js"></script>
@@ -213,6 +229,40 @@
     <script src="../assets/js/main.js"></script>
 
     <!-- Page JS -->
+    <script>
+      $(document).ready(function(){
+
+          $('#formAuthentication').submit(function(event){
+            event.preventDefault();
+
+            $('#wrongData').html('');
+            $('#usernot').html('');
+            $('#userErr').html('');
+            $('#passErr').html('');
+
+            $.ajax({
+                url: "<?php echo base_url('authenticate/authentication'); ?>",
+                type: 'POST',
+                data: $('#formAuthentication').serializeArray(),
+                success: function(res){
+                  var data = JSON.parse(res);
+                  console.log(data);
+                  $('#userErr').html(data['email-username']);
+                  $('#passErr').html(data['password']);
+                  if(data['matched'] == 1){
+                    window.location.href = "<?php echo base_url().'admin/dashboard' ?>";
+                  }else if(data['incorrect']){
+                    $('#wrongData').html(data['incorrect']);
+                  }else{
+                    $('#usernot').html(data['usernot']);
+                  }
+                }
+            });
+
+          })
+
+      })
+    </script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
