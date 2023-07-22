@@ -8,41 +8,64 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             parent::__construct();
         }
 
-        public function dashboard(){
-            $this->load->view('dashboard');
-        }
-
-        public function articleForm(){
-            $this->load->view('addarticleForm');
-        }
-
-        public function addUserForm(){
-            $this->load->view('addUserForm');
-        }
-
-        public function addBlogForm(){
-            $this->load->view('addBlogForm');
-        }
-
-        public function addUser(){
-            $this->load->view('addUser');
-        }
-
-        public function addArticle(){
-            $this->load->view('addArticle');
-        }
-
-        public function addBlog(){
-            $this->load->view('addBlog');
+        public function is_session(){
+            if(!isset($this->session->userdata['id'])){
+                redirect('admin/');
+            }
         }
 
         public function login(){
             $this->load->view('adminLogin');
         }
 
+        public function logout(){
+            session_unset();
+            session_destroy();
+            $$this->input->delete_cookie('username');
+            $$this->input->delete_cookie('password');
+            redirect('admin/');
+        }
+
         public function register(){
             $this->load->view('adminRegister');
         }
+
+        public function dashboard(){
+            $this->is_session();
+            $this->load->view('dashboard');
+        }
+
+        public function articleForm(){
+            $this->is_session();
+            $this->load->view('addarticleForm');
+        }
+
+        public function addUserForm(){
+            $this->is_session();
+            $this->load->view('addUserForm');
+        }
+
+        public function addBlogForm(){
+            $this->is_session();
+            $this->load->view('addBlogForm');
+        }
+
+        public function addUser(){
+            $this->is_session();
+            $this->load->view('addUser');
+        }
+
+        public function addArticle(){
+            $this->is_session();
+            $this->load->view('addArticle');
+        }
+
+        public function addBlog(){
+            $this->is_session();
+            $this->load->view('addBlog');
+        }
+
+        
     } 
 
 ?>

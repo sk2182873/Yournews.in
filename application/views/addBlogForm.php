@@ -3,6 +3,8 @@
 <!-- Layout container -->
 <div class="layout-page">
 
+<?php include_once('include/navbar2.php'); ?>
+
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->

@@ -41,6 +41,7 @@ class authenticate_model extends CI_Model
     {
         $users = array();
         $flag = 0;
+        
         $sql = "SELECT * from users";
 
         $str = $this->db->query($sql);
@@ -52,6 +53,8 @@ class authenticate_model extends CI_Model
                     $users['mail'] = $row->email;
                     $users['username'] = $row->username;
                     $users['pass'] = $row->password;
+                    $users['id'] = $row->userid;
+                    $users['status'] = $row->user_status;
                     $flag = 1;
                 }
             }

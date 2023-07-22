@@ -2,13 +2,22 @@
 
 class authenticate extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function authentication()
     {
+
         $username = $this->input->post('email-username');
         $password = $this->input->post('password');
+        $remember = $this->input->post('remember-me');
+
         $messages = array();
         $errors = array();
+        $userdata = array();
+
 
         $this->form_validation->set_rules('email-username', 'Username or Email', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[3]|max_length[8]');
@@ -25,6 +34,21 @@ class authenticate extends CI_Controller
 
             if ($users != 0) {
                 if (($users['username'] == $username && password_verify($password, $users['pass'])) || ($users['mail'] == $username && password_verify($password, $users['pass']))) {
+
+                    // set login cookie
+                    if ($remember == "on") {
+                        $this->input->set_cookie('username', $users['username'], 5 * 60);
+                        $this->input->set_cookie('password', $users['pass'], 5 * 60);
+                    }
+                    
+
+                    $userdata['name'] = $users['username'];
+                    $userdata['email'] = $users['mail'];
+                    $userdata['id'] = $users['id'];
+                    $userdata['last_login_time'] = time();
+
+                    $this->session->set_userdata($userdata);
+
                     $messages['matched'] = 1;
                 } else {
                     $messages['incorrect'] = "Email or Password is incorrect.";
