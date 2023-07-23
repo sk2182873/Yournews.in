@@ -21,13 +21,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         public function logout(){
             session_unset();
             session_destroy();
-            $$this->input->delete_cookie('username');
-            $$this->input->delete_cookie('password');
+            delete_cookie('username');
+            delete_cookie('password');
             redirect('admin/');
         }
 
         public function register(){
             $this->load->view('adminRegister');
+        }
+
+        public function forgot_pass(){
+            $this->load->view('forgotPassword');
+        }
+
+        public function reset_pass(){
+            $this->load->view('genPassword');
         }
 
         public function dashboard(){

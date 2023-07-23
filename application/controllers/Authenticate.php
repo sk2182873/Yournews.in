@@ -40,7 +40,7 @@ class authenticate extends CI_Controller
                         $this->input->set_cookie('username', $users['username'], 5 * 60);
                         $this->input->set_cookie('password', $users['pass'], 5 * 60);
                     }
-                    
+
 
                     $userdata['name'] = $users['username'];
                     $userdata['email'] = $users['mail'];
@@ -96,6 +96,60 @@ class authenticate extends CI_Controller
                 $errors['msg'] = "This email already exist. Please Signin below link.";
                 echo json_encode($errors);
                 return;
+            }
+        }
+    }
+
+    
+
+    public function password_reset_link_gen()
+    {
+
+        $messages = array();
+        $data = $this->input->post('email');
+
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+
+        if ($this->form_validation->run() == FALSE) {
+            $messages['email'] = form_error('email');
+            echo json_encode($messages);
+        } else {
+
+            $this->load->model('authenticate_model', 'model');
+            $userdata = $this->model->fetch_mail($data);
+
+            if ($userdata == 1) {
+
+                $this->load->library('email');
+
+                //configure email preferences.
+                $config['protocol'] = 'sendmail';
+                $config['mailpath'] = '/usr/sbin/sendmail';
+                $config['charset'] = 'iso-8859-1';
+                $config['wordwrap'] = TRUE;
+
+                $this->email->initialize($config);
+
+                $path = base_url().'admin/reset_pass';
+
+                //send email.
+                $this->email->from('sk2182873@gmail.com', 'aznews');
+                $this->email->to($data);
+                $this->email->subject("Password reset link.");
+                $this->email->message("Please click below link to reset password.<br>"."<a>$path</a>?id=$data");
+
+                if($this->email->send()){
+                    $messages['sent'] = "Reset link sent you successfully to your gmail.";
+                    echo json_encode($messages);
+                }else{
+                    $messages['mailErr'] = "Mail could not be sent due to some technical issue. Please try after some time.";
+                    echo json_encode($messages);
+                }
+               
+            } else {
+
+                $messages['notExist'] = "User do not exist. Please create account first.";
+                echo json_encode($messages);
             }
         }
     }

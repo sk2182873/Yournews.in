@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -27,7 +28,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Login Basic - Pages | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Forgot Password Basic - Pages | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
     <meta name="description" content="" />
 
@@ -69,8 +70,8 @@
 
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
-          <!-- Register -->
+        <div class="authentication-inner py-4">
+          <!-- Forgot Password -->
           <div class="card">
             <div class="card-body">
               <!-- Logo -->
@@ -131,88 +132,47 @@
                       </g>
                     </svg>
                   </span>
-                  <span class="app-brand-text demo text-body fw-bolder">aznews</span>
+                  <span class="app-brand-text demo text-body fw-bolder">Sneat</span>
                 </a>
               </div>
               <!-- /Logo -->
-              <div class="w-100 text-center">
-              <h4 class="mb-2">Welcome to aznews! 👋</h4>
-              <p class="mb-1">Please sign-in to your account.</p>
-              <p class="alert text-danger m-0 mb-1 p-0" id="wrongData"></p>
-              <p class="alert text-danger m-0 mb-1 p-0" id="usernot"></p>
-              </div>
+              <h4 class="mb-2 text-center">Forgot Password? 🔒</h4>
+              <p class="mb-4 text-center">Enter your email and we'll send you instructions to reset your password</p>
+              <p id="Succmsg" class="text-center text-success"></p>
+              <p id="Errmsg" class="text-center text-danger"></p>
 
               <form id="formAuthentication" class="mb-3">
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email or Username</label>
+                  <label for="email" class="form-label">Email</label>
                   <input
                     type="text"
                     class="form-control"
                     id="email"
-                    name="email-username"
-                    placeholder="Enter your email or username"
+                    name="email"
+                    placeholder="Enter your email"
                     autofocus
                   />
                 </div>
-                <!-- Error Div -->
-                <div class="error">
-                  <div class="alert text-danger py-0" role="alert">
-                    <p id="userErr"></p>
-                  </div>
-                </div>
-                <!-- Error div end -->
-                <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Password</label>
-                    <a href="<?php echo base_url().'admin/forgot_pass'?> ">
-                      <small>Forgot Password?</small>
-                    </a>
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
-                </div>
-                <!-- Error Div -->
-                <div class="error">
-                  <div class="alert text-danger py-0" role="alert">
-                    <p id="passErr"></p>
-                  </div>
-                </div>
-                <!-- Error div end -->
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" name="remember-me" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
-                </div>
+                <p id="emailErr" class="text-danger"></p>
+                <button class="btn btn-primary d-grid w-100">Send Reset Link</button>
               </form>
 
-              <p class="text-center">
-                <span>New on our platform?</span>
-                <a href="<?php echo base_url('admin/register'); ?>">
-                  <span>Create an account</span>
+              <div class="text-center">
+                <a href="<?php echo base_url().'admin/login'?>" class="d-flex align-items-center justify-content-center">
+                  <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                  Back to login
                 </a>
-              </p>
+              </div>
             </div>
           </div>
-          <!-- /Register -->
+          <!-- /Forgot Password -->
         </div>
       </div>
     </div>
 
     <!-- / Content -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="../assets/vendor/libs/jquery/jquery.js"></script>
@@ -230,38 +190,31 @@
 
     <!-- Page JS -->
     <script>
-      $(document).ready(function(){
+        $(document).ready(function(){
 
-          $('#formAuthentication').submit(function(event){
-            event.preventDefault();
+            $('#formAuthentication').submit(function(event){
+                event.preventDefault();
 
-            $('#wrongData').html('');
-            $('#usernot').html('');
-            $('#userErr').html('');
-            $('#passErr').html('');
+                $('#Errmsg').html('');
+                $('#Succmsg').html('');
+                $('#emailErr').html('');
 
-            $.ajax({
-                url: "<?php echo base_url('authenticate/authentication'); ?>",
-                type: 'POST',
-                data: $('#formAuthentication').serializeArray(),
-                success: function(res){
-                  var data = JSON.parse(res);
-                  console.log(data);
-                  $('#userErr').html(data['email-username']);
-                  $('#passErr').html(data['password']);
-                  if(data['matched'] == 1){
-                    window.location.href = "<?php echo base_url().'admin/dashboard' ?>";
-                  }else if(data['incorrect']){
-                    $('#wrongData').html(data['incorrect']);
-                  }else{
-                    $('#usernot').html(data['usernot']);
-                  }
-                }
-            });
+                $.ajax({
+                    url: "<?php echo base_url('authenticate/password_reset_link_gen')?>",
+                    type: 'Post',
+                    data: $(this).serializeArray(),
+                    success: function(response){
+                        var data = JSON.parse(response);
 
-          })
+                        $('#Errmsg').html(data['notExist']);
+                        $('#Succmsg').html(data['sent']);
+                        $('#emailErr').html(data['email']);
+                        $('#Errmsg').html(data['mailErr']);
+                    }
+                });
+            })
 
-      })
+        });
     </script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
