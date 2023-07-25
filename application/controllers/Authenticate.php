@@ -32,19 +32,22 @@ class authenticate extends CI_Controller
             $this->load->model('authenticate_model', 'login');
             $users = $this->login->fetch_user($data);
 
+
             if ($users != 0) {
                 if (($users['username'] == $username && password_verify($password, $users['pass'])) || ($users['mail'] == $username && password_verify($password, $users['pass']))) {
 
                     // set login cookie
                     if ($remember == "on") {
-                        $this->input->set_cookie('username', $users['username'], 5 * 60);
-                        $this->input->set_cookie('password', $users['pass'], 5 * 60);
+                        $this->input->set_cookie('username', $users['username'],300);
+                        $this->input->set_cookie('password', $password,300);
+
                     }
 
 
                     $userdata['name'] = $users['username'];
                     $userdata['email'] = $users['mail'];
                     $userdata['id'] = $users['id'];
+                    $userdata['position'] = $users['position'];
                     $userdata['last_login_time'] = time();
 
                     $this->session->set_userdata($userdata);
@@ -68,6 +71,7 @@ class authenticate extends CI_Controller
         $username = $this->input->post('username');
         $email = $this->input->post('email');
         $password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+
 
         $this->form_validation->set_rules('username', 'Username', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
@@ -100,8 +104,7 @@ class authenticate extends CI_Controller
         }
     }
 
-    
-
+    //password geneate link email.
     public function password_reset_link_gen()
     {
 

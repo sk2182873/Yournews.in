@@ -151,6 +151,7 @@
                     id="email"
                     name="email-username"
                     placeholder="Enter your email or username"
+                    value="<?php echo get_cookie('username'); ?>"
                     autofocus
                   />
                 </div>
@@ -176,6 +177,7 @@
                       name="password"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="password"
+                      value="<?php echo get_cookie('password') ?>"
                     />
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
@@ -262,6 +264,7 @@
           })
 
       })
+      
     </script>
 
     <!-- Place this tag in your head or just before your close body tag. -->

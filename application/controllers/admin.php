@@ -21,8 +21,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         public function logout(){
             session_unset();
             session_destroy();
-            delete_cookie('username');
-            delete_cookie('password');
             redirect('admin/');
         }
 

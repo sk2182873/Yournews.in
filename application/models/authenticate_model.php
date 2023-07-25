@@ -7,9 +7,9 @@ class authenticate_model extends CI_Model
     public function register_admin($data)
     {
 
-        $sql = array('username' => $data[0], 'email' => $data[1], 'password' => $data[2], 'user_status' => 1);
+        $sql = array('name' => $data[0], 'email' => $data[1], 'password' => $data[2], 'status' => 1,'position'=>'admin');
 
-        $str = $this->db->insert_string('users', $sql);
+        $str = $this->db->insert_string('admin', $sql);
 
         $res = $this->db->query($str);
 
@@ -23,7 +23,7 @@ class authenticate_model extends CI_Model
     public function fetch_mail($mail)
     {
 
-        $sql = "SELECT email from users";
+        $sql = "SELECT email from admin";
 
         $res = $this->db->query($sql);
 
@@ -42,19 +42,21 @@ class authenticate_model extends CI_Model
         $users = array();
         $flag = 0;
         
-        $sql = "SELECT * from users";
+        $sql = "SELECT * from admin";
 
         $str = $this->db->query($sql);
+
 
         if (!empty($str->result())) {
             foreach ($str->result() as $row) {
 
-                if ($row->username == $data[0] || $row->email == $data[0]) {
+                if ($row->name == $data[0] || $row->email == $data[0]) {
                     $users['mail'] = $row->email;
-                    $users['username'] = $row->username;
+                    $users['username'] = $row->name;
                     $users['pass'] = $row->password;
-                    $users['id'] = $row->userid;
-                    $users['status'] = $row->user_status;
+                    $users['id'] = $row->adminid;
+                    $users['status'] = $row->status;
+                    $users['position'] = $row->position;
                     $flag = 1;
                 }
             }
