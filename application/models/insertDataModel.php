@@ -36,6 +36,20 @@
 
         }
 
+        public function insert_article($data,$path){
+
+            $sql = array('articletitle'=>$data['Atitle'],'shortDescription'=>$data['Sdescp'],'Content'=>$data[''],'imagesurl1'=>$path,'articledate'=>$data[''],'userid'=>$_SESSION['id'],'categoryid'=>'');
+
+            $str = $this->db->insert_string('article', $sql);
+
+            $res = $this->db->query($str);
+
+            if(!$res){
+                echo "Error"; 
+            }
+
+        }
+
     }
 
 ?>

@@ -3,7 +3,7 @@
 <!-- Layout container -->
 <div class="layout-page">
 
-<?php include_once('include/navbar2.php'); ?>
+    <?php include_once('include/navbar2.php'); ?>
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
@@ -19,7 +19,9 @@
                                 <h5 class="mb-0 text-primary fs-4">Add Article</h5>
                             </div>
                             <div class="card-body">
-                                <form>
+
+                                <!-- form starts -->
+                                <?php echo form_open_multipart('insertData/add_article'); ?>
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label text-dark" for="basic-icon-default-title">Article Title</label>
                                         <div class="col-sm-10">
@@ -42,10 +44,10 @@
                                             <div class="input-group input-group-merge">
                                                 <select name="Category" id="basic-icon-default-category" class="form-control">
                                                     <option value="select">--Select--</option>
-                                                    <option value="">Lifestyle</option>
-                                                    <option value="">Technology</option>
-                                                    <option value="">Fashion</option>
-                                                    <option value="">Sports</option>
+                                                    <option value="Lifestyle">Lifestyle</option>
+                                                    <option value="Technology">Technology</option>
+                                                    <option value="Fashion">Fashion</option>
+                                                    <option value="Sports">Sports</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -62,7 +64,7 @@
                                         <label class="col-sm-2 form-label text-dark" for="basic-icon-default-file">Upload Image</label>
                                         <div class="col-sm-10">
                                             <div class="text-primary input-group input-group-merge">
-                                                <input type="file" name="pictures" id="basic-icon-default-file">
+                                                <input type="file" name="image" id="basic-icon-default-file" size="24000000">
                                             </div>
                                         </div>
                                     </div>
@@ -81,6 +83,8 @@
                                         </div>
                                     </div>
                                 </form>
+                                <!-- form ends -->
+
                             </div>
                         </div>
                     </div>
@@ -136,3 +140,24 @@
 
     <!-- Footer -->
     <?php include('include/footer.php'); ?>
+    <script>
+        $(document).ready(function() {
+
+            $('#formauthentication').submit(function(event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: "<?php echo base_url('insertData/add_article'); ?>",
+                    type: "POST",
+                    data: $(this).serializeArray(),
+                    success: function(res) {
+                        console.log(res);
+                    }
+                });
+
+            });
+
+
+
+        });
+    </script>
