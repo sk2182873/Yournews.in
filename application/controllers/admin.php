@@ -28,12 +28,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $this->load->view('adminRegister');
         }
 
-        public function profile(){
-
-            $this->load->view('userProfile');
-
-        }
-
         public function forgot_pass(){
             $this->load->view('forgotPassword');
         }
@@ -75,6 +69,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         public function addBlog(){
             $this->is_session();
             $this->load->view('addBlog');
+        }
+
+        public function account(){
+            $this->is_session();
+            $this->load->view('account');
         }
 
         

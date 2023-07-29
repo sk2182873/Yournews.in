@@ -47,10 +47,10 @@
                                             <div class="input-group input-group-merge">
                                                 <select name="Category" id="basic-icon-default-category" class="form-control">
                                                     <option value="">--Select--</option>
-                                                    <option value="Lifestyle">Lifestyle</option>
+                                                    <!-- <option value="Lifestyle">Lifestyle</option>
                                                     <option value="Technology">Technology</option>
                                                     <option value="Fashion">Fashion</option>
-                                                    <option value="Sports">Sports</option>
+                                                    <option value="Sports">Sports</option> -->
                                                 </select>
                                             </div>
                                             <p id="category" class="text-danger"></p>
@@ -80,7 +80,7 @@
                                                 <textarea name="content" id="content" cols="30" rows="10" class="form-control" placeholder="Please! type your article here."></textarea>
                                             </div>
                                         </div>
-                                        <p id="contentErr" class="text-danger"></p>
+                                        <p id="contentErr" class="text-danger text-center"></p>
                                     </div>
                                     <div class="row justify-content-end">
                                         <div class="col-sm-10">
@@ -208,4 +208,22 @@
         })
 
     })
+
+    $(window).on('load', function() {
+
+        $.ajax({
+            url: "<?php echo base_url('fetchData/fetch_category_data'); ?>",
+            type: "POST",
+            success: function(res) {
+                var category = JSON.parse(res);
+
+
+                $.each(category, function(n, ele) {
+                    var str = ele[0].toUpperCase() + ele.slice(1);
+                    $('#basic-icon-default-category').append("<option value=" + ele + ">" + str + "</option>");
+                })
+            }
+        });
+
+    });
 </script>

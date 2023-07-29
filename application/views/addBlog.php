@@ -16,80 +16,40 @@
             <!-- Layout Demo -->
             <div class="layout-demo-wrapper">
                 <div class="layout-demo-placeholder col-12 d-flex flex-column align-items-start">
-                    
 
-                     <!-- Blog buttons -->
-                     <div class="Blogbuttons w-100 text-end">
+
+                    <!-- Blog buttons -->
+                    <div class="Blogbuttons w-100 text-end">
                         <a href="<?php echo base_url('admin/addBlogForm'); ?>" class="btn btn-primary me-5">
-                        Add Blog
+                            Add Blog
                         </a>
                     </div>
 
                     <div class="w-100 mb-0 ms-3">
                         <h6 class="d-inline text-primary">Blogs List</h6>
                     </div>
-                   
+
                     <!-- User table -->
                     <div class="userTable col-12 mt-3 ps-2">
-                        <table class="table align-middle mb-0 bg-light">
+                        <table class="table align-middle mb-0 bg-light" id="myTable2">
                             <thead class="bg-dark">
                                 <tr>
                                     <th class="text-light">Blog Title</th>
                                     <th class="text-light">Blog Date</th>
                                     <th class="text-light">Short Descp</th>
                                     <th class="text-light">Content</th>
-                                    <th class="text-light">Tags</th>
+                                    <th class="text-light">Category</th>
                                     <th class="text-light">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <p class="text-muted">Delhi Floods Update</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-muted">2023-10-11</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-muted">Lorem ipsum dolor sit .......</p>
-                                    </td>
-                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In cupiditate dolor nulla quisquam. Eveniet est voluptate magnam. Eius rerum aliquid voluptate eaque dolor? Mollitia nulla sapiente sunt dolorum blanditiis molestias.</td>
-                                    <td>
-                                        <p class="badge bg-info text-dark">Digital Marketing</p>
-                                        <p class="badge bg-info text-dark">Information Technology</p>
-                                        <p class="badge bg-info text-dark">SEO</p>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-link btn-sm btn-rounded">
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <p class="text-muted">Delhi Floods Update</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-muted">2023-10-11</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-muted">Lorem ipsum dolor sit .......</p>
-                                    </td>
-                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In cupiditate dolor nulla quisquam. Eveniet est voluptate magnam. Eius rerum aliquid voluptate eaque dolor? Mollitia nulla sapiente sunt dolorum blanditiis molestias.</td>
-                                    <td>
-                                        <p class="badge bg-info text-dark">Digital Marketing</p>
-                                        <p class="badge bg-info text-dark">Information Technology</p>
-                                        <p class="badge bg-info text-dark">SEO</p>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-link btn-sm btn-rounded">
-                                            Edit
-                                        </button>
-                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -101,6 +61,18 @@
             <!--/ Layout Demo -->
         </div>
         <!-- / Content -->
+    </div>
+</div>
 
-        <!-- Footer -->
-        <?php include('include/footer.php'); ?>
+<!-- Footer -->
+<?php include('include/footer.php'); ?>
+<script>
+    $(document).ready(function(){
+        $('#myTable2').DataTable({
+
+            'ajax' : "<?php echo base_url('fetchData/fetch_blog_data') ?>", 
+            'orders': []
+
+        });
+    })
+</script>

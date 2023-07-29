@@ -27,10 +27,6 @@
             $this->load->model('fetchDataModel','model');
             $userdata = $this->model->fetch_article();
 
-            // foreach($userdata as $key => $value){
-            //     echo $value['tagname']."<br>";
-            // }
-
             $data = array();
             foreach($userdata as $key => $value){
                 $data['data'][] = array(
@@ -46,5 +42,41 @@
             echo json_encode($data);
         }
 
+        public function fetch_category_data(){
+
+            $category = array();
+
+           $this->load->model('fetchDataModel','model');
+           $res = $this->model->fetch_category();
+            $i = 1;
+            foreach($res as $row){
+                $category[$i] = $row['categorytitle'];
+                $i++;
+            }
+
+           echo json_encode($category);
+
+        }
+
+
+        public function fetch_blog_data(){
+
+            $this->load->model('fetchDataModel','model');
+            $userdata = $this->model->fetch_blog();
+
+            $data = array();
+            foreach($userdata as $key => $value){
+                $data['data'][] = array(
+                    $value['title'],
+                    $value['date'],
+                    $value['shortDecp'],
+                    $value['content'],
+                    $value['categorytitle'],
+                    "<div><a href='#' class='badge text-primary'>edit</a> <a href='#' class='badge text-danger'>delete</a> </div>"
+                );
+            }
+
+            echo json_encode($data);
+        }
 
     }
