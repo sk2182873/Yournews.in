@@ -109,3 +109,15 @@
 .usertable{
   box-shadow: 0px 2px 2px 0px rgba(166,166,166,0.8);
 }
+
+.articleForm .card{
+  background-color: rgb(255, 255, 255);
+}
+
+@media screen and (max-width: 768px) {
+  #adduserform .rowwrap{
+    display: flex;
+    flex-direction: column;
+  }
+}
+

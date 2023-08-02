@@ -25,8 +25,9 @@
 
             $password = password_hash($data['password'], PASSWORD_DEFAULT);
 
+            $address = $data['address'];
 
-            $sql = array('username'=>$data['fullname'],'email'=>$data['email'],'password'=>$password,'user_status'=>'active','position'=>$data['position']);
+            $sql = array('username'=>$data['fullname'],'email'=>$data['email'],'password'=>$password,'user_status'=>'active','position'=>$data['position'],'address'=>"$address",'phone'=>$data['phone']);
 
             $str = $this->db->insert_string('users', $sql);
 
@@ -38,7 +39,7 @@
 
         public function insert_article($data,$path,$category_id){
 
-            $sql = array('articletitle'=>$data['Atitle'],'shortDescription'=>$data['Sdescp'],'Content'=>$data['content'],'imagesurl'=>$path,'adminid'=>$_SESSION['id'],'categoryid'=>$category_id);
+            $sql = array('title'=>$data['Atitle'],'shortdescription'=>$data['Sdescp'],'content'=>$data['content'],'imagesurl'=>$path,'adminid'=>$_SESSION['id'],'categoryid'=>$category_id,'status'=>1);
 
             $str = $this->db->insert_string('article', $sql);
 
@@ -54,7 +55,7 @@
 
         public function insert_blog($data,$path,$category_id){
 
-            $sql = array('title'=>$data['Btitle'],'shortDecp'=>$data['Sdescp'],'content'=>$data['content'],'imageurl'=>$path,'adminid'=>$_SESSION['id'],'categoryid'=>$category_id);
+            $sql = array('title'=>$data['Btitle'],'shortdescp'=>$data['Sdescp'],'content'=>$data['content'],'imageurl'=>$path,'adminid'=>$_SESSION['id'],'categoryid'=>$category_id,'status'=>1);
 
             $str = $this->db->insert_string('blog', $sql);
 

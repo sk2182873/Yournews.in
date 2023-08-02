@@ -8,9 +8,9 @@
     <div class="content-wrapper">
         <!-- Content -->
 
-        <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="container-xxl flex-grow-1 container-p-y mt-0">
             <!-- Layout Demo -->
-            <div class="layout-demo-wrapper">
+            <div class="layout-demo-wrapper mt-0">
                 <div class="layout-demo-placeholder col-12">
 
                     <div class="articleForm">
@@ -46,7 +46,7 @@
                                         <div class="col-sm-10">
                                             <div class="input-group input-group-merge">
                                                 <select name="Category" id="basic-icon-default-category" class="form-control">
-                                                    <option value="">--Select--</option>
+                                                    <option value="">-- Select Category --</option>
                                                 </select>
                                             </div>
                                             <p id="category" class="text-danger"></p>
@@ -73,7 +73,7 @@
                                         <label class="col-sm-2 form-label text-dark" for="basic-icon-default-content">Content</label>
                                         <div class="col-sm-10">
                                             <div class="">
-                                                <textarea name="content" id="basic-icon-default-content" cols="30" rows="10" class="form-control" placeholder="Please! type your article here."></textarea>
+                                                <textarea name="content" id="basic-icon-default-content" cols="30" rows="7" class="form-control" placeholder="Please! type your article here."></textarea>
                                             </div>
                                         </div>
                                         <p id="contentErr" class="text-danger text-center"></p>
@@ -82,7 +82,7 @@
                                     <div class="row justify-content-end">
                                         <div class="col-sm-10">
                                             <button type="submit" class="btn btn-primary">Save</button>
-                                            <a href="<?php echo base_url('admin/addArticle'); ?>" type="button" class="btn btn-outline-secondary">Back</a>
+                                            <a href="<?php echo base_url('admin/articles'); ?>" type="button" class="btn btn-outline-secondary">Back</a>
                                         </div>
                                     </div>
                                 </form>
@@ -102,8 +102,8 @@
 
 <!-- modal box -->
 <div class="modalClass">
-    <div class="modal modal-top fade" id="modalTop" tabindex="-1">
-        <div class="modal-dialog">
+    <div class="modal fade" id="modalTop" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
             <form class="modal-content" id="categoryForm">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTopTitle">Add Category</h5>
@@ -141,6 +141,28 @@
 
 
 <!-- Footer -->
+<!-- Tinymce text editor script -->
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        mergetags_list: [{
+                value: 'First.Name',
+                title: 'First Name'
+            },
+            {
+                value: 'Email',
+                title: 'Email'
+            },
+        ],
+        ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant"))
+    });
+</script>
+<!-- / Tinymce text editor script -->
+
 <?php include('include/footer.php'); ?>
 <script>
     $(document).ready(function() {
@@ -158,7 +180,7 @@
             $('#Image').html('');
 
             $.ajax({
-                url: "<?php echo base_url('insertData/add_article'); ?>",
+                url: "<?php echo base_url('admin/add_article'); ?>",
                 type: "POST",
                 data: new FormData(this),
                 contentType: false,
@@ -166,6 +188,7 @@
                 processData: false,
                 success: function(res) {
                     var data = JSON.parse(res);
+                    console.log(data);
 
                     $('#formauthentication')[0].reset();
                     $('#title').html(data['atitle']);
@@ -191,16 +214,24 @@
 
 
             $.ajax({
-                url: "<?php echo base_url('insertData/insert_category'); ?>",
+                url: "<?php echo base_url('admin/insert_category'); ?>",
                 type: "POST",
                 data: $('#categoryForm').serializeArray(),
                 success: function(res) {
                     var data = JSON.parse(res);
 
+                    var category = data['data'];
+
                     $('#catTitle').html(data['cate']);
                     $('#sdErr').html(data['Sdecp']);
-                    $('#success2').html(data['success']);
-                    $('#exist').html(data['exist']);
+                    $('#success2').html(data['messages']['success']);
+                    $('#exist').html(data['messages']['exist']);
+
+                    var category = $('#titleSlideTop').val();
+
+
+                    $('#basic-icon-default-category').append("<option value="+category.toLowerCase()+">"+category+"</option>");
+                    
 
                     $('#categoryForm')[0].reset();
 
@@ -212,14 +243,14 @@
     $(window).on('load', function(){
 
         $.ajax({
-            url: "<?php echo base_url('fetchData/fetch_category_data')?>",
+            url: "<?php echo base_url('admin/fetch_category_data') ?>",
             type: "POST",
             success: function(res){
                var category = JSON.parse(res);
 
-               $.each(category, function(n,ele){
+               $.each(category['category'], function(n,ele){
                     var str = ele[0].toUpperCase() + ele.slice(1);
-                    $('#basic-icon-default-category').append("<option value="+ele+">"+str+"</option>")
+                    $('#basic-icon-default-category').append("<option value="+ele+">"+str+"</option>");
                });
             }
         })

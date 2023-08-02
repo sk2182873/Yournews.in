@@ -1,17 +1,4 @@
 <!DOCTYPE html>
-
-<!-- =========================================================
-* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
-==============================================================
-
-* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
-
-=========================================================
- -->
-<!-- beautify ignore:start -->
 <html
   lang="en"
   class="light-style layout-menu-fixed"
@@ -71,6 +58,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../assets/js/config.js"></script>
+    <script src="https://cdn.tiny.cloud/1/qqs4e826560pz9wpxl2kr0b9yv4iu77a00tsp1lirclkp854/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   </head>
 
   <body>
@@ -157,35 +145,59 @@
             </li>
 
             <!-- Layouts -->
+           
+
             <li class="menu-item ">
-              <a href="<?php echo base_url('admin/addUser'); ?>" class="menu-link">
-              <i class='menu-icon tf-icons bx bx-user'></i>
-                <div data-i18n="Analytics">Add User</div>
+              <a href="<?php echo base_url('admin/articles'); ?>" class="menu-link">
+              <i class='menu-icon tf-icons bx bx-news'></i>
+                <div data-i18n="Analytics">Articles</div>
               </a>
             </li>
 
             <li class="menu-item ">
-              <a href="<?php echo base_url('admin/addArticle'); ?>" class="menu-link">
-              <i class='menu-icon tf-icons bx bx-news'></i>
+              <a href="<?php echo base_url('admin/addarticle'); ?>" class="menu-link">
+              <i class='menu-icon tf-icons bx bx-add-to-queue'></i>
                 <div data-i18n="Analytics">Add Article</div>
               </a>
             </li>
+            
 
             <li class="menu-item ">
-              <a href="<?php echo base_url('admin/addBlog'); ?>" class="menu-link">
+              <a href="<?php echo base_url('admin/blogs'); ?>" class="menu-link">
               <i class='menu-icon tf-icons bx bx-news'></i>
+                <div data-i18n="Analytics">Blogs</div>
+              </a>
+            </li>
+
+            <li class="menu-item ">
+              <a href="<?php echo base_url('admin/addblogs'); ?>" class="menu-link">
+              <i class='menu-icon tf-icons bx bx-add-to-queue'></i>
                 <div data-i18n="Analytics">Add Blog</div>
               </a>
             </li>
 
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bxs-dock-top"></i>
-                <div data-i18n="Account Settings">Account Settings</div>
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Account Settings">Users</div>
               </a>
+
               <ul class="menu-sub">
-                <li class="menu-item">
+              <li class="">
+              <a href="<?php echo base_url('admin/users'); ?>" class="menu-link">
+              <i class="menu-icon tf-icons bx bxs-user-detail"></i>&nbsp;&nbsp;
+                <div data-i18n="Analytics">User List</div>
+              </a>
+            </li>
+                <li class="">
+                <a href="<?php echo base_url('admin/addusers'); ?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-user-plus"></i>&nbsp;&nbsp;
+                    <div data-i18n="Account">Add User</div>
+                  </a>
+                </li>
+                <li class="">
                   <a href="<?php echo base_url('admin/account'); ?>" class="menu-link">
+                  <i class="menu-icon tf-icons bx bxs-user-account"></i>&nbsp;&nbsp;
                     <div data-i18n="Account">Account</div>
                   </a>
                 </li>

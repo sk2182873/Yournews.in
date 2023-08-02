@@ -38,9 +38,8 @@ class authenticate extends CI_Controller
 
                     // set login cookie
                     if ($remember == "on") {
-                        $this->input->set_cookie('username', $users['username'],300);
+                        $this->input->set_cookie('username', $users['mail'],300);
                         $this->input->set_cookie('password', $password,300);
-
                     }
 
 

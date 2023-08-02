@@ -17,7 +17,7 @@
                 <div class="layout-demo-placeholder col-12 d-flex flex-column align-items-start">
 
                     <div class="articleButtons w-100 text-end">
-                        <a href="<?php echo base_url('admin/articleForm'); ?>" class="btn btn-primary me-5">
+                        <a href="<?php echo base_url('admin/addarticle'); ?>" class="btn btn-primary me-5">
                             Add Article
                         </a>
                     </div>
@@ -36,11 +36,13 @@
                                     <th class="text-light">Short Descp</th>
                                     <th class="text-light">Content</th>
                                     <th class="text-light">Category</th>
+                                    <th class="text-light">Status</th>
                                     <th class="text-light">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="text-black">
                                 <tr>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

@@ -12,6 +12,8 @@
                 $data['data'][] = array(
                     $value['username'],
                     $value['email'],
+                    $value['address'],
+                    $value['phone'],
                     $value['position'],
                     $value['user_status'],
                     "<div><a href='#' class='badge text-primary'>edit</a> <a href='#' class='badge text-danger'>delete</a> </div>"
@@ -30,11 +32,12 @@
             $data = array();
             foreach($userdata as $key => $value){
                 $data['data'][] = array(
-                    $value['articletitle'],
-                    $value['articledate'],
-                    $value['shortDescription'],
-                    $value['Content'],
+                    $value['title'],
+                    $value['date'],
+                    $value['shortdescription'],
+                    strip_tags(substr($value['content'],0,100))." .......",
                     $value['categorytitle'],
+                    $value['status'],
                     "<div><a href='#' class='badge text-primary'>edit</a> <a href='#' class='badge text-danger'>delete</a> </div>"
                 );
             }
@@ -44,18 +47,16 @@
 
         public function fetch_category_data(){
 
-            $category = array();
-
            $this->load->model('fetchDataModel','model');
            $res = $this->model->fetch_category();
-            $i = 1;
+
             foreach($res as $row){
-                $category[$i] = $row['categorytitle'];
-                $i++;
+                $category[] = $row['categorytitle'];
+                $categoryid[] = $row['categoryid'];
             }
+            
 
-           echo json_encode($category);
-
+           echo json_encode(array("category"=>$category,"categoryid"=>$categoryid));
         }
 
 
@@ -69,9 +70,10 @@
                 $data['data'][] = array(
                     $value['title'],
                     $value['date'],
-                    $value['shortDecp'],
-                    $value['content'],
+                    $value['shortdescp'],
+                    strip_tags(substr($value['content'],0,100))." ......",
                     $value['categorytitle'],
+                    $value['status'],
                     "<div><a href='#' class='badge text-primary'>edit</a> <a href='#' class='badge text-danger'>delete</a> </div>"
                 );
             }

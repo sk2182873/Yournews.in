@@ -18,7 +18,7 @@ class fetchDataModel extends CI_Model
     public function fetch_category()
     {
 
-        $sql = "SELECT * FROM category";
+        $sql = "SELECT * FROM category ORDER BY categorytitle";
 
         $res = $this->db->query($sql);
 

@@ -46,11 +46,7 @@
                                         <div class="col-sm-10">
                                             <div class="input-group input-group-merge">
                                                 <select name="Category" id="basic-icon-default-category" class="form-control">
-                                                    <option value="">--Select--</option>
-                                                    <!-- <option value="Lifestyle">Lifestyle</option>
-                                                    <option value="Technology">Technology</option>
-                                                    <option value="Fashion">Fashion</option>
-                                                    <option value="Sports">Sports</option> -->
+                                                    <option value="">-- Select Category --</option>                                                   
                                                 </select>
                                             </div>
                                             <p id="category" class="text-danger"></p>
@@ -59,7 +55,7 @@
 
 
                                     <div class="w-100 text-end">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTop">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
                                             Add Category
                                         </button>
                                     </div>
@@ -77,7 +73,7 @@
                                         <label class="col-sm-2 form-label text-dark" for="content">Content</label>
                                         <div class="col-sm-10">
                                             <div class="">
-                                                <textarea name="content" id="content" cols="30" rows="10" class="form-control" placeholder="Please! type your article here."></textarea>
+                                                <textarea name="content" id="content" cols="30" rows="7" class="form-control" placeholder="Please! type your article here."></textarea>
                                             </div>
                                         </div>
                                         <p id="contentErr" class="text-danger text-center"></p>
@@ -101,8 +97,8 @@
 
         <!-- modal box -->
         <div class="modalClass">
-            <div class="modal modal-top fade" id="modalTop" tabindex="-1">
-                <div class="modal-dialog">
+            <div class="modal fade" id="modalCenter" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
                     <form class="modal-content" id="modalForm">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalTopTitle">Add Category</h5>
@@ -141,7 +137,23 @@
 <!-- / modal box -->
 
 <!-- Footer -->
+<script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+      mergetags_list: [
+        { value: 'First.Name', title: 'First Name' },
+        { value: 'Email', title: 'Email' },
+      ],
+      ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant"))
+    });
+  </script>
+
 <?php include('include/footer.php'); ?>
+
 <script>
     $(document).ready(function() {
 
@@ -158,7 +170,7 @@
             $('#Image').html('');
 
             $.ajax({
-                url: "<?php echo base_url('insertData/add_blog') ?>",
+                url: "<?php echo base_url('admin/add_blog') ?>",
                 type: "POST",
                 data: new FormData(this),
                 contentType: false,
@@ -189,16 +201,26 @@
             $('#success2').html('');
 
             $.ajax({
-                url: "<?php echo base_url('insertData/add_category'); ?>",
+                url: "<?php echo base_url('admin/insert_category'); ?>",
                 type: "POST",
                 data: $('#modalForm').serializeArray(),
                 success: function(res) {
                     var data = JSON.parse(res);
 
+                    console.log(data['category']);
+
                     $('#catTitle').html(data['cate']);
                     $('#sdErr').html(data['Sdecp']);
-                    $('#success2').html(data['success']);
-                    $('#exist').html(data['exist']);
+                    $('#success2').html(data['messages']['success']);    
+                    $('#success2').html(data['messages']['success']);
+                    $('#exist').html(data['messages']['exist']);
+
+                    var category = $('#titleSlideTop').val();
+
+                    $('#basic-icon-default-category').append("<option value="+category.toLowerCase()+">"+category+"</option>");
+                    
+                    
+
                     $('#modalForm')[0].reset();
                 }
 
@@ -212,16 +234,17 @@
     $(window).on('load', function() {
 
         $.ajax({
-            url: "<?php echo base_url('fetchData/fetch_category_data'); ?>",
+            url: "<?php echo base_url('admin/fetch_category_data'); ?>",
             type: "POST",
             success: function(res) {
                 var category = JSON.parse(res);
 
-
-                $.each(category, function(n, ele) {
+                var i = 1;
+                $.each(category['category'], function(n, ele) {
                     var str = ele[0].toUpperCase() + ele.slice(1);
                     $('#basic-icon-default-category').append("<option value=" + ele + ">" + str + "</option>");
-                })
+                    i++;
+                 })
             }
         });
 

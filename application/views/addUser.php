@@ -21,7 +21,7 @@
 
                     <!-- Add User buttons -->
                     <div class="Userbuttons text-end">
-                        <a href="<?php echo base_url('admin/addUserForm'); ?>" class="btn btn-primary me-5">
+                        <a href="<?php echo base_url('admin/addusers'); ?>" class="btn btn-primary me-5">
                             Add User
                         </a>
                     </div>
@@ -38,7 +38,9 @@
                                 <tr class="text-center bg-dark"> 
                                     <th class="text-white text-center">Name</th>
                                     <th class="text-white text-center">Email</th>
-                                    <th class="text-white text-center">Title</th>
+                                    <th class="text-white text-center">address</th>
+                                    <th class="text-white text-center">Phone</th>
+                                    <th class="text-white text-center">Position</th>
                                     <th class="text-white text-center">Status</th>
                                     <th class="text-white text-center">Actions</th>
                                 </tr>
@@ -81,7 +83,7 @@
     $(document).ready(function(){
         $('#mytable').DataTable({
 
-            "ajax": "<?php echo base_url('fetchData/fetch_user_data') ?>",
+            "ajax": "<?php echo base_url('admin/fetch_user_data') ?>",
             "order":[],
         });
     })

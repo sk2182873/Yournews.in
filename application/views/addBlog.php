@@ -20,7 +20,7 @@
 
                     <!-- Blog buttons -->
                     <div class="Blogbuttons w-100 text-end">
-                        <a href="<?php echo base_url('admin/addBlogForm'); ?>" class="btn btn-primary me-5">
+                        <a href="<?php echo base_url('admin/addblogs'); ?>" class="btn btn-primary me-5">
                             Add Blog
                         </a>
                     </div>
@@ -39,6 +39,7 @@
                                     <th class="text-light">Short Descp</th>
                                     <th class="text-light">Content</th>
                                     <th class="text-light">Category</th>
+                                    <th class="text-light">Status</th>
                                     <th class="text-light">Actions</th>
                                 </tr>
                             </thead>
