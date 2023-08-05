@@ -158,7 +158,7 @@
               </form>
 
               <div class="text-center">
-                <a href="<?php echo base_url().'admin/login'?>" class="d-flex align-items-center justify-content-center">
+                <a href="<?php echo base_url().'user/'?>" class="d-flex align-items-center justify-content-center">
                   <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
                   Back to login
                 </a>
@@ -200,7 +200,7 @@
                 $('#emailErr').html('');
 
                 $.ajax({
-                    url: "<?php echo base_url('authenticate/password_reset_link_gen')?>",
+                    url: "<?php echo base_url('authenticate/user_password_reset_link_gen')?>",
                     type: 'Post',
                     data: $(this).serializeArray(),
                     success: function(response){

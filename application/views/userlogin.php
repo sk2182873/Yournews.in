@@ -165,7 +165,7 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Password</label>
-                    <a href="<?php echo base_url().'admin/forgot_pass'?> ">
+                    <a href="<?php echo base_url().'user/forgot_password'?> ">
                       <small>Forgot Password?</small>
                     </a>
                   </div>
@@ -199,13 +199,6 @@
                   <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
                 </div>
               </form>
-
-              <p class="text-center">
-                <span>New on our platform?</span>
-                <a href="<?php echo base_url('admin/register'); ?>">
-                  <span>Create an account</span>
-                </a>
-              </p>
             </div>
           </div>
           <!-- /Register -->
@@ -237,13 +230,14 @@
           $('#formAuthentication').submit(function(event){
             event.preventDefault();
 
+
             $('#wrongData').html('');
             $('#usernot').html('');
             $('#userErr').html('');
             $('#passErr').html('');
 
             $.ajax({
-                url: "<?php echo base_url('authenticate/authentication'); ?>",
+                url: "<?php echo base_url('authenticate/user_authentication'); ?>",
                 type: 'POST',
                 data: $('#formAuthentication').serializeArray(),
                 success: function(res){
@@ -252,7 +246,7 @@
                   $('#userErr').html(data['email-username']);
                   $('#passErr').html(data['password']);
                   if(data['matched'] == 1){
-                    window.location.href = "<?php echo base_url().'admin/dashboard' ?>";
+                    window.location.href = "<?php echo base_url().'user/dashboard' ?>";
                   }else if(data['incorrect']){
                     $('#wrongData').html(data['incorrect']);
                   }else{

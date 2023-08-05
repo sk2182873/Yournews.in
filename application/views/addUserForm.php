@@ -100,7 +100,6 @@
                   <div class="row">
                     <div class="col ps-4">
                       <button type="submit" class="btn btn-primary mt-3">Add</button>
-                      <a href="<?php echo base_url('admin/addUser'); ?>" class="btn btn-outline-secondary mt-3">Back</a>
                     </div>
                   </div>
                 </form>

@@ -1,17 +1,4 @@
 <!DOCTYPE html>
-
-<!-- =========================================================
-* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
-==============================================================
-
-* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
-
-=========================================================
- -->
-<!-- beautify ignore:start -->
 <html
   lang="en"
   class="light-style customizer-hide"
@@ -136,8 +123,10 @@
               </div>
               <!-- /Logo -->
               <h4 class="mb-2 text-center">Reset Password</h4>
-              <p id="msg" class="text-center"></p>
+              <p id="msg" class="text-center text-success"></p>
+              <p id="dbErr" class="text-center text-danger"></p>
 
+            <!-- pass reset form -->
               <form id="formAuthentication" class="mb-3">
               <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
@@ -155,6 +144,7 @@
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
                 </div>
+                <p id="pass" class="text-danger"></p>
 
                 <div class="mb-1 form-password-toggle">
                   <div class="d-flex justify-content-between">
@@ -172,13 +162,13 @@
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
                 </div>
-                <p id="cnfPass" class="text-danger">Password not matched.</p>
+                <p id="cnfPass" class="text-danger"></p>
 
                 <button class="btn btn-primary d-grid w-100">Update</button>
               </form>
-              
+
               <div class="text-center">
-                <a href="<?php echo base_url() . 'admin/login' ?>" class="d-flex align-items-center justify-content-center">
+                <a href="<?php echo base_url() . 'user/login' ?>" class="d-flex align-items-center justify-content-center">
                   <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
                   Back to login
                 </a>
@@ -215,12 +205,24 @@
             $('#formAuthentication').submit(function(event){
                 event.preventDefault();
 
+                $("#cnfPass").html('');
+                $("#msg").html('');
+                $("#dbErr").html('');
+                $("#pass").html('');
+
                 $.ajax({
-                    url: "<?php echo base_url('insertData/update_pass') ?>",
+                    url: "<?php echo base_url('authenticate/user_update_pass') ?>",
                     type: 'Post',
                     data: $(this).serializeArray(),
                     success: function(response){
-                        console.log(response);
+                      var res = JSON.parse(response);
+
+                        $("#dbErr").html(res['notMatched']);
+                        $("#msg").html(res['success']);
+                        $("#dbErr").html(res['dbErr']);
+                        $("#cnfPass").html(res['cnfpass']);
+                        $("#pass").html(res['pass']);
+
                     }
                 });
             })

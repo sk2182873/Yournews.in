@@ -27,7 +27,7 @@
                                         <label class="col-sm-2 col-form-label text-dark" for="basic-icon-default-title">Article Title</label>
                                         <div class="col-sm-10">
                                             <div class="input-group input-group-merge">
-                                                <input type="text" name="Atitle" class="form-control" id="basic-icon-default-title" placeholder="" aria-label="" aria-describedby="basic-icon-default-fullname2">
+                                                <input type="text" name="title" class="form-control" id="basic-icon-default-title" placeholder="" aria-label="" aria-describedby="basic-icon-default-fullname2">
                                             </div>
                                             <p id="title" class="text-danger"></p>
                                         </div>
@@ -60,7 +60,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="row mb-3">
+                                    <!-- <div class="row mb-3">
                                         <label class="col-sm-2 form-label text-dark" for="basic-icon-default-file">Upload Image</label>
                                         <div class="col-sm-10">
                                             <div class="text-primary input-group input-group-merge">
@@ -68,7 +68,8 @@
                                             </div>
                                             <p id="Image" class="text-danger"></p>
                                         </div>
-                                    </div>
+                                    </div> -->
+
                                     <div class="row mb-3">
                                         <label class="col-sm-2 form-label text-dark" for="basic-icon-default-content">Content</label>
                                         <div class="col-sm-10">
@@ -180,12 +181,9 @@
             $('#Image').html('');
 
             $.ajax({
-                url: "<?php echo base_url('admin/add_article'); ?>",
+                url: "<?php echo base_url('common/add_article'); ?>",
                 type: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
+                data: $(this).serializeArray(),
                 success: function(res) {
                     var data = JSON.parse(res);
                     console.log(data);
@@ -214,7 +212,7 @@
 
 
             $.ajax({
-                url: "<?php echo base_url('admin/insert_category'); ?>",
+                url: "<?php echo base_url('common/insert_category'); ?>",
                 type: "POST",
                 data: $('#categoryForm').serializeArray(),
                 success: function(res) {

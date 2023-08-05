@@ -74,7 +74,7 @@
 
             $.ajax({
                 url: "<?php echo base_url('authenticate/password_reset_link_gen') ?>",
-                type: 'Post',
+                type: 'POST',
                 data: $(this).serializeArray(),
                 success: function(response) {
                     var data = JSON.parse(response);

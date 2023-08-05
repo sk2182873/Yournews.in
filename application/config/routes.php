@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -52,7 +52,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Views';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['admin'] = 'admin/login' ;
+// admin routes
+$route['admin'] = 'admin/login';
 $route['register'] = 'admin/register';
 $route['profile'] = 'admin/profile';
 $route['admin/forgot-password'] = 'admin/forgot_pass';
+$route['admin/dashboard'] = 'pages/dashboard';
+$route['admin/articles'] = 'pages/articles';
+$route['admin/addarticle'] = 'pages/addarticle';
+$route['admin/blogs'] = 'pages/blogs';
+$route['admin/addblogs'] = 'pages/addblogs';
+$route['admin/users'] = 'pages/users';
+$route['admin/addusers'] = 'pages/addusers';
+$route['admin/account'] = 'pages/account';
+
+//user routes.
+$route['user'] = 'user/login';
+$route['user/dashboard'] = 'pages/dashboard';
+$route['user/articles'] = 'pages/articles';
+$route['user/addarticle'] = 'pages/addarticle';
+$route['user/blogs'] = 'pages/blogs';
+$route['user/addblogs'] = 'pages/addblogs';
+$route['user/account'] = 'pages/account';

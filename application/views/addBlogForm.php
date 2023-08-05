@@ -60,7 +60,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="row mb-3">
+                                    <!-- <div class="row mb-3">
                                         <label class="col-sm-2 form-label text-dark" for="basic-icon-default-file">Upload Image</label>
                                         <div class="col-sm-10">
                                             <div class="text-primary input-group input-group-merge">
@@ -68,7 +68,7 @@
                                             </div>
                                         </div>
                                         <p id="Image" class="text-danger"></p>
-                                    </div>
+                                    </div> -->
                                     <div class="row mb-3">
                                         <label class="col-sm-2 form-label text-dark" for="content">Content</label>
                                         <div class="col-sm-10">
@@ -170,7 +170,7 @@
             $('#Image').html('');
 
             $.ajax({
-                url: "<?php echo base_url('admin/add_blog') ?>",
+                url: "<?php echo base_url('common/add_blog') ?>",
                 type: "POST",
                 data: new FormData(this),
                 contentType: false,
@@ -201,7 +201,7 @@
             $('#success2').html('');
 
             $.ajax({
-                url: "<?php echo base_url('admin/insert_category'); ?>",
+                url: "<?php echo base_url('common/insert_category'); ?>",
                 type: "POST",
                 data: $('#modalForm').serializeArray(),
                 success: function(res) {
