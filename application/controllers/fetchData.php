@@ -37,7 +37,7 @@
                     $value['shortdescription'],
                     strip_tags(substr($value['content'],0,100))." .......",
                     $value['categorytitle'],
-                    $value['status'],
+                    "<div><a href='#' class='badge text-success showbtn'>Show</a></div>",
                     "<div><a href='#' class='badge text-primary'>edit</a> <a href='#' class='badge text-danger'>delete</a> </div>"
                 );
             }

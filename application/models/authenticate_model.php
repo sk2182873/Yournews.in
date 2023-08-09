@@ -42,6 +42,8 @@ class authenticate_model extends CI_Model
                     $users['id'] = $row->adminid;
                     $users['status'] = $row->status;
                     $users['position'] = $row->position;
+                    $users['alternative_email'] = $row->alternative_email;
+                    $users['phone'] = $row->phone;
                     $flag = 1;
                 }
             }

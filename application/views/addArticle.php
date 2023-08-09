@@ -73,7 +73,8 @@
 
             "ajax": "<?php echo base_url('fetchData/fetch_article_data') ?>",
             "order": [],
-        });
+            
 
+        });
     })
 </script>

@@ -27,12 +27,12 @@ class common extends CI_Controller
             $messages['categ'] = form_error('Category');
             $messages['cont'] = form_error('content');
         } else {
-            // $config['filename'] = time();
-            // $config['upload_path'] = './uploads/';
-            // $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|PNG|GIF';
-            // $config['max_size']     = '24000000';
-            // $config['max_width'] = '5000';
-            // $config['max_height'] = '5000';
+            $config['filename'] = time();
+            $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|PNG|GIF';
+            $config['max_size']     = '24000000';
+            $config['max_width'] = '5000';
+            $config['max_height'] = '5000';
 
             $cate_title = strtolower($this->input->post('Category'));
 
@@ -40,15 +40,20 @@ class common extends CI_Controller
             $category_id = $this->commonModel->fetch_category_id($cate_title);
 
             if ($category_id) {
-                // $this->load->library('upload', $config);
+                $this->load->library('upload', $config);
 
-                // if (!$this->upload->do_upload('image')) {
-                //     $messages['imageErr']  = $this->upload->display_errors();
-                // }
+                if (!$this->upload->do_upload('image')) {
+                    $messages['imageErr']  = $this->upload->display_errors();
+                }
 
-                // $full_path = $this->upload->data('full_path');
+                $full_path = $this->upload->data('full_path');
+
+                $explodepath = explode('/', $full_path);
+
+                $path = $explodepath[4].'/'.$explodepath[5];
+                
                
-                $res = $this->commonModel->insert_article($data, $category_id);
+                $res = $this->commonModel->insert_article($data, $category_id,$path);
 
                 if ($res) {
                     $messages['success'] = "Successfully Added";
@@ -80,25 +85,25 @@ class common extends CI_Controller
             $messages['categ'] = form_error('Category');
             $messages['cont'] = form_error('content');
         } else {
-            // $config['filename'] = time();
-            // $config['upload_path'] = './uploads/';
-            // $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|PNG|GIF';
-            // $config['max_size']     = '24000000';
-            // $config['max_width'] = '5000';
-            // $config['max_height'] = '5000';
+            $config['filename'] = time();
+            $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|PNG|GIF';
+            $config['max_size']     = '24000000';
+            $config['max_width'] = '5000';
+            $config['max_height'] = '5000';
 
             $cate_title = strtolower($this->input->post('Category'));
 
             $category_id = $this->commonModel->fetch_category_id($cate_title);
 
             if ($category_id) {
-                // $this->load->library('upload', $config);
+                $this->load->library('upload', $config);
 
-                // if (!$this->upload->do_upload('pictures')) {
-                //     $messages['imageErr']  = $this->upload->display_errors();
-                // }
+                if (!$this->upload->do_upload('pictures')) {
+                    $messages['imageErr']  = $this->upload->display_errors();
+                }
 
-                // $full_path = $this->upload->data('full_path');
+                $full_path = $this->upload->data('full_path');
                
                 $res = $this->commonModel->insert_blog($data, $category_id);
 

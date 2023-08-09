@@ -100,7 +100,7 @@
         <div class="menu-inner-shadow"></div>
 
         <!-- admin menu -->
-        <?php if (!isset($_SESSION['flag'])) { ?>
+        <?php if (!isset($_SESSION['flag'])) {?>
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item ">

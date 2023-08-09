@@ -60,7 +60,7 @@
                                         </button>
                                     </div>
 
-                                    <!-- <div class="row mb-3">
+                                    <div class="row mb-3">
                                         <label class="col-sm-2 form-label text-dark" for="basic-icon-default-file">Upload Image</label>
                                         <div class="col-sm-10">
                                             <div class="text-primary input-group input-group-merge">
@@ -68,7 +68,8 @@
                                             </div>
                                         </div>
                                         <p id="Image" class="text-danger"></p>
-                                    </div> -->
+                                    </div>
+                                    
                                     <div class="row mb-3">
                                         <label class="col-sm-2 form-label text-dark" for="content">Content</label>
                                         <div class="col-sm-10">

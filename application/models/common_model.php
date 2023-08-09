@@ -43,14 +43,14 @@
             return $res->result_array();
         }
 
-        public function insert_article($data,$category_id){
+        public function insert_article($data,$category_id,$path){
             $user = $this->session->userdata('roll');
 
             if($user == 'admin'){
-                $sql = array('title'=>$data['title'],'shortdescription'=>$data['Sdescp'],'content'=>$data['content'],'adminid'=>$_SESSION['id'],'categoryid'=>$category_id,'status'=>1);
+                $sql = array('title'=>$data['title'],'shortdescription'=>$data['Sdescp'],'content'=>$data['content'],'imagesurl'=>$path,'adminid'=>$_SESSION['id'],'categoryid'=>$category_id,'status'=>1);
 
             }else{
-                $sql = array('title'=>$data['title'],'shortdescription'=>$data['Sdescp'],'content'=>$data['content'],'userid'=>$_SESSION['userid'],'categoryid'=>$category_id,'status'=>1);
+                $sql = array('title'=>$data['title'],'shortdescription'=>$data['Sdescp'],'content'=>$data['content'],'imagesurl'=>$path,'userid'=>$_SESSION['userid'],'categoryid'=>$category_id,'status'=>1);
             }
 
            

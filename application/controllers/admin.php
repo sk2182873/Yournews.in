@@ -9,6 +9,7 @@ class admin extends CI_Controller
         parent::__construct();
         $this->load->model('common_model', 'commonModel');
         $this->load->model('admin_model', 'adminModel');
+        $this->load->model('authenticate_model','authenticateModel');
     }
 
 
@@ -41,7 +42,7 @@ class admin extends CI_Controller
     }
 
 
-// <---------------------------------------------------------------------- admin functions ------------------------------------------------------------------------------>
+    // <---------------------------------------------------------------------- admin functions ------------------------------------------------------------------------------>
 
     public function add_user()
     {
@@ -66,7 +67,7 @@ class admin extends CI_Controller
             $messages['phone'] = form_error('phone');
             $messages['address'] = form_error('address');
         } else {
-           
+
             $res = $this->commonModel->fetch_data('*', 'users');
 
             foreach ($res as $key => $value) {
@@ -93,22 +94,27 @@ class admin extends CI_Controller
     public function update_profile()
     {
 
-        $data = $this->input->post();
+        $messages = array();
 
-        echo "<pre>";
-        print_r($data);
-        echo $_FILES['profile']['name'];
+        $email = $this->input->post('email');
+        $username = $this->input->post('firstName');
+        $alteremail = $this->input->post('alteremail');
+
+        $data = array($email, $username, $alteremail);
+
+        // echo "<pre>";
+        // print_r($data);
+        // echo $_FILES['profile']['name'];
 
         $this->form_validation->set_rules('firstName', 'Fullname', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('alteremail', 'Email', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             echo validation_errors();
         } else {
             if ($_FILES['profile']['name']) {
-
                 $config['filename'] = time();
-                $config['upload_path'] = './uploads/';
+                $config['upload_path'] = './uploads/admin/';
                 $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|PNG|GIF';
                 $config['max_size']     = '24000000';
                 $config['max_width'] = '5000';
@@ -120,18 +126,20 @@ class admin extends CI_Controller
                     $messages['imageErr']  = $this->upload->display_errors();
                 }
 
-                // $full_path = $this->upload->data('full_path');
-                // $this->load->model('insertDataModel', 'model');
-                // $res = $this->model->insert_article($data, $full_path, $category_id);
+                $full_path = $this->upload->data('full_path');
 
-                // if ($res) {
-                //     $messages['success'] = "Successfully Added";
-                // } else {
-                //     $messages['dbErr'] = "Database Error";
-                // }
+                $res = $this->adminModel->update_admin_profile($data, $full_path);
 
+                if ($res) {
+                    $messages['success'] = "Successfully Added";
+                    $users = $this->authenticateModel->fetch_admin($data);
+                } else {
+                    $messages['dbErr'] = "Database Error";
+                }
             }
         }
+
+        echo json_encode($messages);
     }
 
     public function fetch_user_data()
@@ -181,9 +189,7 @@ class admin extends CI_Controller
 
     public function fetch_category_data()
     {
-
-        $this->load->model('fetchDataModel', 'model');
-        $res = $this->model->fetch_category();
+        $res = $this->commonModel->fetch_category();
 
         foreach ($res as $row) {
             $category[] = $row['categorytitle'];

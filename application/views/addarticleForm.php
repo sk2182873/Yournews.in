@@ -60,7 +60,7 @@
                                         </button>
                                     </div>
 
-                                    <!-- <div class="row mb-3">
+                                    <div class="row mb-3">
                                         <label class="col-sm-2 form-label text-dark" for="basic-icon-default-file">Upload Image</label>
                                         <div class="col-sm-10">
                                             <div class="text-primary input-group input-group-merge">
@@ -68,7 +68,7 @@
                                             </div>
                                             <p id="Image" class="text-danger"></p>
                                         </div>
-                                    </div> -->
+                                    </div>
 
                                     <div class="row mb-3">
                                         <label class="col-sm-2 form-label text-dark" for="basic-icon-default-content">Content</label>
@@ -183,7 +183,10 @@
             $.ajax({
                 url: "<?php echo base_url('common/add_article'); ?>",
                 type: "POST",
-                data: $(this).serializeArray(),
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
                 success: function(res) {
                     var data = JSON.parse(res);
                     console.log(data);

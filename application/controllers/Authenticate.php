@@ -34,6 +34,7 @@ class authenticate extends CI_Controller
             $data = array($username, $password);
             $users = $this->authenticate_model->fetch_admin($data);
 
+            // var_dump($users);die();
 
             if ($users != 0) {
                 if (($users['username'] == $username && password_verify($password, $users['pass'])) || ($users['mail'] == $username && password_verify($password, $users['pass']))) {
@@ -51,6 +52,8 @@ class authenticate extends CI_Controller
                     $userdata['email'] = $users['mail'];
                     $userdata['id'] = $users['id'];
                     $userdata['position'] = $users['position'];
+                    $userdata['alteremail'] = $users['alternative_email'];
+                    $userdata['phone'] = $users['phone'];
                     $userdata['last_login_time'] = time();
 
                     $this->session->set_userdata($userdata);
