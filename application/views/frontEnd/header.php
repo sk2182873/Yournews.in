@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
 <head>
@@ -94,10 +94,10 @@
                                 <div class="main-menu d-none d-md-block">
                                     <nav>
                                         <ul id="navigation" class="d-inline">
-                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="<?php echo base_url() ?>">Home</a></li>
                                         </ul>
                                         <ul class="d-inline">
-                                            <li id="page"><a href="#">Pages</a>
+                                            <li id="page"><a href="#">More</a>
                                                 <ul class="submenu"></ul>
                                             </li>
                                         </ul>

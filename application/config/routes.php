@@ -49,7 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = '';
+$route['default_controller'] = 'Home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 // admin routes
@@ -75,4 +75,20 @@ $route['user/blogs'] = 'pages/blogs';
 $route['user/addblogs'] = 'pages/addblogs';
 $route['user/account'] = 'pages/account';
 
-$route['aznews/'] = 'Views/index';
+
+$route['business'] = 'Home/business';
+
+
+$route['education/(:num)'] = "News/education/$1";
+$route['sports/(:num)'] = "News/sports/$1";
+$route['technology/(:num)'] = "News/technology/$1";
+$route['politics/(:num)'] = "News/politics/$1";
+$route['entertainment/(:num)'] = "News/entertainment/$1";
+$route['business/(:num)'] = "News/business/$1";
+$route['world/(:num)'] = "News/world/$1";
+$route['country/(:num)'] = "News/country/$1";
+
+
+
+
+

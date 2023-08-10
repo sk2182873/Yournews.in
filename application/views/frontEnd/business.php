@@ -73,7 +73,7 @@
         //trending news
         $.ajax({
 
-            url: "<?php echo base_url() . 'frontend/fetch_articles' ?>",
+            url: "<?php echo base_url() . 'Business/fetch_articles_business' ?>",
             type: 'post',
             success: function(res) {
                 var data = JSON.parse(res);
@@ -109,7 +109,7 @@
 
         //recent news
         $.ajax({
-            url: '<?php echo base_url() . 'frontend/fetch_recents' ?>',
+            url: '<?php echo base_url() . 'Business/fetch_recents_business' ?>',
             type: 'POST',
             success: function(res) {
                 var data = JSON.parse(res);
