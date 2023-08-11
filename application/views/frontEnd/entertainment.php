@@ -73,11 +73,13 @@
         //trending news
         $.ajax({
 
-            url: "<?php echo base_url() . 'Business/fetch_articles_business' ?>",
+            url: "<?php echo base_url() . 'Entertainment/fetch_articles_entertainment' ?>",
             type: 'post',
             success: function(res) {
                 var data = JSON.parse(res);
                 var base_url = '<?php echo base_url() ?>';
+
+                console.log(data);
                 
                 $('#image0').attr('src', base_url + data[4]['imagesurl']);
                 $('#headingtop0').html(data[4]['title']);
@@ -109,7 +111,7 @@
 
         //recent news
         $.ajax({
-            url: '<?php echo base_url() . 'Business/fetch_recents_business' ?>',
+            url: '<?php echo base_url() . 'Entertainment/fetch_recents_entertainment' ?>',
             type: 'POST',
             success: function(res) {
                 var data = JSON.parse(res);

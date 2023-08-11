@@ -25,8 +25,8 @@
                         </div>
 
                         <div class="about-prea">
-                            <?php if($art){ 
-                                foreach($art as $row){
+                            <?php if ($art) {
+                                foreach ($art as $row) {
                                     echo $row['content'];
                                 }
                             } ?>
@@ -138,27 +138,32 @@
 
 <?php include('footer.php'); ?>
 <script>
-    $(window).on('load', function() {
+    $(document).ready(function() {
+        $(window).on('load', function() {
 
-        //fetch category
-        $.ajax({
-            url: '<?php echo base_url() . 'frontend/fetch_category' ?>',
-            type: 'POST',
-            success: function(res) {
-                var data = JSON.parse(res);
+            //fetch category
+            $.ajax({
+                url: '<?php echo base_url() . 'frontend/fetch_category' ?>',
+                type: 'POST',
+                success: function(res) {
+                    var data = JSON.parse(res);
+                    var base_url = "<?php echo base_url(); ?>";
 
-                $.each(data, function(n, ele) {
+                    console.log(data);
 
-                    if (n < 7) {
-                        $('#navigation').append(`<li><a href="${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
-                    } else {
-                       $('.submenu').append(`<li><a href="${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
-                    }
+                    $.each(data, function(n, ele) {
+
+                        if (n < 7) {
+                            $('#navigation').append(`<li><a href="${base_url}/${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
+                        } else {
+                            $('.submenu').append(`<li><a href="${base_url}/${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
+                        }
 
 
-                })
-            }
+                    })
+                }
+            });
+
         });
-
-    });
+    })
 </script>

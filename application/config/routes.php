@@ -52,6 +52,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller'] = 'Home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
 // admin routes
 $route['admin'] = 'admin/login';
 $route['register'] = 'admin/register';
@@ -75,10 +76,17 @@ $route['user/blogs'] = 'pages/blogs';
 $route['user/addblogs'] = 'pages/addblogs';
 $route['user/account'] = 'pages/account';
 
-
+//pages route.
 $route['business'] = 'Home/business';
+$route['country'] = 'Home/country';
+$route['education'] = 'Home/education';
+$route['entertainment'] = 'Home/entertainment';
+$route['politics'] = 'Home/politics';
+$route['sports'] = 'Home/sports';
+$route['technology'] = 'Home/technology';
+$route['world'] = 'Home/world';
 
-
+//functions route.
 $route['education/(:num)'] = "News/education/$1";
 $route['sports/(:num)'] = "News/sports/$1";
 $route['technology/(:num)'] = "News/technology/$1";
