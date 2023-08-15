@@ -128,19 +128,19 @@
             </li>
 
 
-            <li class="menu-item ">
-              <a href="<?php echo base_url('admin/blogs'); ?>" class="menu-link">
+            <!-- <li class="menu-item ">
+              <a href="<?php// echo base_url('admin/blogs'); ?>" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-news'></i>
                 <div data-i18n="Analytics">Blogs</div>
               </a>
             </li>
 
             <li class="menu-item ">
-              <a href="<?php echo base_url('admin/addblogs'); ?>" class="menu-link">
+              <a href="<?php// echo base_url('admin/addblogs'); ?>" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-add-to-queue'></i>
                 <div data-i18n="Analytics">Add Blog</div>
               </a>
-            </li>
+            </li> -->
 
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -218,19 +218,19 @@
             </li>
 
 
-            <li class="menu-item ">
-              <a href="<?php echo base_url('user/blogs'); ?>" class="menu-link">
+            <!-- <li class="menu-item ">
+              <a href="<?php// echo base_url('user/blogs'); ?>" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-news'></i>
                 <div data-i18n="Analytics">Blogs</div>
               </a>
             </li>
 
             <li class="menu-item ">
-              <a href="<?php echo base_url('user/addblogs'); ?>" class="menu-link">
+              <a href="<?php// echo base_url('user/addblogs'); ?>" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-add-to-queue'></i>
                 <div data-i18n="Analytics">Add Blog</div>
               </a>
-            </li>
+            </li> -->
 
             <li class="menu-item ">
               <a href="<?php echo base_url('user/account'); ?>" class="menu-link">

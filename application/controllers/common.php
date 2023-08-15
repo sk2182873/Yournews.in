@@ -8,6 +8,56 @@ class common extends CI_Controller
         $this->load->model('common_model', 'commonModel');
     }
 
+    public function update_profile()
+    {
+
+        $messages = array();
+        $filename = "";
+
+        $alteremail = $this->input->post('alteremail');
+
+
+        $this->form_validation->set_rules('alteremail', 'Alternate Email', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $messages['alteremail'] = form_error('alteremail');
+           
+        } else {
+
+
+                $config['filename'] = time();
+                $config['upload_path'] = './uploads/admin/';
+                $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|PNG|GIF';
+                $config['max_size']     = '24000000';
+                $config['max_width'] = '5000';
+                $config['max_height'] = '5000';
+
+                $this->load->library('upload', $config);
+
+                if($_FILES['profile']['name']){
+                    $this->upload->do_upload('profile');
+
+                    $full_path = $this->upload->data('full_path');
+
+                    $exploded_url = explode('/',$full_path);
+
+                    $filename = $_FILES['profile']['name'];
+
+                }
+
+                $res = $this->commonModel->update_profile($alteremail, $filename);
+
+
+                if ($res) {
+                    $messages['success'] = "Successfully Update";
+                } else {
+                    $messages['dbErr'] = "Database Error";
+                }
+        }
+
+        echo json_encode($messages);
+    }
+
     public function add_article()
     {
         $messages = array();
@@ -104,8 +154,12 @@ class common extends CI_Controller
                 }
 
                 $full_path = $this->upload->data('full_path');
+
+                $explodepath = explode('/', $full_path);
+
+                $path = $explodepath[4].'/'.$explodepath[5];
                
-                $res = $this->commonModel->insert_blog($data, $category_id);
+                $res = $this->commonModel->insert_blog($data, $category_id, $path);
 
                 if ($res) {
                     $messages['success'] = "Successfully Added";
@@ -116,8 +170,6 @@ class common extends CI_Controller
         }
 
         echo json_encode($messages);
-        // echo json_encode($data);
-        // echo json_encode($_FILES['pictures']['name']);
     }
 
     public function insert_category()

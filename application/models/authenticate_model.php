@@ -44,6 +44,7 @@ class authenticate_model extends CI_Model
                     $users['position'] = $row->position;
                     $users['alternative_email'] = $row->alternative_email;
                     $users['phone'] = $row->phone;
+                    $users['profilepic'] = $row->profile_img;
                     $flag = 1;
                 }
             }
@@ -66,10 +67,7 @@ class authenticate_model extends CI_Model
 
         if (!empty($str->result())) {
              foreach ($str->result() as $row) {
-            //     var_dump($row->username);
-            //     echo "break";
-            //     var_dump($data);
-            //     die();
+            
                 if ($row->username == $data[0] || $row->email == $data[0]) {
                     $users['mail'] = $row->email;
                     $users['username'] = $row->username;
@@ -77,6 +75,9 @@ class authenticate_model extends CI_Model
                     $users['id'] = $row->userid;
                     $users['status'] = $row->user_status;
                     $users['position'] = $row->position;
+                    $users['phone'] = $row->phone;
+                    $users['alternative_email'] = $row->alternative_email;
+                    $users['profilepic'] = $row->profile_img;
                     $flag = 1;
                 }
             }

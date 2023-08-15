@@ -54,6 +54,7 @@ class authenticate extends CI_Controller
                     $userdata['position'] = $users['position'];
                     $userdata['alteremail'] = $users['alternative_email'];
                     $userdata['phone'] = $users['phone'];
+                    $userdata['profilepic'] = $users['profilepic'];
                     $userdata['last_login_time'] = time();
 
                     $this->session->set_userdata($userdata);
@@ -206,6 +207,9 @@ class authenticate extends CI_Controller
                     $userdata['email'] = $users['mail'];
                     $userdata['userid'] = $users['id'];
                     $userdata['position'] = $users['position'];
+                    $userdata['alteremail'] = $users['alternative_email'];
+                    $userdata['phone'] = $users['phone'];
+                    $userdata['profilepic'] = $users['profilepic'];
                     $userdata['last_login_time'] = time();
                     $userdata['flag'] = 1;
 

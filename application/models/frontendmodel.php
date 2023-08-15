@@ -231,7 +231,8 @@ class frontendmodel extends CI_Model
     }
     //--------------------------------------Technology Page Functions--------------------------------------------------
 
-    public function fetch_tech_articles(){
+    public function fetch_tech_articles()
+    {
 
         $sql = "SELECT * FROM article as a
         LEFT JOIN category as c
@@ -244,7 +245,8 @@ class frontendmodel extends CI_Model
 
     }
 
-    public function fetch_recents_tech_articles(){
+    public function fetch_recents_tech_articles()
+    {
 
         $sql = "SELECT * FROM article as a
         LEFT JOIN category as c
@@ -285,4 +287,5 @@ class frontendmodel extends CI_Model
         return $res->result_array();
 
     }
+    
 }

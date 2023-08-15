@@ -3,7 +3,7 @@
 <div class="layout-page">
 <!-- Navbar -->
 
-<?php include_once('include/navbar3.php'); ?>
+<?php include_once('include/navbar2.php'); ?>
 
 <!-- / Navbar -->
 

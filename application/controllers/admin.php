@@ -96,23 +96,15 @@ class admin extends CI_Controller
 
         $messages = array();
 
-        $email = $this->input->post('email');
-        $username = $this->input->post('firstName');
         $alteremail = $this->input->post('alteremail');
 
-        $data = array($email, $username, $alteremail);
 
-        // echo "<pre>";
-        // print_r($data);
-        // echo $_FILES['profile']['name'];
-
-        $this->form_validation->set_rules('firstName', 'Fullname', 'required');
-        $this->form_validation->set_rules('alteremail', 'Email', 'required');
+        $this->form_validation->set_rules('alteremail', 'Alternate Email', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            echo validation_errors();
+            $messages['alteremail'] = form_error('alteremail');
         } else {
-            if ($_FILES['profile']['name']) {
+            
                 $config['filename'] = time();
                 $config['upload_path'] = './uploads/admin/';
                 $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|PNG|GIF';
@@ -128,15 +120,18 @@ class admin extends CI_Controller
 
                 $full_path = $this->upload->data('full_path');
 
-                $res = $this->adminModel->update_admin_profile($data, $full_path);
+                $exploded_url = explode('/',$full_path);
+
+                $path = $config['upload_path'].$exploded_url[6];
+
+                $res = $this->adminModel->update_admin_profile($alteremail, $path);
+
 
                 if ($res) {
-                    $messages['success'] = "Successfully Added";
-                    $users = $this->authenticateModel->fetch_admin($data);
+                    $messages['success'] = "Successfully Update";
                 } else {
                     $messages['dbErr'] = "Database Error";
                 }
-            }
         }
 
         echo json_encode($messages);

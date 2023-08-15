@@ -24,13 +24,13 @@ class admin_model extends CI_Model
         return $result;
     }
 
-    public function update_admin_profile($data, $path)
+    public function update_admin_profile($alteremail, $path)
     {
 
 
         $session_id = $_SESSION['id'];
 
-        $sql = array('name' => $data['firstName'],    'alternative_email' => $data['alteremail'], 'profile_img' => "$path");
+        $sql = array('alternative_email' => "$alteremail", 'profile_img' => "$path");
 
         $where = "adminid = $session_id";
 
@@ -38,11 +38,9 @@ class admin_model extends CI_Model
 
         $res = $this->db->query($str);
 
-        echo $res;die();
-
         if ($res) {
-            $userdata['name'] = $data['name'];
-            $userdata['alteremail'] = $data['alteremail'];
+            $userdata['alteremail'] = $alteremail;
+            $userdata['profilepic'] = $path;
             $this->session->set_userdata($userdata);
             return $res;
         }
