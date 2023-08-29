@@ -28,16 +28,16 @@
 <body>
 
     <!-- Preloader Start --> 
-    <!-- <div id="preloader-active">
+    <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="<?php //echo base_url() ?>asset/img/logo/logo.png" alt="">
+                    <img src="<?php echo base_url() ?>asset/img/logo/logo.png" alt="">
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- Preloader Start -->
 
     <header>
@@ -71,12 +71,12 @@
                             <!-- Logo -->
                             <div class="col-xl-3 col-lg-3 col-md-3">
                                 <div class="logo">
-                                    <a href="index.html"><img src="<?php echo base_url() ?>asset/img/logo/logo.png" alt=""></a>
+                                    <a href="<?php echo base_url(); ?>"><img src="<?php echo base_url() ?>asset/img/logo/logo.png" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-9 col-lg-9 col-md-9">
                                 <div class="header-banner f-right ">
-                                    <img src="<?php echo base_url() ?>asset/img/hero/header_card.jpg" alt="">
+                                    <img src="<?php echo base_url(); ?>asset/img/hero/header_card.jpg" alt="">
                                 </div>
                             </div>
                         </div>

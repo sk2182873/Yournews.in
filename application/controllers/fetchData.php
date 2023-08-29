@@ -30,15 +30,15 @@
             $userdata = $this->model->fetch_article();
 
             $data = array();
+
             foreach($userdata as $key => $value){
                 $data['data'][] = array(
-                    $value['title'],
-                    $value['date'],
-                    $value['shortdescription'],
-                    strip_tags(substr($value['content'],0,100))." .......",
-                    $value['categorytitle'],
-                    "<div><a href='#' class='badge text-success showbtn'>Show</a></div>",
-                    "<div><a href='#' class='badge text-primary'>edit</a> <a href='#' class='badge text-danger'>delete</a> </div>"
+                    "Title"=>$value['title'],
+                    "Date"=>$value['date'],
+                    "Sdescp"=>$value['shortdescription'],
+                    "Content"=>strip_tags(substr($value['content'],0,100))." .......",
+                    "CTitle"=>$value['categorytitle'],
+					"id"=>$value['id']
                 );
             }
 

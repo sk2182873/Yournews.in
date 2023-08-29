@@ -2,6 +2,9 @@
 
 class common extends CI_Controller
 {
+
+	public $messages = array();
+
     public function __construct()
     {
         parent::__construct();
@@ -64,6 +67,11 @@ class common extends CI_Controller
 
         $data = $this->input->post();
 
+		$title = $this->input->post('title');
+
+		$url_slug = url_title($title,'-',TRUE);
+
+
         $this->form_validation->set_rules('title', 'Article Title', 'required');
         $this->form_validation->set_rules('Sdescp', 'Short Description', 'required');
         $this->form_validation->set_rules('Category', 'Category', 'required');
@@ -103,7 +111,7 @@ class common extends CI_Controller
                 $path = $explodepath[4].'/'.$explodepath[5];
                 
                
-                $res = $this->commonModel->insert_article($data, $category_id,$path);
+                $res = $this->commonModel->insert_article($data, $category_id,$path,$url_slug);
 
                 if ($res) {
                     $messages['success'] = "Successfully Added";
@@ -216,5 +224,28 @@ class common extends CI_Controller
 
         echo json_encode(array("messages" => $messages));
     }
+
+	public function delete_article(){
+
+	
+
+		$id = $this->input->post('delId');
+
+		$res = $this->commonModel->delete_article_by_id($id);
+
+		if($res){
+			$messages['success'] = "success";
+		}else{
+			$messages['error'] = "error";
+		}
+
+		echo json_encode($messages);
+	}
+
+	public function update_artilce(){
+
+		
+
+	}
 }
 ?>

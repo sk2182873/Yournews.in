@@ -114,6 +114,12 @@
   background-color: rgb(255, 255, 255);
 }
 
+.fa-pen{
+	border: 3px solid rgb(2, 117, 216);
+	padding: 3px;
+	border-radius: 5px;
+}
+
 
 @media screen and (max-width: 768px) {
   #adduserform .rowwrap{

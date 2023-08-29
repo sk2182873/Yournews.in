@@ -44,14 +44,14 @@ class common_model extends CI_Model
         return $res->result_array();
     }
 
-    public function insert_article($data, $category_id, $path)
+    public function insert_article($data, $category_id, $path, $url_slug)
     {
         $user = $this->session->userdata('roll');
 
         if ($user == 'admin') {
-            $sql = array('title' => $data['title'], 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path, 'adminid' => $_SESSION['id'], 'categoryid' => $category_id, 'status' => 1);
+            $sql = array('title' => $data['title'], 'url_slug' => $url_slug, 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path, 'adminid' => $_SESSION['id'], 'categoryid' => $category_id, 'status' => 1);
         } else {
-            $sql = array('title' => $data['title'], 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path, 'userid' => $_SESSION['userid'], 'categoryid' => $category_id, 'status' => 1);
+            $sql = array('title' => $data['title'], 'url_slug' => $url_slug, 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path, 'userid' => $_SESSION['userid'], 'categoryid' => $category_id, 'status' => 1);
         }
 
 
@@ -175,4 +175,12 @@ class common_model extends CI_Model
 
         return 0;
     }
+
+	public function delete_article_by_id($id){
+
+		return $this->db->delete('article', array('id' => $id));
+
+
+
+	}
 }

@@ -15,6 +15,10 @@
 
             $articles = $this->frontendModel->fetch_articles();
 
+			// echo "<pre>";
+			// print_r($articles);
+			// die();
+
             echo json_encode($articles);
         }
 

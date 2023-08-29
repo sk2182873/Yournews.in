@@ -91,51 +91,7 @@ class admin extends CI_Controller
         echo json_encode($messages);
     }
 
-    public function update_profile()
-    {
-
-        $messages = array();
-
-        $alteremail = $this->input->post('alteremail');
-
-
-        $this->form_validation->set_rules('alteremail', 'Alternate Email', 'required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $messages['alteremail'] = form_error('alteremail');
-        } else {
-            
-                $config['filename'] = time();
-                $config['upload_path'] = './uploads/admin/';
-                $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|PNG|GIF';
-                $config['max_size']     = '24000000';
-                $config['max_width'] = '5000';
-                $config['max_height'] = '5000';
-
-                $this->load->library('upload', $config);
-
-                if (!$this->upload->do_upload('profile')) {
-                    $messages['imageErr']  = $this->upload->display_errors();
-                }
-
-                $full_path = $this->upload->data('full_path');
-
-                $exploded_url = explode('/',$full_path);
-
-                $path = $config['upload_path'].$exploded_url[6];
-
-                $res = $this->adminModel->update_admin_profile($alteremail, $path);
-
-
-                if ($res) {
-                    $messages['success'] = "Successfully Update";
-                } else {
-                    $messages['dbErr'] = "Database Error";
-                }
-        }
-
-        echo json_encode($messages);
-    }
+    
 
     public function fetch_user_data()
     {

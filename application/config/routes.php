@@ -87,14 +87,9 @@ $route['technology'] = 'Home/technology';
 $route['world'] = 'Home/world';
 
 //functions route.
-$route['education/(:num)'] = "News/education/$1";
-$route['sports/(:num)'] = "News/sports/$1";
-$route['technology/(:num)'] = "News/technology/$1";
-$route['politics/(:num)'] = "News/politics/$1";
-$route['entertainment/(:num)'] = "News/entertainment/$1";
-$route['business/(:num)'] = "News/business/$1";
-$route['world/(:num)'] = "News/world/$1";
-$route['country/(:num)'] = "News/country/$1";
+$route['article/(:num)/(:any)'] = "Article/index/$1/$2";
+
+
 
 
 
