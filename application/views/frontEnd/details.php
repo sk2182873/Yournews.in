@@ -154,9 +154,9 @@
                     $.each(data, function(n, ele) {
 
                         if (n < 7) {
-                            $('#navigation').append(`<li><a href="${base_url}${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
+                            $('#navigation').append(`<li><a href="${base_url}category/${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
                         } else {
-                            $('.submenu').append(`<li><a href="${base_url}${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
+                            $('.submenu').append(`<li><a href="${base_url}category/${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
                         }
 
 

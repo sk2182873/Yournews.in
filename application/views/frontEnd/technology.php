@@ -83,7 +83,7 @@
                 
                 $('#image0').attr('src', base_url + data[4]['imagesurl']);
                 $('#headingtop0').html(data[4]['title']);
-                $('#headingtop0').attr('href', 'article'+'/'+data[4]['id']+'/'+data[4]['url_slug']);
+                $('#headingtop0').attr('href', '<?php echo base_url() ?>article'+'/'+data[4]['id']+'/'+data[4]['url_slug']);
                 $('#tag').html(data[4]['categorytitle']);
 
                 $.each(data, function(n, ele) {
@@ -93,7 +93,7 @@
                             </div>
                             <div class="trand-right-cap">
                                 <span class="color1">${ele['categorytitle']}</span>
-                                <h4><a href="article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
+                                <h4><a href="<?php echo base_url() ?>article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
                             </div>
                         </div>`);
 
@@ -124,7 +124,7 @@
                                 </div>
                                 <div class="what-cap">
                                     <span class="color1">${ele['categorytitle']}</span>
-                                    <h4><a href="article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
+                                    <h4><a href="<?php echo base_url() ?>article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
                                 </div>
                             </div>`);
                 });
@@ -142,9 +142,9 @@
                 $.each(data, function(n, ele) {
 
                     if (n < 7) {
-                        $('#navigation').append(`<li><a href="${base_url}${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
+                        $('#navigation').append(`<li><a href="${base_url}category/${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
                     } else {
-                       $('.submenu').append(`<li><a href="${base_url}${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
+                       $('.submenu').append(`<li><a href="${base_url}category/${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
                     }
 
                 })

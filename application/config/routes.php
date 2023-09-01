@@ -77,14 +77,14 @@ $route['user/addblogs'] = 'pages/addblogs';
 $route['user/account'] = 'pages/account';
 
 //pages route.
-$route['business'] = 'Home/business';
-$route['country'] = 'Home/country';
-$route['education'] = 'Home/education';
-$route['entertainment'] = 'Home/entertainment';
-$route['politics'] = 'Home/politics';
-$route['sports'] = 'Home/sports';
-$route['technology'] = 'Home/technology';
-$route['world'] = 'Home/world';
+$route['category/business'] = 'Home/business';
+$route['category/country'] = 'Home/country';
+$route['category/education'] = 'Home/education';
+$route['category/entertainment'] = 'Home/entertainment';
+$route['category/politics'] = 'Home/politics';
+$route['category/sports'] = 'Home/sports';
+$route['category/technology'] = 'Home/technology';
+$route['category/world'] = 'Home/world';
 
 //functions route.
 $route['article/(:num)/(:any)'] = "Article/index/$1/$2";
