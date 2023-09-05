@@ -173,4 +173,50 @@ class admin extends CI_Controller
 
         echo json_encode($data);
     }
+
+	public function addPage(){
+
+		$messages = array();
+		$data = $this->input->post();
+
+
+		$this->form_validation->set_rules('pagename','Page Name','required');
+		$this->form_validation->set_rules('descp','Description','required');
+		$this->form_validation->set_rules('content','Content','required');
+
+		if($this->form_validation->run() == FALSE){
+			$messages['pagename'] = form_error('pagename');
+			$messages['descp'] = form_error('descp');
+			$messages['content'] = form_error('content');
+		}else{
+			$data['p_slug'] = url_title($this->input->post('pagename'), '-', TRUE);
+
+			$result = $this->adminModel->insert_page($data);
+			if($result){
+				$messages['success'] = "Successfully Page Created.";
+				$this->save_routes();
+			}else{
+				$messages['error'] = "Page is not created due to technical error";
+			}
+
+		}
+
+		echo json_encode($messages);
+	}
+
+	private function save_routes(){
+
+		$routes = $this->adminModel->get_all_routes();
+		$data = array();
+		if(!empty($routes)){
+			$data[] = '<?php ';
+			foreach($routes as $route ){
+				$data[] = '$route[\''.$route['p_slug'].'\'] = \''.'Pages'.'/'.'index/'.$route['p_id'].'\';';
+			}
+			
+			$output = implode("\n ", $data);
+			write_file(APPPATH.'cache/routes.php', $output);
+		}
+
+	}
 }

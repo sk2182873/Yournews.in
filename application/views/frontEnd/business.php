@@ -122,7 +122,7 @@
                                 </div>
                                 <div class="what-cap">
                                     <span class="color1">${ele['categorytitle']}</span>
-                                    <h4><a href="<?php echo base_url() ?>article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
+                                    <h4><a class='title' href="<?php echo base_url() ?>article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
                                 </div>
                             </div>`);
                 });

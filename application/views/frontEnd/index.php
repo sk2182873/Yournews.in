@@ -121,8 +121,8 @@
                                     <img src="${base_url+ele['imagesurl']}" alt="image not found" width="400px" height="300px"> 
                                 </div>
                                 <div class="what-cap">
-                                    <span class="category">${ele['categorytitle']}</span>
-                                    <h4><a class="title" href="<?php echo base_url() ?>article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
+                                    <span>${ele['categorytitle']}</span>
+                                    <h4><a  href="<?php echo base_url() ?>article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
                                 </div>
                             </div>`);
                 });
@@ -130,6 +130,7 @@
             }
         });
 
+		//fetch recents
         $.ajax({
             url: '<?php echo base_url() . 'frontend/fetch_category' ?>',
             type: 'POST',

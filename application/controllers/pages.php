@@ -1,7 +1,30 @@
 <?php
 
-class pages extends CI_Controller
+class Pages extends CI_Controller
 {
+
+
+	public function __construct()
+	{
+		
+		parent::__construct();
+		$this->load->model('admin_model', 'adminModel');
+		
+	}
+
+	public function index($id){
+
+		$data = array();
+		$data['page'] = $this->adminModel->getPageById($id);
+		$data['link'] = $this->adminModel->get_all_routes();
+
+
+		// echo "<pre>";
+		// print_r($page);
+		// die();
+
+		$this->load->view('frontEnd/pages', ['data'=>$data]);
+	}
 
     public function is_session_admin()
     {
@@ -41,7 +64,7 @@ class pages extends CI_Controller
     public function addarticle()
     {
         $this->session_collison();
-        $this->load->view('addarticleForm');
+        $this->load->view('addarticle');
     }
 
     public function addblogs()
@@ -53,7 +76,7 @@ class pages extends CI_Controller
     public function articles()
     {
         $this->session_collison();
-        $this->load->view('addArticle');
+        $this->load->view('articleList');
     }
 
     public function blogs()
@@ -73,4 +96,14 @@ class pages extends CI_Controller
         $this->session_collison();
         $this->load->view('dashboard');
     }
+
+	public function addpage(){
+		$this->session_collison();
+		$this->load->view('addPage');
+	}
+
+	public function pagesList(){
+		$this->session_collison();
+		$this->load->view('pagesList');
+	}
 }

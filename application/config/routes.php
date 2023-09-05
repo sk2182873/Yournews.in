@@ -66,6 +66,8 @@ $route['admin/addblogs'] = 'pages/addblogs';
 $route['admin/users'] = 'pages/users';
 $route['admin/addusers'] = 'pages/addusers';
 $route['admin/account'] = 'pages/account';
+$route['admin/pages'] = 'pages/pagesList';
+$route['admin/addpage'] = 'pages/addpage';
 
 //user routes.
 $route['user'] = 'user/login';
@@ -85,12 +87,13 @@ $route['category/politics'] = 'Home/politics';
 $route['category/sports'] = 'Home/sports';
 $route['category/technology'] = 'Home/technology';
 $route['category/world'] = 'Home/world';
+$route['category/search'] = 'Home/search';
 
 //functions route.
 $route['article/(:num)/(:any)'] = "Article/index/$1/$2";
 
 
-
+require_once APPPATH.'cache/routes.php';
 
 
 

@@ -8,6 +8,8 @@ class admin_model extends CI_Model
         parent::__construct();
     }
 
+	
+
     public function insert_user_profile_data($data)
     {
 
@@ -24,5 +26,35 @@ class admin_model extends CI_Model
         return $result;
     }
 
+	public function insert_page($data){
+
+
+
+		$str =$this->db->insert_string('pages', array('page_name'=>$data['pagename'],'description'=>$data['descp'],'content'=>$data['content'],'p_slug'=>$data['p_slug']));
+
+		$res = $this->db->query($str);
+
+		return $res;
+
+	}
+
+	public function get_all_routes(){
+
+		$query = $this->db->get_where('pages', array('p_status'=>1));
+
+		return $query->result_array();
+		// echo "<pre>";
+		// print_r($query->result_array());
+		// die();
+	}
+
+	public function getPageById($id){
+
+		$query = $this->db->get_where('pages', array('p_id'=>$id));
+
+		return $query->result_array();
+
+	}
+	
     
 }

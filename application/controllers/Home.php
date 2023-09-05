@@ -44,6 +44,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         public function world(){
             $this->load->view('frontEnd/world');
         }
+
+		public function search(){
+			$this->load->view('frontEnd/search');
+		}
        
     }
 

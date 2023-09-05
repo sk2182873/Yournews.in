@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url() ?>asset/img/favicon.ico">
-
+	
     <!-- CSS here -->
     <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/owl.carousel.min.css">
@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/slick.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/nice-select.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>asset/css/style.css">
+	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/demo.css">
 </head>
 
 <body>
@@ -109,8 +110,8 @@
                                 <div class="header-right-btn f-right d-none d-lg-block">
                                     <i class="fas fa-search special-tag"></i>
                                     <div class="search-box">
-                                        <form action="#">
-                                            <input type="text" placeholder="Search" id="find" onkeyup="search()">
+                                        <form id="searchForm" class="d-flex flex-row">
+                                            <input type="text" placeholder="Search" id="find">
                                         </form>
                                     </div>
                                 </div>
