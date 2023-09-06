@@ -21,8 +21,10 @@
                             <div class="card-body">
                                 <p id="success" class="text-success text-center"></p>
                                 <p id="dbErr" class="text-danger text-center"></p>
+
                                 <!-- form starts -->
                                 <form id="formauthentication">
+									
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label text-dark" for="basic-icon-default-title">Article Title</label>
                                         <div class="col-sm-10">
@@ -32,6 +34,7 @@
                                             <p id="title" class="text-danger"></p>
                                         </div>
                                     </div>
+
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label text-dark" for="basic-icon-default-Short-Description">Short Description</label>
                                         <div class="col-sm-10">
@@ -41,6 +44,7 @@
                                             <p id="sdcp" class="text-danger"></p>
                                         </div>
                                     </div>
+
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label text-dark" for="basic-icon-default-category">Choose Category</label>
                                         <div class="col-sm-10">
@@ -53,11 +57,20 @@
                                         </div>
                                     </div>
 
-
                                     <div class="w-100 text-end">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTop">
                                             Add Category
                                         </button>
+                                    </div>
+									
+									<div class="row my-3">
+                                        <label class="col-sm-2 col-form-label text-dark" for="basic-icon-default-Short-Description">Meta Keywords</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group input-group-merge">
+                                                <input type="text" name="meta_keys" id="basic-icon-default-Short-Description" class="form-control" placeholder="" aria-label="" aria-describedby="basic-icon-default-company2">
+                                            </div>
+                                            <p id="meta_Err" class="text-danger"></p>
+                                        </div>
                                     </div>
 
                                     <div class="row mb-3">
@@ -86,6 +99,7 @@
                                             <a href="<?php echo base_url('admin/articles'); ?>" type="button" class="btn btn-outline-secondary">Back</a>
                                         </div>
                                     </div>
+
                                 </form>
                                 <!-- form ends -->
 
@@ -155,6 +169,10 @@
         $('#formauthentication').submit(function(event) {
             event.preventDefault();
 
+			for (instance in CKEDITOR.instances) {
+				CKEDITOR.instances[instance].updateElement();
+			}
+
             $('#success').html('');
             $('#imgErr').html('');
             $('#title').html('');
@@ -163,6 +181,7 @@
             $('#contentErr').html('');
             $('#dbErr').html('');
             $('#Image').html('');
+			$('#meta_Err').html('');
 
             $.ajax({
                 url: "<?php echo base_url('common/add_article'); ?>",
@@ -182,6 +201,7 @@
                     $('#contentErr').html(data['cont']);
                     $('#success').html(data['success']);
                     $('#Image').html(data['imageErr']);
+					$('#meta_Err').html(data['meta']);
 
                 }
             });

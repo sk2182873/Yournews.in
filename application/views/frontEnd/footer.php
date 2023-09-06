@@ -10,7 +10,7 @@
 
 							<li><a href="<?php echo base_url().$link['p_slug'] ?>"><?php echo $link['page_name']; ?></a></li>
 
-					<?php 	} ?>
+					<?php } ?>
 					</ul>
 				</div>
 

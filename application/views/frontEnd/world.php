@@ -1,4 +1,4 @@
-<?php include('header.php'); ?>
+<?php include('header2.php'); ?>
 
 <main>
     <!-- Trending Area Start -->
@@ -73,7 +73,7 @@
         //trending news
         $.ajax({
 
-            url: "<?php echo base_url() . 'World/fetch_articles_world' ?>",
+            url: "<?php echo base_url() . 'fetchData/fetch_articles_by_category/world' ?>",
             type: 'post',
             success: function(res) {
                 var data = JSON.parse(res);
@@ -111,7 +111,7 @@
 
         //recent news
         $.ajax({
-            url: '<?php echo base_url() . 'World/fetch_recents_world' ?>',
+            url: '<?php echo base_url() . 'fetchData/fetch_recent_articles_by_category/world' ?>',
             type: 'POST',
             success: function(res) {
                 var data = JSON.parse(res);

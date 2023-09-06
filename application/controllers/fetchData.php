@@ -2,10 +2,17 @@
 
     class fetchData extends CI_Controller{
 
+		public function __construct()
+		{
+			parent::__construct();
+			$this->load->model('frontendmodel', 'frontModel');
+			$this->load->model('fetchDataModel','fetchModel');
+		}
+
         public function fetch_user_data(){
 
-            $this->load->model('fetchDataModel','model');
-            $userdata = $this->model->fetch_data("*",'users');
+            
+            $userdata = $this->fetchModel->fetch_data("*",'users');
 
             $data = array();
             foreach($userdata as $key => $value){
@@ -26,8 +33,8 @@
         //fetch article from database
         public function fetch_article_data(){
 
-            $this->load->model('fetchDataModel','model');
-            $userdata = $this->model->fetch_article();
+            
+            $userdata = $this->fetchModel->fetch_article();
 
             $data = array();
 
@@ -47,8 +54,8 @@
 
         public function fetch_category_data(){
 
-           $this->load->model('fetchDataModel','model');
-           $res = $this->model->fetch_category();
+          
+           $res = $this->fetchModel->fetch_category();
 
             foreach($res as $row){
                 $category[] = $row['categorytitle'];
@@ -62,8 +69,8 @@
 
         public function fetch_blog_data(){
 
-            $this->load->model('fetchDataModel','model');
-            $userdata = $this->model->fetch_blog();
+          
+            $userdata = $this->fetchModel->fetch_blog();
 
             $data = array();
             foreach($userdata as $key => $value){
@@ -80,5 +87,20 @@
 
             echo json_encode($data);
         }
+
+		public function fetch_articles_by_category($category){
+
+			$result = $this->frontModel->fetchArticlesByCategory($category);
+
+			echo json_encode($result);
+
+		}
+
+		public function fetch_recent_articles_by_category($category){
+			
+			$result = $this->frontModel->fetchRecentArticlesById($category);
+
+			echo json_encode($result);
+		}
 
     }

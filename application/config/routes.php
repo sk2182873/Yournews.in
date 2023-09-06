@@ -79,15 +79,7 @@ $route['user/addblogs'] = 'pages/addblogs';
 $route['user/account'] = 'pages/account';
 
 //pages route.
-$route['category/business'] = 'Home/business';
-$route['category/country'] = 'Home/country';
-$route['category/education'] = 'Home/education';
-$route['category/entertainment'] = 'Home/entertainment';
-$route['category/politics'] = 'Home/politics';
-$route['category/sports'] = 'Home/sports';
-$route['category/technology'] = 'Home/technology';
-$route['category/world'] = 'Home/world';
-$route['category/search'] = 'Home/search';
+$route['category/(:any)'] = 'Home/loadPages/$1';
 
 //functions route.
 $route['article/(:num)/(:any)'] = "Article/index/$1/$2";

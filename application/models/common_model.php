@@ -49,9 +49,9 @@ class common_model extends CI_Model
         $user = $this->session->userdata('roll');
 
         if ($user == 'admin') {
-            $sql = array('title' => $data['title'], 'url_slug' => $url_slug, 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path, 'adminid' => $_SESSION['id'], 'categoryid' => $category_id, 'status' => 1);
+            $sql = array('title' => $data['title'], 'url_slug' => $url_slug, 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path,'meta_keywords'=>$data['meta_keys'],'adminid' => $_SESSION['id'], 'categoryid' => $category_id, 'status' => 1);
         } else {
-            $sql = array('title' => $data['title'], 'url_slug' => $url_slug, 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path, 'userid' => $_SESSION['userid'], 'categoryid' => $category_id, 'status' => 1);
+            $sql = array('title' => $data['title'], 'url_slug' => $url_slug, 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path,'meta_keywords'=>$data['meta_keys'],'userid' => $_SESSION['userid'], 'categoryid' => $category_id, 'status' => 1);
         }
 
 

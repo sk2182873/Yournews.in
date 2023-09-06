@@ -76,6 +76,7 @@ class common extends CI_Controller
         $this->form_validation->set_rules('Sdescp', 'Short Description', 'required');
         $this->form_validation->set_rules('Category', 'Category', 'required');
         $this->form_validation->set_rules('content', 'Content', 'required');
+		$this->form_validation->set_rules('meta_keys', 'Meta Keywords', 'required');
 
 
 
@@ -84,6 +85,7 @@ class common extends CI_Controller
             $messages['sdecp'] = form_error('Sdescp');
             $messages['categ'] = form_error('Category');
             $messages['cont'] = form_error('content');
+			$messages['meta'] = form_error('meta_keys');
         } else {
             $config['filename'] = time();
             $config['upload_path'] = './uploads/';
