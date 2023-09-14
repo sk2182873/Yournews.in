@@ -11,6 +11,47 @@ class common extends CI_Controller
         $this->load->model('common_model', 'commonModel');
     }
 
+	public function fetch_user_data()
+    {
+		$statusBtn = '';
+
+		$userdata = $this->commonModel->fetch_users();
+
+		$noOfRows = $this->commonModel->get_filteredData('users');
+
+        $data = array();
+		foreach ($userdata as $row) {
+
+			if ($row['user_status'] == 1) {
+				$statusBtn = '<button type="button" class="text-success status" value="' . $row['userid'] . '">show</button>';
+			} else {
+				$statusBtn = '<button type="button" class="text-danger status" value="' . $row['userid'] . '">hide</button>';
+			}
+
+			$sub_array = array();
+
+			$sub_array[] = $row['username'];
+			$sub_array[] = $row['email'];
+			$sub_array[] = $row['address'];
+			$sub_array[] = $row['phone'];
+			$sub_array[] = $row['position'];
+			$sub_array[] = $statusBtn;
+			$sub_array[] = '<button type="button" class="text-primary actionBtn" id="edt" value="' . $row['userid'] . '">Edit</button>
+							<button type="button" class="text-danger actionBtn" id="del" value="' . $row['userid'] . '">Delete</button>';
+
+			$data[] = $sub_array;
+		}
+
+		$output = array(
+			"draw" => intval($_POST["draw"]),
+			"recordsTotal" => $this->commonModel->get_all_data("users"),
+			"recordsFiltered" => $noOfRows,
+			"data" => $data
+		);
+
+        echo json_encode($output);
+    }
+
     public function update_profile()
     {
 
@@ -244,10 +285,92 @@ class common extends CI_Controller
 		echo json_encode($messages);
 	}
 
-	public function update_artilce(){
+	public function fetch_article_data()
+	{
+
+		$statusBtn = '';
+
+		$userdata = $this->commonModel->fetch_article();
+		
+		$noOfRows = $this->commonModel->get_filteredData('article', 'category');
+
+		$data = array();
+
+		foreach ($userdata as $row) {
+
+			if ($row['status'] == 1) {
+				$statusBtn = '<button type="button" class="text-success status" value="' . $row['id'] . '">show</button>';
+			} else {
+				$statusBtn = '<button type="button" class="text-danger status" value="' . $row['id'] . '">hide</button>';
+			}
+
+			$sub_array = array();
+
+			$sub_array[] = $row['title'];
+			$sub_array[] = $row['date'];
+			$sub_array[] = $row['shortdescription'];
+			$sub_array[] = $row['categorytitle'];
+			$sub_array[] = $statusBtn;
+			$sub_array[] = '<button type="button" class="text-primary actionBtn" id="edt" value="' . $row['id'] . '">Edit</button>
+							<button type="button" class="text-danger actionBtn" id="del" value="' . $row['id'] . '">Delete</button>';
+
+			$data[] = $sub_array;
+		}
+
+		$output = array(
+			"draw" => intval($_POST["draw"]),
+			"recordsTotal" => $this->commonModel->get_all_data("article"),
+			"recordsFiltered" => $noOfRows,
+			"data" => $data
+		);
+
+
+		echo json_encode($output);
+	}
+
+	public function fetch_pages(){
+
+		$statusBtn = '';
+
+		$userdata = $this->commonModel->fetchPages();
+		$noOfRows = $this->commonModel->get_filteredData('pages');
+
+		$data = array();
+
+		foreach ($userdata as $row) {
+
+			if ($row['p_status'] == 1) {
+				$statusBtn = '<button type="button" class="text-success status" value="' . $row['p_id'] . '">show</button>';
+			} else {
+				$statusBtn = '<button type="button" class="text-danger status" value="' . $row['p_id'] . '">hide</button>';
+			}
+
+			$sub_array = array();
+
+			$sub_array[] = $row['page_name'];
+			$sub_array[] = $row['created_at'];
+			$sub_array[] = $row['description'];
+			$sub_array[] = $statusBtn;
+			$sub_array[] = '<button type="button" class="text-primary actionBtn" id="edt" value="' . $row['p_id'] . '">Edit</button>
+							<button type="button" class="text-danger actionBtn" id="del" value="' . $row['p_id'] . '">Delete</button>';
+
+			$data[] = $sub_array;
+		}
+
+		$output = array(
+			"draw" => intval($_POST["draw"]),
+			"recordsTotal" => $this->commonModel->get_all_data('pages'),
+			"recordsFiltered" => $noOfRows,
+			"data" => $data
+		);
+
+
+		echo json_encode($output);
+	}
+
+	public function delete_page(){
 
 		
 
 	}
 }
-?>

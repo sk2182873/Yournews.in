@@ -17,7 +17,7 @@ class admin_model extends CI_Model
 
         $address = $data['address'];
 
-        $sql = array('username' => $data['fullname'], 'email' => $data['email'], 'password' => $password, 'user_status' => 'active', 'position' => $data['position'], 'address' => "$address", 'phone' => $data['phone']);
+        $sql = array('username' => $data['fullname'], 'email' => $data['email'], 'password' => $password, 'position' => $data['position'], 'address' => "$address", 'phone' => $data['phone']);
 
         $str = $this->db->insert_string('users', $sql);
 

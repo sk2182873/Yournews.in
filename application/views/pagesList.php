@@ -1,4 +1,3 @@
-
 <?php include('include/header.php'); ?>
 
 <!-- Layout container -->
@@ -24,19 +23,18 @@
 					</div>
 
 					<div class="w-100 mb-0 ms-3">
-						<h6 class="d-inline text-primary">Articles List</h6>
+						<h6 class="d-inline text-primary">Pages List</h6>
 					</div>
 
 					<!-- User table -->
 					<div class="userTable col-12 mt-3 ps-2">
 						<div class="table table-responsive">
-							<table class="table align-middle mb-0 bg-light w-100" id="articleTable">
+							<table class="table align-middle mb-0 bg-light w-100" id="pageTable">
 								<thead class="bg-dark">
 									<tr>
 										<th class="text-light">Page Name</th>
 										<th class="text-light">Create Date</th>
 										<th class="text-light">Description</th>
-										<th class="text-light">Content</th>
 										<th class="text-light">Status</th>
 										<th class="text-light">Actions</th>
 									</tr>
@@ -100,7 +98,7 @@
 						<textarea name="" id="" cols="30" rows="10"></textarea>
 					</div>
 				</div>
-				
+
 			</div>
 			<div class="row">
 				<div class="col mb-3">
@@ -117,3 +115,33 @@
 
 
 <?php include('include/footer.php'); ?>
+<script>
+$(document).ready(function() {
+
+	function fetch_page() {
+
+		$('#pageTable').DataTable({
+
+			"processing": true,
+			"serverSide": true,
+
+			"ajax": {
+				url: "<?php echo base_url('common/fetch_pages'); ?>",
+				type: "POST",
+				"order": []
+			},
+
+			"columnDefs": [{
+				"orderable": false
+			}]
+
+		});
+
+	}
+
+	fetch_page();
+
+	
+
+});
+</script>

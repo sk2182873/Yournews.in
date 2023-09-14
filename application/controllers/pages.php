@@ -58,7 +58,7 @@ class Pages extends CI_Controller
     public function users()
     {
         $this->session_collison();
-        $this->load->view('addUser');
+        $this->load->view('userList');
     }
 
     public function addarticle()

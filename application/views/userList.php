@@ -83,8 +83,19 @@
     $(document).ready(function(){
         $('#mytable').DataTable({
 
-            "ajax": "<?php echo base_url('admin/fetch_user_data') ?>",
-            "order":[],
+			"processing": true,
+			"serverSide": true,
+
+
+            "ajax": {
+				url : "<?php echo base_url('common/fetch_user_data') ?>",
+				type:"post",
+				"order":[]
+			},
+			"columDefs": {
+				"orderable": false
+			} 
+            
         });
     })
 </script>

@@ -120,6 +120,18 @@
 	border-radius: 5px;
 }
 
+.status{
+	border: none;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+.actionBtn{
+	border: none;
+	cursor: pointer;
+	background-color: transparent;
+}
+
 @media screen and (max-width: 768px) {
   #adduserform .rowwrap{
     display: flex;

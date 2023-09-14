@@ -35,7 +35,6 @@
 										<th class="text-light">Article Title</th>
 										<th class="text-light">Article Date</th>
 										<th class="text-light">Short Descp</th>
-										<th class="text-light">Content</th>
 										<th class="text-light">Category</th>
 										<th class="text-light">Status</th>
 										<th class="text-light">Actions</th>
@@ -100,7 +99,7 @@
 						<textarea name="" id="" cols="30" rows="10"></textarea>
 					</div>
 				</div>
-				
+
 			</div>
 			<div class="row">
 				<div class="col mb-3">
@@ -121,52 +120,23 @@
 	$(document).ready(function() {
 
 		function fetch() {
-			$.ajax({
-				url: "<?php echo base_url('fetchData/fetch_article_data'); ?>",
-				type: "POST",
-				success: function(data) {
-					var data = JSON.parse(data);
+			$('#articleTable').DataTable({
 
-					$('#articleTable').DataTable({
+				"processing": true,
+				"serverSide": true,
+				
+				
+				"ajax": {
+					url: "<?php echo base_url('common/fetch_article_data'); ?>",
+					type: "post",
+					"order": []
+				},
+				"columnDefs": [{
+					"target": [0],
+					"orderable": false
+				}]
 
-						"data": data.data,
-						"responsive": true,
-						"columns": [{
-								"data": "Title"
-							},
-							{
-								"data": "Date"
-							},
-							{
-								"data": "Sdescp"
-							},
-							{
-								"data": "Content"
-							},
-							{
-								"data": "CTitle"
-							},
-							{
-
-								"data": "id"
-								// render: function(data, type, row, meta) {
-								// 	var a = `<a style="cursor:pointer" value="${row.id}" class='badge text-success showbtn' id="swBtn">Show</a>`;
-								// 	return a;
-								// }
-							},
-							{
-								"data": "id"
-								// render: function(data, type, row, meta) {
-								// 	var b = `<a  style="cursor:pointer" value="${row.id}" class='badge text-primary' data-bs-toggle="modal" data-bs-target="#basicModal" id="edt"><i class="fas fa-pen fs-6"></i></a> <a style="cursor:pointer" value="${row.id}" id="del" class='badge text-danger'><i class="fas fa-trash fs-5"></i></a>`;
-								// 	return b;
-								// }
-							}
-						]
-					});
-
-				}
-
-			})
+			});
 		}
 
 		fetch();
