@@ -11,46 +11,7 @@ class common extends CI_Controller
         $this->load->model('common_model', 'commonModel');
     }
 
-	public function fetch_user_data()
-    {
-		$statusBtn = '';
-
-		$userdata = $this->commonModel->fetch_users();
-
-		$noOfRows = $this->commonModel->get_filteredData('users');
-
-        $data = array();
-		foreach ($userdata as $row) {
-
-			if ($row['user_status'] == 1) {
-				$statusBtn = '<button type="button" class="text-success status" value="' . $row['userid'] . '">show</button>';
-			} else {
-				$statusBtn = '<button type="button" class="text-danger status" value="' . $row['userid'] . '">hide</button>';
-			}
-
-			$sub_array = array();
-
-			$sub_array[] = $row['username'];
-			$sub_array[] = $row['email'];
-			$sub_array[] = $row['address'];
-			$sub_array[] = $row['phone'];
-			$sub_array[] = $row['position'];
-			$sub_array[] = $statusBtn;
-			$sub_array[] = '<button type="button" class="text-primary actionBtn" id="edt" value="' . $row['userid'] . '">Edit</button>
-							<button type="button" class="text-danger actionBtn" id="del" value="' . $row['userid'] . '">Delete</button>';
-
-			$data[] = $sub_array;
-		}
-
-		$output = array(
-			"draw" => intval($_POST["draw"]),
-			"recordsTotal" => $this->commonModel->get_all_data("users"),
-			"recordsFiltered" => $noOfRows,
-			"data" => $data
-		);
-
-        echo json_encode($output);
-    }
+	
 
     public function update_profile()
     {
@@ -274,7 +235,7 @@ class common extends CI_Controller
 
 		$id = $this->input->post('delId');
 
-		$res = $this->commonModel->delete_article_by_id($id);
+		$res = $this->commonModel->delete_row_by_id('article', 'id', $id);
 
 		if($res){
 			$messages['success'] = "success";
@@ -299,9 +260,9 @@ class common extends CI_Controller
 		foreach ($userdata as $row) {
 
 			if ($row['status'] == 1) {
-				$statusBtn = '<button type="button" class="text-success status" value="' . $row['id'] . '">show</button>';
+				$statusBtn = '<button type="button" class="text-success status" value="show" data-id="'.$row['id'].'">show</button>';
 			} else {
-				$statusBtn = '<button type="button" class="text-danger status" value="' . $row['id'] . '">hide</button>';
+				$statusBtn = '<button type="button" class="text-danger status" value="hide" data-id="'.$row['id'].'">hide</button>';
 			}
 
 			$sub_array = array();
@@ -328,49 +289,87 @@ class common extends CI_Controller
 		echo json_encode($output);
 	}
 
-	public function fetch_pages(){
+	public function update_user_status(){
 
-		$statusBtn = '';
+		$current_status = "";
 
-		$userdata = $this->commonModel->fetchPages();
-		$noOfRows = $this->commonModel->get_filteredData('pages');
+		$id = $this->input->post('data');
+		
+		$userdata = $this->commonModel->fetch_table('users', 'userid', $id);
 
-		$data = array();
-
-		foreach ($userdata as $row) {
-
-			if ($row['p_status'] == 1) {
-				$statusBtn = '<button type="button" class="text-success status" value="' . $row['p_id'] . '">show</button>';
-			} else {
-				$statusBtn = '<button type="button" class="text-danger status" value="' . $row['p_id'] . '">hide</button>';
-			}
-
-			$sub_array = array();
-
-			$sub_array[] = $row['page_name'];
-			$sub_array[] = $row['created_at'];
-			$sub_array[] = $row['description'];
-			$sub_array[] = $statusBtn;
-			$sub_array[] = '<button type="button" class="text-primary actionBtn" id="edt" value="' . $row['p_id'] . '">Edit</button>
-							<button type="button" class="text-danger actionBtn" id="del" value="' . $row['p_id'] . '">Delete</button>';
-
-			$data[] = $sub_array;
+		foreach($userdata  as $row){
+			$current_status = $row['user_status'];
 		}
 
-		$output = array(
-			"draw" => intval($_POST["draw"]),
-			"recordsTotal" => $this->commonModel->get_all_data('pages'),
-			"recordsFiltered" => $noOfRows,
-			"data" => $data
-		);
 
+		if($current_status == 1){
+			/* change_status(): function take 5 arguments.
+				$table = table to be update,
+				$column = column to be update,
+				$value = value to be update,
+				$where_col = condition table,
+				$id = condition value	
+			*/
 
-		echo json_encode($output);
+			$result = $this->commonModel->change_status('users', 'user_status', 0, 'userid', $id);
+
+		}else{
+			$result = $this->commonModel->change_status('users', 'user_status', 1, 'userid', $id);
+		}
+		
+		echo json_encode($result);
 	}
 
-	public function delete_page(){
+	public function update_article_status(){
 
+		$current_status = "";
+
+		$id = $this->input->post('data');
 		
+		$userdata = $this->commonModel->fetch_table('article', 'id', $id);
 
+		foreach($userdata  as $row){
+			$current_status = $row['status'];
+		}
+
+
+		if($current_status == 1){
+			/* change_status(): function take 5 arguments.
+				$table = table to be update,
+				$column = column to be update,
+				$value = value to be update,
+				$where_col = condition table,
+				$id = condition value	
+			*/
+
+			$result = $this->commonModel->change_status('article', 'status', 0, 'id', $id);
+
+		}else{
+			$result = $this->commonModel->change_status('article', 'status', 1, 'id', $id);
+		}
+		
+		echo json_encode($result);
+
+	}
+
+	public function update_article(){
+
+		$articledata = $this->input->post();
+
+		$category = $articledata['category'];
+
+		$categoryid = $this->commonModel->fetch_category_id($category);
+		
+		array_push($articledata, $categoryid);
+
+		$result = $this->commonModel->update_table_by_id('article', $articledata);
+
+		if($result){
+			$messages['success'] = "Successfully Updated.";
+		}else{
+			$messages['Err'] = "Sorry! Please Try Again.";
+		}
+
+		echo json_encode($messages);
 	}
 }

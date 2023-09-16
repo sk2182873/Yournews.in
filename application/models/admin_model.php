@@ -8,10 +8,61 @@ class admin_model extends CI_Model
         parent::__construct();
     }
 
-	
+	public function fetchPages(){
+		$this->db->select("*");
+		$this->db->from("pages");
 
-    public function insert_user_profile_data($data)
-    {
+		if (isset($_POST["search"]["value"])) {
+			$this->db->like('page_name', $_POST["search"]["value"]);
+			$this->db->or_like('created_at', $_POST["search"]["value"]);
+			$this->db->or_like('description', $_POST["search"]["value"]);
+			$this->db->or_like('p_status', $_POST["search"]["value"]);
+		}
+
+
+		if (isset($_POST["order"])) {
+			$this->db->order_by($_POST['order']['0']['column'], $_POST['order']['0']['dir']);
+		} else {
+			$this->db->order_by("id", "DESC");
+		}
+
+		if ($_POST['length'] != -1) {
+			$this->db->limit($_POST["length"], $_POST['start']);
+		}
+
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+	
+	public function fetch_users_datatable(){
+
+		$this->db->select('*');
+		$this->db->from('users');
+
+		if(isset($_POST['search']['value'])){
+			$this->db->like('username', $_POST['search']['value']);
+			$this->db->or_like('email', $_POST['search']['value']);
+			$this->db->or_like('address', $_POST['search']['value']);
+			$this->db->or_like('phone', $_POST['search']['value']);
+			$this->db->or_like('position', $_POST['search']['value']);
+			$this->db->or_like('user_status', $_POST['search']['value']);
+		}
+
+		if($_POST['order']){
+			$this->db->order_by($_POST['order'][0]['column'], $_POST['order'][0]['dir']);
+		}else{
+			$this->db->order_by('userid' , 'ASC');
+		}
+
+		if($_POST['length'] != -1){
+			$this->db->limit($_POST['length'], $_POST['start']);
+		}
+
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+	
+    public function insert_user_profile_data($data){
 
         $password = password_hash($data['password'], PASSWORD_DEFAULT);
 

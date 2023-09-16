@@ -1,5 +1,5 @@
 <?php
-#[AllowDynamicProperties]
+// #[AllowDynamicProperties]
 class authenticate_model extends CI_Model
 {
 

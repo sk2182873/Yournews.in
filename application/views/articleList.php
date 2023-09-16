@@ -59,57 +59,62 @@
 </div>
 
 <!-- edit modal -->
-<div class="modal fade show" id="basicModal" tabindex="-1" style="display:none" aria-modal="true" role="dialog">
+<div class="modal fade show " id="basicModal" tabindex="-1" style="display:none" aria-modal="true" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel1">Update Article</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
+			<div class="w-100 messages">
+				<p class="text-success text-center" id="success"></p>
+				<p class="text-danger text-center" id="Err"></p>
+			</div>
 			<div class="modal-body">
-				<div class="row">
-					<div class="col mb-3">
-						<label for="nameBasic" class="form-label">Article Title</label>
-						<input type="text" id="nameBasic" class="form-control" placeholder="Enter Name">
+				<form id="updateArticleForm">
+					<div class="row">
+						<div class="col mb-3">
+							<label for="nameBasic" class="form-label">Article Title</label>
+							<input type="text" id="article" name="aTitle" class="form-control" placeholder="Enter Name">
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col mb-3">
-						<label for="nameBasic" class="form-label">Date</label>
-						<input type="text" id="nameBasic" class="form-control" placeholder="Enter Name">
+					<div class="row">
+						<div class="col mb-3">
+							<label for="nameBasic" class="form-label">Description</label>
+							<input type="text" id="description" name="description" class="form-control" placeholder="Enter Name">
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col mb-3">
-						<label for="nameBasic" class="form-label">Description</label>
-						<input type="text" id="nameBasic" class="form-control" placeholder="Enter Name">
+					<div class="row">
+						<div class="col mb-3">
+							<label for="nameBasic" class="form-label">Category</label>
+							<select name="category" id="basic-icon-default-category" class="form-control">
+								<!-- <option value='' id="option">Select</option> -->
+							</select>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col mb-3">
-						<label for="nameBasic" class="form-label">Category</label>
-						<select name="" id="" class="form-control">
-							<option value="">Select</option>
-						</select>
+					<div class="row">
+						<div class="col mb-3">
+							<label for="nameBasic" class="form-label">Content</label>
+							<textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col mb-3">
-						<label for="nameBasic" class="form-label">Content</label>
-						<textarea name="" id="" cols="30" rows="10"></textarea>
+					<div class="row">
+						<div class="col mb-3">
+							<input type="hidden" id="hidden" name="articleid" class="form-control">
+						</div>
 					</div>
-				</div>
+					<div class="row">
+						<div class="col mb-3">
+							<button type="button" class="btn btn-outline-secondary ms-5" data-bs-dismiss="modal">
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary">Update</button>
+						</div>
 
+					</div>
+				</form>
 			</div>
-			<div class="row">
-				<div class="col mb-3">
-					<button type="button" class="btn btn-outline-secondary ms-5" data-bs-dismiss="modal">
-						Close
-					</button>
-					<button type="button" class="btn btn-primary">Update</button>
-				</div>
 
-			</div>
 		</div>
 	</div>
 </div>
@@ -124,8 +129,8 @@
 
 				"processing": true,
 				"serverSide": true,
-				
-				
+
+
 				"ajax": {
 					url: "<?php echo base_url('common/fetch_article_data'); ?>",
 					type: "post",
@@ -139,7 +144,31 @@
 			});
 		}
 
-		fetch();
+		function fetch_category(text) {
+
+			$.ajax({
+				url: "<?php echo base_url('admin/fetch_category_data') ?>",
+				type: "POST",
+				success: function(res) {
+					var category = JSON.parse(res);
+
+					for (let i = 0; i < category['category'].length; i++) {
+						$(`#basic-icon-default-category option[value='${category['category'][i]}']`).remove()
+					}
+
+					$.each(category['category'], function(n, ele) {
+						var str = ele[0].toUpperCase() + ele.slice(1);
+						if (ele == text) {
+							console.log(text);
+							$('#basic-icon-default-category').append("<option value=" + ele + " class='option' selected> " + str + "</option>");
+						} else {
+							$('#basic-icon-default-category').append("<option value=" + ele + " class='option'>" + str + "</option>");
+						}
+
+					});
+				}
+			})
+		}
 
 		$(document).on("click", "#del", function(e) {
 			e.preventDefault();
@@ -165,6 +194,7 @@
 						},
 						success: function(res) {
 							var res = JSON.parse(res);
+
 							if (res['success']) {
 								$('#articleTable').DataTable().destroy();
 								fetch();
@@ -174,8 +204,6 @@
 									'success'
 								)
 							}
-
-
 						}
 					})
 
@@ -192,9 +220,79 @@
 			var editId = $(this).attr('value');
 
 			$.ajax({
-				url: "<?php echo base_url(''); ?>",
+				url: "<?php echo base_url('fetchData/fetch_article'); ?>",
+				type: 'post',
+				data: {
+					artielid: editId
+				},
+				success: function(res) {
+					var data = JSON.parse(res);
+
+					$('#article').val(data[0]['title']);
+					$('#date').val(data[0]['date']);
+					$('#description').val(data[0]['shortdescription']);
+					$('#content').html(data[0]['content']);
+					$('#hidden').val(data[0]['id']);
+					$('#basic-icon-default-category').append("<option value=" + data[1] + " class='option'>" + data[1] + "</option>");
+
+					fetch_category(data[1]);
+				}
 			});
 		});
 
+		$(document).on('click', '.status', function(e) {
+			e.preventDefault();
+
+			let id = $(this).attr('data-id');
+
+			$.ajax({
+				url: "<?php echo base_url('common/update_article_status'); ?>",
+				type: 'post',
+				data: {
+					"data": id
+				},
+				success: function(response) {
+					$('#articleTable').DataTable().destroy();
+					fetch();
+				}
+
+			});
+
+
+		})
+
+		$('#updateArticleForm').submit(function(e) {
+			e.preventDefault();
+
+			setTimeout(function() {
+				$('#success').html('');
+				$('#Err').html('');
+
+			}, 2000);
+
+
+			$.ajax({
+				url: "<?php echo base_url('common/update_article'); ?>",
+				type: 'post',
+				data: $(this).serializeArray(),
+				success: function(res) {
+					var data = JSON.parse(res);
+
+					if (data['success']) {
+						$('#success').html(data['success']);
+					} else {
+						$('.#Err').html(data['Err']);
+					}
+
+					$('#articleTable').DataTable().destroy();
+					fetch();
+				}
+			})
+
+
+
+		})
+		
+		fetch();
 	})
 </script>

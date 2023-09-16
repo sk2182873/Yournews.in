@@ -32,9 +32,10 @@
 							<table class="table align-middle mb-0 bg-light w-100" id="pageTable">
 								<thead class="bg-dark">
 									<tr>
-										<th class="text-light">Page Name</th>
+										<th class="text-light">Page Title</th>
 										<th class="text-light">Create Date</th>
 										<th class="text-light">Description</th>
+										<th class="text-light">Content</th>
 										<th class="text-light">Status</th>
 										<th class="text-light">Actions</th>
 									</tr>
@@ -62,53 +63,49 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel1">Update Article</h5>
+				<h5 class="modal-title" id="exampleModalLabel1">Update Page</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
+			<div class="w-100 messages">
+				<p class="text-success text-center" id="success"></p>
+				<p class="text-danger text-center" id="Err"></p>
+			</div>
 			<div class="modal-body">
-				<div class="row">
-					<div class="col mb-3">
-						<label for="nameBasic" class="form-label">Article Title</label>
-						<input type="text" id="nameBasic" class="form-control" placeholder="Enter Name">
+				<form id="updatePageForm" >
+					<div class="row">
+						<div class="col mb-3">
+							<label for="nameBasic" class="form-label">Page Title</label>
+							<input type="text" id="pagename" name='pTitle' class="form-control" placeholder="Enter Name">
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col mb-3">
-						<label for="nameBasic" class="form-label">Date</label>
-						<input type="text" id="nameBasic" class="form-control" placeholder="Enter Name">
+					<div class="row">
+						<div class="col mb-3">
+							<label for="nameBasic" class="form-label">Description</label>
+							<input type="text" id="description" name='Descp' class="form-control" placeholder="Enter Name">
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col mb-3">
-						<label for="nameBasic" class="form-label">Description</label>
-						<input type="text" id="nameBasic" class="form-control" placeholder="Enter Name">
+					<div class="row">
+						<div class="col mb-3">
+							<label for="nameBasic" class="form-label">Content</label>
+							<textarea id="content" cols="30" rows="10" name='content' class="form-control"></textarea>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col mb-3">
-						<label for="nameBasic" class="form-label">Category</label>
-						<select name="" id="" class="form-control">
-							<option value="">Select</option>
-						</select>
+					<div class="row">
+						<div class="col mb-3">
+							<input type="hidden" id="pageid" name='pageid' class="form-control">
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col mb-3">
-						<label for="nameBasic" class="form-label">Content</label>
-						<textarea name="" id="" cols="30" rows="10"></textarea>
+					<div class="row">
+						<div class="col mb-3 d-flex justify-content-end">
+							<button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary">Update</button>
+						</div>
 					</div>
-				</div>
-
+				</form>
 			</div>
-			<div class="row">
-				<div class="col mb-3">
-					<button type="button" class="btn btn-outline-secondary ms-5" data-bs-dismiss="modal">
-						Close
-					</button>
-					<button type="button" class="btn btn-primary">Update</button>
-				</div>
 
-			</div>
 		</div>
 	</div>
 </div>
@@ -116,32 +113,151 @@
 
 <?php include('include/footer.php'); ?>
 <script>
-$(document).ready(function() {
+	$(document).ready(function() {
 
-	function fetch_page() {
+		function fetch_page() {
 
-		$('#pageTable').DataTable({
+			$('#pageTable').DataTable({
 
-			"processing": true,
-			"serverSide": true,
+				"processing": true,
+				"serverSide": true,
 
-			"ajax": {
-				url: "<?php echo base_url('common/fetch_pages'); ?>",
-				type: "POST",
-				"order": []
-			},
+				"ajax": {
+					url: "<?php echo base_url('admin/fetch_pages'); ?>",
+					type: "POST",
+					"order": []
+				},
 
-			"columnDefs": [{
-				"orderable": false
-			}]
+				"columnDefs": [{
+					"orderable": false
+				}]
 
+			});
+
+		}
+
+		
+
+		//change status of user.
+		$(document).on('click', '.status', function(e) {
+			e.preventDefault();
+
+			let id = $(this).attr('data-id');
+
+			$.ajax({
+				url: "<?php echo base_url('admin/update_page_status'); ?>",
+				type: 'post',
+				data: {
+					"data": id
+				},
+				success: function(response) {
+					$('#pageTable').DataTable().destroy();
+					fetch_page();
+				}
+
+			})
 		});
 
-	}
+		//fetch user details.
+		$(document).on("click", "#edt", function(e) {
+			e.preventDefault();
 
-	fetch_page();
+			$("#basicModal").modal('show');
 
-	
+			var editId = $(this).attr('value');
 
-});
+			$.ajax({
+				url: "<?php echo base_url('fetchData/fetch_pages'); ?>",
+				type: 'post',
+				data: {
+					'id': editId
+				},
+				success: function(res) {
+					var data = JSON.parse(res);
+
+					$('#pagename').val(data[0]['page_name']);
+					$('#description').val(data[0]['description']);
+					$('#content').val(data[0]['content']);
+					$('#pageid').val(data[0]['p_id']);
+
+
+				}
+			});
+		});
+
+		$(document).on('click', '#del', function(e) {
+			e.preventDefault();
+
+			var delId = $(this).attr("value");
+
+			Swal.fire({
+				title: 'Are you sure?',
+				text: "You won't be able to revert this!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, delete it!'
+			}).then((result) => {
+				if (result.isConfirmed) {
+
+					$.ajax({
+						url: "<?php echo base_url('admin/delete_page'); ?>",
+						type: "post",
+						data: {
+							delId: delId
+						},
+						success: function(res) {
+							var res = JSON.parse(res);
+
+
+							if (res['success']) {
+								if (res['success']) {
+									$('#pageTable').DataTable().destroy();
+									Swal.fire(
+										'Deleted!',
+										'Your file has been deleted.',
+										'success'
+									)
+									fetch_page();
+								}
+							}
+
+						}
+					})
+				}
+			})
+		});
+
+		$('#updatePageForm').submit(function(e) {
+			e.preventDefault();
+
+			setTimeout(function(){
+				$('#success').html('');
+				$('#Err').html('');
+
+			}, 2000);
+			
+
+			$.ajax({
+				url: "<?php echo base_url('admin/update_page'); ?>",
+				type: 'post',
+				data: $('#updatePageForm').serializeArray(),
+				success: function(res) {
+					var data = JSON.parse(res);
+
+					if(data['success']){
+						$('#success').html(data['success']);
+					}else{
+						$('.#Err').html(data['Err']);
+					}
+
+					$('#pageTable').DataTable().destroy();
+					fetch_page();
+				}
+			})
+		})
+
+		fetch_page();
+	});
 </script>

@@ -4,8 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class admin extends CI_Controller
 {
 
-    public function __construct()
-    {
+    public function __construct(){
         parent::__construct();
         $this->load->model('common_model', 'commonModel');
         $this->load->model('admin_model', 'adminModel');
@@ -14,16 +13,14 @@ class admin extends CI_Controller
 
 
 
-    public function login()
-    {
+    public function login(){
         $user = array();
         $user['roll'] = 'admin';
         $this->session->set_userdata($user);
         $this->load->view('adminlogin_panel');
     }
 
-    public function logout()
-    {
+    public function logout(){
         session_unset();
         session_destroy();
         redirect('admin/');
@@ -31,21 +28,18 @@ class admin extends CI_Controller
 
 
 
-    public function forgot_pass()
-    {
+    public function forgot_pass(){
         $this->load->view('admin_forgot_password');
     }
 
-    public function reset_pass()
-    {
+    public function reset_pass(){
         $this->load->view('admin_gen_password');
     }
 
 
     // <---------------------------------------------------------------------- admin functions ------------------------------------------------------------------------------>
 
-    public function add_user()
-    {
+    public function add_user(){
 
         $messages = array();
 
@@ -91,33 +85,139 @@ class admin extends CI_Controller
         echo json_encode($messages);
     }
 
-    
+	public function fetch_pages(){
 
-    public function fetch_user_data()
-    {
+		$statusBtn = '';
 
-        $this->load->model('fetchDataModel', 'model');
-        $userdata = $this->model->fetch_data("*", 'users');
+		$userdata = $this->adminModel->fetchPages();
+		$noOfRows = $this->commonModel->get_filteredData('pages');
+
+		$data = array();
+
+		foreach ($userdata as $row) {
+
+			if ($row['p_status'] == 1) {
+				$statusBtn = '<button type="button" class="text-success status" value="show" data-id="'.$row['p_id'].'">show</button>';
+			} else {
+				$statusBtn = '<button type="button" class="text-danger status" value="hide" data-id="'.$row['p_id'].'">hide</button>';
+			}
+
+			$sub_array = array();
+
+			$sub_array[] = $row['page_name'];
+			$sub_array[] = $row['created_at'];
+			$sub_array[] = $row['description'];
+			$sub_array[] = substr(strip_tags($row['content']),0,100);
+			$sub_array[] = $statusBtn;
+			$sub_array[] = '<button type="button" class="text-primary actionBtn" id="edt" value="'.$row['p_id'].'">Edit</button>
+							<button type="button" class="text-danger actionBtn" id="del" value="'.$row['p_id'].'">Delete</button>';
+
+			$data[] = $sub_array;
+		}
+
+		$output = array(
+			"draw" => intval($_POST["draw"]),
+			"recordsTotal" => $this->commonModel->get_all_data('pages'),
+			"recordsFiltered" => $noOfRows,
+			"data" => $data
+		);
+
+
+		echo json_encode($output);
+	}
+
+	public function update_page_status(){
+		$current_status = "";
+
+		$id = $this->input->post('data');
+
+		// echo $id;
+		// die();
+		
+		$pagedata = $this->commonModel->fetch_table('pages', 'p_id', $id);
+
+		// echo "<pre>";
+		// print_r($userdata);
+		// die();
+
+		foreach($pagedata  as $row){
+			$current_status = $row['p_status'];
+		}
+
+		if($current_status == 1){
+			/* change_status(): function take 5 arguments.
+				$table = table to be update,
+				$column = column to be update,
+				$value = value to be update,
+				$where_col = condition table,
+				$id = condition value	
+			*/
+
+			$result = $this->commonModel->change_status('pages', 'p_status', 0, 'p_id', $id);
+
+		}else{
+			$result = $this->commonModel->change_status('pages', 'p_status', 1, 'p_id', $id);
+		}
+		
+		echo json_encode($result);
+	}
+
+	public function delete_page(){
+		$delid = $this->input->post('delId');
+
+		$res = $this->commonModel->delete_row_by_id('pages', 'p_id', $delid);
+
+		if($res){
+			$messages['success'] = "success";
+		}else{
+			$messages['error'] = "error";
+		}
+
+		echo json_encode($messages);
+	}
+
+	public function fetch_user_data(){
+		$statusBtn = '';
+
+		$userdata = $this->adminModel->fetch_users_datatable();
+
+		$noOfRows = $this->commonModel->get_filteredData('users');
 
         $data = array();
-        foreach ($userdata as $key => $value) {
-            $data['data'][] = array(
-                $value['username'],
-                $value['email'],
-                $value['address'],
-                $value['phone'],
-                $value['position'],
-                $value['user_status'],
-                "<div><a href='#' class='badge text-primary'>edit</a> <a href='#' class='badge text-danger'>delete</a> </div>"
-            );
-        }
+		foreach ($userdata as $row) {
 
-        echo json_encode($data);
+			if ($row['user_status'] == 1) {
+				$statusBtn = '<button type="button" class="text-success status" value="Active" data-id="' . $row['userid'] . '" title="click to change status">Active</button>';
+			} else {
+				$statusBtn = '<button type="button" class="text-danger status" value="Not Active" data-id="' . $row['userid'] . '" title="click to change status">Not Active</button>';
+			}
+
+			$sub_array = array();
+
+			$sub_array[] = $row['username'];
+			$sub_array[] = $row['email'];
+			$sub_array[] = $row['address'];
+			$sub_array[] = $row['phone'];
+			$sub_array[] = $row['position'];
+			$sub_array[] = $statusBtn;
+			$sub_array[] = '<button type="button" class="text-primary actionBtn" id="edt" value="' . $row['userid'] . '">Edit</button>
+							<button type="button" class="text-danger actionBtn" id="del" value="' . $row['userid'] . '">Delete</button>';
+
+			$data[] = $sub_array;
+		}
+
+		$output = array(
+			"draw" => intval($_POST["draw"]),
+			"recordsTotal" => $this->commonModel->get_all_data("users"),
+			"recordsFiltered" => $noOfRows,
+			"data" => $data
+		);
+
+        echo json_encode($output);
     }
 
     //fetch article from database
-    public function fetch_article_data()
-    {
+    public function fetch_article_data(){
 
         $this->load->model('fetchDataModel', 'model');
         $userdata = $this->model->fetch_article();
@@ -138,8 +238,7 @@ class admin extends CI_Controller
         echo json_encode($data);
     }
 
-    public function fetch_category_data()
-    {
+    public function fetch_category_data(){
         $res = $this->commonModel->fetch_category();
 
         foreach ($res as $row) {
@@ -152,8 +251,7 @@ class admin extends CI_Controller
     }
 
 
-    public function fetch_blog_data()
-    {
+    public function fetch_blog_data(){
 
         $this->load->model('fetchDataModel', 'model');
         $userdata = $this->model->fetch_blog();
@@ -217,6 +315,52 @@ class admin extends CI_Controller
 			$output = implode("\n ", $data);
 			write_file(APPPATH.'cache/routes.php', $output);
 		}
+
+	}
+
+	public function update_user(){
+
+
+		$userdata = $this->input->post();
+
+		$result = $this->commonModel->update_table_by_id('users', $userdata);
+
+		if($result){
+			$messages['success'] = "Successfully Updated.";
+		}else{
+			$messages['Err'] = "Sorry! Please Try Again.";
+		}
+
+		echo json_encode($messages);
+	}
+
+	public function delete_user(){
+		$delid = $this->input->post('delId');
+
+		$res = $this->commonModel->delete_row_by_id('users', 'userid', $delid);
+
+		if($res){
+			$messages['success'] = "success";
+		}else{
+			$messages['error'] = "error";
+		}
+
+		echo json_encode($messages);
+	}
+
+	public function update_page(){
+
+		$pageData = $this->input->post();
+
+		$result = $this->commonModel->update_table_by_id('pages', $pageData);
+
+		if($result){
+			$messages['success'] = "Successfully Updated.";
+		}else{
+			$messages['Err'] = "Sorry! Please Try Again.";
+		}
+
+		echo json_encode($messages);
 
 	}
 }

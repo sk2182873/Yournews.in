@@ -50,7 +50,7 @@
                                         <div class="col-sm-10">
                                             <div class="input-group input-group-merge">
                                                 <select name="Category" id="basic-icon-default-category" class="form-control">
-                                                    <option value="">-- Select Category --</option>
+                                                    <option value="" class="option">-- Select Category --</option>
                                                 </select>
                                             </div>
                                             <p id="category" class="text-danger"></p>
@@ -253,9 +253,11 @@
             success: function(res){
                var category = JSON.parse(res);
 
+				// console.log(ca);
+
                $.each(category['category'], function(n,ele){
                     var str = ele[0].toUpperCase() + ele.slice(1);
-                    $('#basic-icon-default-category').append("<option value="+ele+">"+str+"</option>");
+                    $('#basic-icon-default-category').append("<option value="+ele+" class='option'>"+str+"</option>");
                });
             }
         })
