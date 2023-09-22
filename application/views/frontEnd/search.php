@@ -1,4 +1,4 @@
-<?php  include("frontend/header.php"); ?>
+
 
 <main>
     <!-- Trending Area Start -->
@@ -10,7 +10,9 @@
                     <div class="col-lg-12">
                         <div class="trending-tittle">
                             <strong>Trending now</strong>
-
+							<?php 
+								print_r($data[0]['shortdescription']);
+							 ?>
                         </div>
                     </div>
                 </div>
@@ -30,7 +32,6 @@
                     </div>
                     <!-- Riht content -->
                     <div class="col-lg-4" id="leftNews">
-
                     </div>
                 </div>
             </div>
@@ -65,4 +66,7 @@
 </main>
 
 
-<?php include("frontend/footer.php"); ?>
+
+<script>
+
+</script>

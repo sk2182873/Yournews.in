@@ -9,17 +9,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         {
             parent::__construct();
 			$this->load->model('admin_model', 'adminModel');
+			$this->load->model('frontendmodel','frontendModel');
         }
 
         public function index(){
 			$data['link'] = $this->adminModel->get_all_routes();
+			$categories = $this->frontendModel->fetch_categories();
+
+			$this->load->view('frontEnd/header2', ['categories'=>$categories]);
             $this->load->view('frontEnd/index', ['data'=>$data]);
         }
 
 		public function loadPages($page){
 			$data['link'] = $this->adminModel->get_all_routes();
-            $this->load->view('frontEnd/'.$page, ['data'=>$data]);
+			$categories = $this->frontendModel->fetch_categories();
+
+			$data['page'] = $page;
+		
+			$this->load->view('frontEnd/header2', ['categories'=>$categories]);
+            $this->load->view('frontEnd/common-page', ['data'=>$data]);
+			$this->load->view('frontEnd/footer', ['data'=>$data]);
+
 		}
+
+		// public function load_search(){
+
+		// 	$data['article'] = $this->input->post();
+
+		// 	// var_dump($data['article']);die();
+
+		// 	$data['link'] = $this->adminModel->get_all_routes();
+		// 	$categories = $this->frontendModel->fetch_categories();
+
+		// 	$this->load->view('frontEnd/header2', ['categories'=>$categories]);
+        //     $this->load->view('frontEnd/search', ['data'=>$data]);
+		// 	$this->load->view('frontEnd/footer', ['data'=>$data]);
+		// }
         // public function business(){
         //     $this->load->view('frontEnd/business');
         // }

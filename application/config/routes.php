@@ -50,7 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'Home';
-$route['404_override'] = '';
+$route['404_override'] = 'My404';
 $route['translate_uri_dashes'] = FALSE;
 
 // admin routes
@@ -66,8 +66,10 @@ $route['admin/addblogs'] = 'pages/addblogs';
 $route['admin/users'] = 'pages/users';
 $route['admin/addusers'] = 'pages/addusers';
 $route['admin/account'] = 'pages/account';
+$route['admin/category'] = 'pages/category';
 $route['admin/pages'] = 'pages/pagesList';
 $route['admin/addpage'] = 'pages/addpage';
+
 
 //user routes.
 $route['user'] = 'user/login';
@@ -77,6 +79,10 @@ $route['user/addarticle'] = 'pages/addarticle';
 $route['user/blogs'] = 'pages/blogs';
 $route['user/addblogs'] = 'pages/addblogs';
 $route['user/account'] = 'pages/account';
+$route['user/category'] = 'pages/category';
+
+$route['category/search'] = 'frontend/search';
+
 
 //pages route.
 $route['category/(:any)'] = 'Home/loadPages/$1';

@@ -43,7 +43,7 @@
 	<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 	<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 	<script src="<?php echo base_url() ?>assets/js/config.js"></script>
-	<script src="<?php echo base_url().'ckeditor/ckeditor.js' ?>"></script>
+	<script src="<?php echo base_url() . 'ckeditor/ckeditor.js' ?>"></script>
 </head>
 
 <body>
@@ -136,7 +136,7 @@
 						<!-- Layouts Pages -->
 						<li class="menu-item">
 							<a href="javascript:void(0);" class="menu-link menu-toggle">
-								<i class='menu-icon tf-icons bx bx-file-blank' ></i>
+								<i class='menu-icon tf-icons bx bx-file-blank'></i>
 								<div data-i18n="Account Settings">Pages</div>
 							</a>
 
@@ -180,22 +180,35 @@
 						</li>
 
 						<li class="menu-item ">
+							<a href="<?php echo base_url('admin/category'); ?>" class="menu-link">
+								<i class='menu-icon tf-icons bx bx-category'></i>
+								<div data-i18n="Analytics">Categories</div>
+							</a>
+						</li>
+
+						<li class="menu-item ">
 							<a href="<?php echo base_url('admin/account'); ?>" class="menu-link">
 								<i class='menu-icon tf-icons bx bxs-user-account'></i>
 								<div data-i18n="Analytics">Account</div>
 							</a>
 						</li>
-						
+
 						<li class="menu-item">
 							<a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="menu-link">
 								<i class="menu-icon tf-icons bx bx-support"></i>
 								<div data-i18n="Support">Support</div>
 							</a>
 						</li>
-						<li class="menu-item">
+						<!-- <li class="menu-item">
 							<a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="menu-link">
 								<i class="menu-icon tf-icons bx bx-file"></i>
 								<div data-i18n="Documentation">Documentation</div>
+							</a>
+						</li> -->
+						<li class="menu-item ">
+							<a href="<?php echo base_url() . 'admin/logout' ?>" class="menu-link">
+								<i class="menu-icon tf-icons bx bx-power-off"></i>
+								<span class="align-middle">Log Out</span>
 							</a>
 						</li>
 					</ul>
@@ -221,13 +234,13 @@
 
 							<ul class="menu-sub">
 								<li class="menu-item ">
-									<a href="<?php echo base_url('admin/articles'); ?>" class="menu-link">
+									<a href="<?php echo base_url('user/articles'); ?>" class="menu-link">
 										<i class='menu-icon tf-icons bx bx-news'></i>
 										<div data-i18n="Analytics">Articles</div>
 									</a>
 								</li>
 								<li class="menu-item ">
-									<a href="<?php echo base_url('admin/addarticle'); ?>" class="menu-link">
+									<a href="<?php echo base_url('user/addarticle'); ?>" class="menu-link">
 										<i class='menu-icon tf-icons bx bx-add-to-queue'></i>
 										<div data-i18n="Analytics">Add Article</div>
 									</a>
@@ -236,22 +249,35 @@
 						</li>
 
 						<li class="menu-item ">
+							<a href="<?php echo base_url('user/category'); ?>" class="menu-link">
+								<i class='menu-icon tf-icons bx bx-category'></i>
+								<div data-i18n="Analytics">Categories</div>
+							</a>
+						</li>
+
+						<li class="menu-item ">
 							<a href="<?php echo base_url('user/account'); ?>" class="menu-link">
 								<i class='menu-icon tf-icons bx bxs-user-account'></i>
 								<div data-i18n="Analytics">Account</div>
 							</a>
 						</li>
-						
+
 						<li class="menu-item">
 							<a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="menu-link">
 								<i class="menu-icon tf-icons bx bx-support"></i>
 								<div data-i18n="Support">Support</div>
 							</a>
 						</li>
-						<li class="menu-item">
+						<!-- <li class="menu-item">
 							<a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="menu-link">
 								<i class="menu-icon tf-icons bx bx-file"></i>
 								<div data-i18n="Documentation">Documentation</div>
+							</a>
+						</li> -->
+						<li class="menu-item ">
+							<a class="menu-link" href="<?php echo base_url() . 'user/logout' ?>">
+								<i class="menu-icon tf-icons bx bx-power-off"></i>
+								<span class="align-middle">Log Out</span>
 							</a>
 						</li>
 					</ul>

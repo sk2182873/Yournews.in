@@ -66,12 +66,12 @@
                         </a>
                     </li>
                     <?php } ?>
-                    <li>
+                    <!-- <li>
                         <a class="dropdown-item" href="#">
                             <i class="bx bx-cog me-2"></i>
                             <span class="align-middle">Settings</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>

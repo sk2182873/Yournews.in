@@ -154,6 +154,19 @@ class authenticate extends CI_Controller
         echo json_encode($messages);
     }
 
+	public function fetchAdmin(){
+
+		$mail = $this->input->post('mail');
+
+		$data = array();
+
+		$data[0] = $mail;
+
+		$adminData = $this->authenticate_model->fetch_admin($data);
+
+		echo json_encode($adminData);
+	}
+
 
 
     //<--------------------------------------------------USER METHODS-------------------------------------------------------------------->//

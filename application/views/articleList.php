@@ -124,7 +124,7 @@
 <script>
 	$(document).ready(function() {
 
-		function fetch() {
+		function datatable_fetch() {
 			$('#articleTable').DataTable({
 
 				"processing": true,
@@ -197,7 +197,7 @@
 
 							if (res['success']) {
 								$('#articleTable').DataTable().destroy();
-								fetch();
+								datatable_fetch();
 								Swal.fire(
 									'Deleted!',
 									'Your file has been deleted.',
@@ -253,7 +253,7 @@
 				},
 				success: function(response) {
 					$('#articleTable').DataTable().destroy();
-					fetch();
+					datatable_fetch();
 				}
 
 			});
@@ -285,7 +285,7 @@
 					}
 
 					$('#articleTable').DataTable().destroy();
-					fetch();
+					datatable_fetch();
 				}
 			})
 
@@ -293,6 +293,6 @@
 
 		})
 		
-		fetch();
+		datatable_fetch();
 	})
 </script>

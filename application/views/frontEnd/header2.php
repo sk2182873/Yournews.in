@@ -35,7 +35,7 @@
 			<div class="preloader-inner position-relative">
 				<div class="preloader-circle"></div>
 				<div class="preloader-img pere-text">
-					<img src="<?php echo base_url() ?>asset/img/logo/logo.png" alt="">
+					<img src="<?php echo base_url() ?>asset/img/logo/logo-no-background.png" alt="">
 				</div>
 			</div>
 		</div>
@@ -73,7 +73,7 @@
 							<!-- Logo -->
 							<div class="col-xl-3 col-lg-3 col-md-3">
 								<div class="logo">
-									<a href="<?php echo base_url(); ?>"><img src="<?php echo base_url() ?>asset/img/logo/logo.png" alt=""></a>
+									<a  href="<?php echo base_url(); ?>"><img width='200px' src="<?php echo base_url() ?>asset/img/logo/logo-no-background.png" alt=""></a>
 								</div>
 							</div>
 							<div class="col-xl-9 col-lg-9 col-md-9">
@@ -97,22 +97,37 @@
 									<nav>
 										<ul id="navigation" class="d-inline">
 											<li><a href="<?php echo base_url() ?>">Home</a></li>
+											<?php
+											$index = 0;
+											if (isset($categories)) {
+												foreach ($categories as $row) {
+													if ($index <= 6) { ?>
+														<li><a href="<?php echo base_url() . 'category/' . $row['categorytitle'] ?>"><?php echo $row['categorytitle']; ?></a></li>
+													<?php $index++;
+													} else { ?>
+														<ul class="d-inline">
+															<li id="page"><a href="#">More</a>
+																<ul class="submenu">
+																	<li><a href="<?php echo base_url() . 'category/' . $row['categorytitle'] ?>"><?php echo $row['categorytitle']; ?></a></li>
+																</ul>
+															</li>
+														</ul>
 										</ul>
-										<ul class="d-inline">
-											<li id="page"><a href="#">More</a>
-												<ul class="submenu"></ul>
-											</li>
-										</ul>
+
+							<?php }
+												}
+											} ?>
 									</nav>
 								</div>
 							</div>
 
 							<div class="col-xl-2 col-lg-2 col-md-4">
 								<div class="header-right-btn f-right d-none d-lg-block">
-									<i class="fas fa-search special-tag"></i>
-									<div class="search-box">
+									
+									<div class="">
 										<form id="searchForm" class="d-flex flex-row">
-											<input type="text" placeholder="Search" id="find">
+											<input type="text" value="" placeholder="Search" id="find">
+											
 										</form>
 									</div>
 								</div>

@@ -36,7 +36,7 @@ class frontendmodel extends CI_Model
 	public function fetch_categories()
 	{
 
-		$sql = "SELECT * FROM category ORDER BY categorytitle";
+		$sql = "SELECT * FROM category WHERE status='1' ORDER BY categorytitle ";
 
 		$res = $this->db->query($sql);
 
@@ -61,29 +61,54 @@ class frontendmodel extends CI_Model
 
 	//--------------------------------Business Page Functions----------------------------------------------------------
 
-	public function fetchArticlesByCategory($category){
+	public function fetchArticlesByCategory($category)
+	{
+
+		// echo $category;
+		// die();
 
 		$sql = "SELECT * FROM article as a
 				LEFT JOIN category as c
 				ON a.categoryid = c.categoryid
-				WHERE c.categorytitle = '$category'";
+				WHERE c.categorytitle = '$category' AND article_status = 1";
 
 		$res = $this->db->query($sql);
 
 		return $res->result_array();
 	}
 
-	public function fetchRecentArticlesById($category){
+	public function fetchRecentArticlesById($category)
+	{
 
 		$sql = "SELECT * FROM article as a
 				LEFT JOIN category as c
 				ON a.categoryid = c.categoryid
-				WHERE c.categorytitle = '$category'
+				WHERE c.categorytitle = '$category' AND article_status = '1'
 				ORDER BY a.id DESC LIMIT 5";
 
 		$result = $this->db->query($sql);
 
 		return $result->result_array();
+	}
 
+	public function search_term($searchTerm)
+	{
+
+		// echo $searchTerm;
+		// die();
+
+		$sql = "SELECT * FROM `article` 
+				LEFT JOIN category 
+				ON article.categoryid = category.categoryid 
+				WHERE title LIKE '%$searchTerm%'
+				OR content LIKE '%$searchTerm%'
+				OR url_slug LIKE '%$searchTerm%'
+				OR shortdescription LIKE '%$searchTerm%'
+				OR meta_keywords LIKE '%$searchTerm%'
+				OR imagesurl LIKE '%$searchTerm%'";
+
+		$result = $this->db->query($sql);
+
+		return $result->result_array();
 	}
 }

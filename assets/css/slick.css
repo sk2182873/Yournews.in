@@ -17,6 +17,10 @@
         touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
 }
+#slider{display:none;}
+#slider.slick-initialized{display:block;}
+
+
 
 .slick-list
 {

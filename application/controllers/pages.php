@@ -85,6 +85,11 @@ class Pages extends CI_Controller
         $this->load->view('addBlog');
     }
 
+	public function category(){
+		$this->session_collison();
+        $this->load->view('category');
+	}
+
     public function account()
     {
         $this->session_collison();

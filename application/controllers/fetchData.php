@@ -66,14 +66,17 @@ class fetchData extends CI_Controller
 
 	public function fetch_category_data()
 	{
-
+		
 
 		$res = $this->fetchModel->fetch_category();
 
 		foreach ($res as $row) {
 			$category[] = $row['categorytitle'];
 			$categoryid[] = $row['categoryid'];
+			
 		}
+
+		
 
 
 		echo json_encode(array("category" => $category, "categoryid" => $categoryid));
@@ -101,9 +104,6 @@ class fetchData extends CI_Controller
 
 		echo json_encode($data);
 	}
-
-	
-
 
 	public function fetch_blog_data()
 	{

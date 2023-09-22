@@ -7,6 +7,7 @@
         {
             parent::__construct();
             $this->load->model('frontendmodel','frontendModel');
+			$this->load->model('admin_model', 'adminModel');
         }
 
         
@@ -36,6 +37,13 @@
             echo json_encode($categories);
         }
 
-    }
+		public function search(){
+			
+			$searchTerm = $this->input->post('data');
 
-?>
+			$result = $this->frontendModel->search_term($searchTerm);
+
+			echo json_encode($result);			
+		}
+
+    }

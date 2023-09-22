@@ -60,9 +60,9 @@ class common_model extends CI_Model
 		return $res->result_array();
 	}
 
-	public function fetch_data($data, $table){
+	public function fetch_total($column, $table){
 
-		$res = $this->db->select($data)
+		$res = $this->db->select($column)
 			->from($table)
 			->get();
 
@@ -114,14 +114,18 @@ class common_model extends CI_Model
 
 	public function insert_category_model($data){
 
+		// echo "<pre>";
+		// print_r($data);
+		// die();
+
 		$user = $this->session->userdata('roll');
 
 		$category_title = strtolower($data['CatTitle']);
 
 		if ($user == 'admin') {
-			$sql = array('categorytitle' => $category_title, 'Shortdescp' => $data['Sdecp'], 'adminid' => $_SESSION['id']);
+			$sql = array('categorytitle' => $category_title, 'Shortdescp' => $data['Sdescp'], 'adminid' => $_SESSION['id']);
 		} else {
-			$sql = array('categorytitle' => $category_title, 'Shortdescp' => $data['Sdecp'], 'userid' => $_SESSION['userid']);
+			$sql = array('categorytitle' => $category_title, 'Shortdescp' => $data['Sdescp'], 'userid' => $_SESSION['userid']);
 		}
 
 		$str = $this->db->insert_string('category', $sql);
@@ -214,6 +218,9 @@ class common_model extends CI_Model
 		}else if($table == 'users'){
 			$col = array('username'=>$data['username'],'email'=>$data['email'],'address'=>$data['address'],'phone'=>$data['phone'],'position'=>$data['position']);
 			$where_str = "userid = ".$data['userid'];
+		}else if($table == 'category'){
+			$col = array('categorytitle'=>$data['Ctitle'],'Shortdescp'=>$data['description']);
+			$where_str = "categoryid = ".$data['categoryid'];
 		}else{
 			$col = array('page_name'=>$data['pTitle'],'content'=>$data['content'],'description'=>$data['Descp'],'p_slug'=>url_title($data['pTitle'],'-',TRUE));
 			$where_str = "p_id = ".$data['pageid'];
@@ -240,7 +247,7 @@ class common_model extends CI_Model
 			$this->db->or_like('date', $_POST['search']['value']);
 			$this->db->or_like("shortdescription", $_POST['search']['value']);
 			$this->db->or_like('categorytitle', $_POST['search']['value']);
-			$this->db->or_like("status", $_POST['search']['value']);
+			$this->db->or_like('article_status', $_POST['search']['value']);
 		}
 
 		if (isset($_POST["order"])) {
@@ -266,7 +273,7 @@ class common_model extends CI_Model
 		$this->db->select("*");
 		$this->db->from($table1);
 
-		if (($table1 != 'pages') && ($table1 != 'users') ) {
+		if (($table1 != 'pages') && ($table1 != 'users') && ($table1 != 'category') ) {
 
 			$this->db->join($table2, ".$table1.categoryid = $table2.categoryid", "left");
 		}
@@ -283,5 +290,21 @@ class common_model extends CI_Model
 		return $this->db->count_all_results();
 	}
 
+	public function fetchCategoryBYid($id){
+
+		$where_str = "categoryid = ".$id;
+
+		// echo $where_str;die();
+
+		$this->db->select('*');
+		$this->db->from('category');
+		$this->db->where($where_str);
+
+		$result = $this->db->get();
+
+		return $result->result_array();
+		
+
+	}
 	
 }
