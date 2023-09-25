@@ -1,6 +1,3 @@
-<?php //include('header2.php'); 
-?>
-
 <main>
 	<!-- Trending Area Start -->
 	<div class="trending-area fix">
@@ -53,34 +50,48 @@
 				</div>
 				<div class="row article">
 					<div class="col-12 ">
-						<div id="slider" class="recent-active dot-style d-flex dot-style">
+						<div class="recent-active responsive d-flex mb-5 dot-style">
+							<?php foreach ($data['articles'] as $row) { ?>
+								<div class="single-recent mb-5 mx-4">
+									<div class="articleimage">
+										<img src="<?php echo base_url() . $row['imagesurl']; ?>" alt="image not found" width="370px" height="370px" style="border-radius:12px;">
+									</div>
+									<div class="what-cap">
+										<span class="color1"><?php echo $row['categorytitle']; ?></span>
+										<h4><a class='title' href="<?php echo base_url('category').'/' .$row['categorytitle'] .'/' . $row['url_slug']; ?>"><?php echo substr($row['title'], 0, 70); ?></a></h4>
+									</div>
+								</div>
 
 
+							<?php } ?>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<section>
-		<div class="container offset-md-1" id="searchPanel">
-			<div class="row">
-				<div class="col-12 search" style="text-align: center;color:#c0392b;">
-
+		<section>
+			<div class="container offset-md-1" id="searchPanel">
+				<div class="row">
+					<div class="col-12 search" style="text-align: center;color:#c0392b;">
+						dfbfdbdfbfdb
+					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<!--Recent Articles End -->
+		<!--Recent Articles End -->
 </main>
 
 
 
-<?php include('footer.php'); ?>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
 	$(window).on('load', function() {
+
+		setTimeout(function() {
+			$('#preloader-active').css('display', 'none');
+		}, 1000);
 
 		//trending news
 		$.ajax({
@@ -91,21 +102,26 @@
 				var data = JSON.parse(res);
 				var base_url = '<?php echo base_url() ?>';
 
+
 				$('#image0').attr('src', base_url + data[4]['imagesurl']);
 				$('#headingtop0').html(data[4]['title']);
-				$('#headingtop0').attr('href', '<?php echo base_url() ?>article' + '/' + data[4]['id'] + '/' + data[4]['url_slug']);
+				$('#headingtop0').attr('href', '<?php echo base_url('category') ?>/'+data[4]['categorytitle']+'/'+ data[4]['url_slug']);
 				$('#tag').html(data[4]['categorytitle']);
 
 				$.each(data, function(n, ele) {
-					$('#leftNews').append(`<div class="trand-right-single d-flex article">
+
+					if(ele['article_status'] == 1){
+						$('#leftNews').append(`<div class="trand-right-single d-flex article">
                             <div class="trand-right-img">
                                 <img src="${base_url+ele['imagesurl']}" alt="image not found" width="100px">
                             </div>
                             <div class="trand-right-cap ">
                                 <span class="category">${ele['categorytitle']}</span>
-                                <h4><a class="title" href="<?php echo base_url() ?>article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
+                                <h4><a class="title" href="<?php echo base_url('category') ?>/${ele['categorytitle']}/${ele['url_slug']}">${ele['title']}</a></h4>
                             </div>
                         </div>`);
+					}
+					
 
 
 
@@ -118,58 +134,6 @@
 			}
 
 		});
-
-		//recent news
-		$.ajax({
-			url: '<?php echo base_url() . 'frontend/fetch_recents' ?>',
-			type: 'POST',
-			success: function(res) {
-				var data = JSON.parse(res);
-				var base_url = '<?php echo base_url() ?>';
-
-				$.each(data, function(n, ele) {
-					$('.recent-active').append(`<div class="single-recent mb-100">
-                                <div class="what-img">
-                                    <img src="${base_url+ele['imagesurl']}" alt="image not found" width="400px" height="300px"> 
-                                </div>
-                                <div class="what-cap">
-                                    <span>${ele['categorytitle']}</span>
-                                    <h4><a  href="<?php echo base_url() ?>article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
-                                </div>
-                            </div>`);
-				});
-
-			}
-		});
-
-		// fetch category
-		// $.ajax({
-		//     url: '<?php echo base_url() . 'frontend/fetch_category' ?>',
-		//     type: 'POST',
-		//     success: function(res) {
-		//         var data = JSON.parse(res);
-		//         var base_url = "<?php echo base_url(); ?>"
-
-		//         $.each(data, function(n, ele) {
-
-		//             if (n < 7) {
-		//                 $('#navigation').append(`<li><a href="${base_url}category/${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
-		//             } else {
-		//                $('.submenu').append(`<li><a href="${base_url}category/${ele['categorytitle']}" role="menuitem" tabindex="0">${ele['categorytitle']}</a></li>`);
-		//             }
-
-
-		//         })
-		//     }
-		// });
-
-		$("#slider").slick({
-			arrows: false,
-			autoplay: true
-		});
-
-		// $('.slick-dots').css('display', 'block');
-		// $('.slick-dots li').class('slick-active');
 	});
 
 	$(document).ready(function() {
@@ -187,34 +151,32 @@
 				success: function(res) {
 					var data = JSON.parse(res);
 
+					console.log(data);
 
-					if(data == ""){
-						$('.search').html('No data found.');
-						setTimeout(function(){
-							$('#searchPanel').hide();
-						}, 3000);
-						
-					}else{
+					if (data == "") {
+						$('.search').empty().append('No data found.');
+
+					} else {
 						$('#searchPanel').css('display', 'block');
 						$.each(data, function(n, ele) {
-						let id = data[n]['id'];
-						let slug = data[n]['url_slug'];
+							let id = data[n]['id'];
+							let slug = data[n]['url_slug'];
+							let category = data[n]['categorytitle'];
 
-						$('.search').html(`<div class="mb-2 searchresult">
-						<a href="<?php echo base_url() . 'article/${id}/${slug}'; ?>" id="titlelink" style="display:block">
-						<h6 style="color: #c0392b;">${data[n]['title']}</h6>
-						<p>
-							${data[n]['shortdescription']};
-						</p>
-						</a>
-						
-					</div>`);
-					}
-
-					// $('.search').html('');
-		)};
+							$('.search').empty().append(`<div class="mb-2 searchresult">
+									<a href="<?php echo base_url() . 'category/${category}/${slug}'; ?>" id="titlelink" style="display:block">
+									<h6 style="color: #c0392b;">${data[n]['title']}</h6>
+									<p>
+										${data[n]['shortdescription']};
+									</p>
+									</a>
+									
+								</div>`);
+						})
+					};
 
 				}
+
 
 			});
 		});

@@ -96,17 +96,17 @@ class admin extends CI_Controller
 
 		$statusBtn = '';
 
-		$userdata = $this->adminModel->fetchPages();
+		$pagedata = $this->adminModel->fetchPages();
 		$noOfRows = $this->commonModel->get_filteredData('pages');
 
 		$data = array();
 
-		foreach ($userdata as $row) {
+		foreach ($pagedata as $row) {
 
 			if ($row['p_status'] == 1) {
-				$statusBtn = '<button type="button" class="text-success status" value="show" data-id="' . $row['p_id'] . '">show</button>';
+				$statusBtn = '<button type="button" class="btn btn-success bg-success px-2 status" style="font-size:10px" value="show" data-id="' . $row['p_id'] . '">show</button>';
 			} else {
-				$statusBtn = '<button type="button" class="text-danger status" value="hide" data-id="' . $row['p_id'] . '">hide</button>';
+				$statusBtn = '<button type="button" class="btn btn-danger bg-danger mt-1 px-2 status" style="font-size: 10px" value="hide" data-id="' . $row['p_id'] . '">hide</button>';
 			}
 
 			$sub_array = array();
@@ -116,8 +116,8 @@ class admin extends CI_Controller
 			$sub_array[] = $row['description'];
 			$sub_array[] = substr(strip_tags($row['content']), 0, 100);
 			$sub_array[] = $statusBtn;
-			$sub_array[] = '<button type="button" class="text-primary actionBtn" id="edt" value="' . $row['p_id'] . '">Edit</button>
-							<button type="button" class="text-danger actionBtn" id="del" value="' . $row['p_id'] . '">Delete</button>';
+			$sub_array[] = '<button type="button" class="btn btn-primary bg-primary px-2 actionBtn" title="edit" style="font-size: 10px" id="edt" value="' . $row['p_id'] . '"><i class="fas fa-pen border-0"></i></button>
+							<button type="button" class="btn btn-danger bg-danger px-2  actionBtn" title="delete" style="font-size: 10px" id="del" value="' . $row['p_id'] . '"><i class="fas fa-trash"></i></button>';
 
 			$data[] = $sub_array;
 		}
@@ -208,9 +208,9 @@ class admin extends CI_Controller
 		foreach ($userdata as $row) {
 
 			if ($row['user_status'] == 1) {
-				$statusBtn = '<button type="button" class="text-success status" value="active" data-id="' . $row['userid'] . '" title="click to change status">active</button>';
+				$statusBtn = '<button type="button" class="btn btn-success bg-success px-2 status" style="font-size: 10px" value="active" data-id="' . $row['userid'] . '" title="click to change status">active</button>';
 			} else {
-				$statusBtn = '<button type="button" class="text-danger status" value="inactive" data-id="' . $row['userid'] . '" title="click to change status">inactive</button>';
+				$statusBtn = '<button type="button" class="btn btn-danger bg-danger px-2 mt-1 status" style="font-size: 10px" value="inactive" data-id="' . $row['userid'] . '" title="click to change status">inactive</button>';
 			}
 
 			$sub_array = array();
@@ -221,8 +221,8 @@ class admin extends CI_Controller
 			$sub_array[] = $row['phone'];
 			$sub_array[] = $row['position'];
 			$sub_array[] = $statusBtn;
-			$sub_array[] = '<button type="button" class="text-primary actionBtn" id="edt" value="' . $row['userid'] . '">Edit</button>
-							<button type="button" class="text-danger actionBtn" id="del" value="' . $row['userid'] . '">Delete</button>';
+			$sub_array[] = '<button type="button" class="btn btn-primary bg-primary p-1 actionBtn" style="font-size: 10px" id="edt" value="' . $row['userid'] . '"><i class="fas fa-pen border-0"></i></button>
+							<button type="button" class="btn btn-danger bg-danger px-2 py-1 actionBtn" style="font-size: 10px" id="del" value="' . $row['userid'] . '"><i class="fas fa-trash"></i></button>';
 
 			$data[] = $sub_array;
 		}

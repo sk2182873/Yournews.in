@@ -118,7 +118,7 @@
                       </g>
                     </svg>
                   </span>
-                  <span class="app-brand-text demo text-body fw-bolder">aznews</span>
+                  <span class="app-brand-text demo text-body fw-bolder">Your News</span>
                 </a>
               </div>
               <!-- /Logo -->

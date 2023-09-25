@@ -29,7 +29,7 @@ class common extends CI_Controller
 
 
 			$config['filename'] = time();
-			$config['upload_path'] = './uploads/admin/';
+			$config['upload_path'] = 'uploads/admin/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|PNG|GIF';
 			$config['max_size']     = '24000000';
 			$config['max_width'] = '5000';
@@ -253,7 +253,7 @@ class common extends CI_Controller
 
 		$statusBtn = '';
 
-		$userdata = $this->commonModel->fetch_article();
+		$articledata = $this->commonModel->fetch_article();
 
 		$noOfRows = $this->commonModel->get_filteredData('article', 'category');
 
@@ -263,12 +263,12 @@ class common extends CI_Controller
 		// print_r($userdata);
 		// die();
 
-		foreach ($userdata as $row) {
+		foreach ($articledata as $row) {
 
 			if ($row['article_status'] == 1) {
-				$statusBtn = '<button type="button" class="text-success status" data-id="'. $row['id'] . '">show</button>';
+				$statusBtn = '<button type="button" class="btn bg-success btn-success p-1 status" style="font-size: 10px" data-id="'. $row['id'] . '">show</button>';
 			} else {
-				$statusBtn = '<button type="button" class="text-danger status" data-id="'. $row['id'] . '">hide</button>';
+				$statusBtn = '<button type="button" class="btn bg-danger btn-danger p-1 status" style="font-size: 10px" data-id="'. $row['id'] . '">hide</button>';
 			}
 
 			$sub_array = array();
@@ -278,8 +278,8 @@ class common extends CI_Controller
 			$sub_array[] = $row['shortdescription'];
 			$sub_array[] = ucfirst($row['categorytitle']);
 			$sub_array[] = $statusBtn;
-			$sub_array[] = '<button type="button" class="text-primary actionBtn" id="edt" value="' . $row['id'] . '">Edit</button>
-							<button type="button" class="text-danger actionBtn" id="del" value="' . $row['id'] . '">Delete</button>';
+			$sub_array[] = '<button type="button" class="btn btn-primary text-white  bg-primary px-2 actionBtn" style="font-size: 10px"  id="edt" value="' . $row['id'] . '"><i class="fas fa-pen border-0"></i></button>
+							<button type="button" class="btn btn-danger text-white bg-danger px-2 actionBtn" style="font-size: 10px"  id="del" value="' . $row['id'] . '"><i class="fas fa-trash"></i></button>';
 
 			$data[] = $sub_array;
 		}

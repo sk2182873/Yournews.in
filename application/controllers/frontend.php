@@ -16,6 +16,8 @@
 
             $articles = $this->frontendModel->fetch_articles();
 
+			// echo count($articles);
+			// die();
 			// echo "<pre>";
 			// print_r($articles);
 			// die();

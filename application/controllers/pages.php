@@ -9,6 +9,7 @@ class Pages extends CI_Controller
 		
 		parent::__construct();
 		$this->load->model('admin_model', 'adminModel');
+		$this->load->model('frontendmodel','frontendModel');
 		
 	}
 
@@ -17,6 +18,8 @@ class Pages extends CI_Controller
 		$data = array();
 		$data['page'] = $this->adminModel->getPageById($id);
 		$data['link'] = $this->adminModel->get_all_routes();
+		$categories = $this->frontendModel->fetch_categories();
+		$data['categories'] = $categories;
 
 
 		// echo "<pre>";
@@ -24,6 +27,7 @@ class Pages extends CI_Controller
 		// die();
 
 		$this->load->view('frontEnd/pages', ['data'=>$data]);
+		$this->load->view('frontEnd/footer', ['data'=>$data]);
 	}
 
     public function is_session_admin()

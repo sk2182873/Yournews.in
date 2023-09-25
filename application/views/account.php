@@ -20,18 +20,19 @@
 						<h5 class="card-header">Profile Details</h5>
 						<!-- Account -->
 						<div class="card-body d-flex justify-content-between">
-							<div class="d-flex align-items-start align-items-sm-center gap-4">
-								<?php if (isset($_SESSION['profilepic'])) { ?>
-									<img src="<?php echo base_url() . $_SESSION['profilepic']; ?>" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+							<?php if (isset($_SESSION['profilepic'])) { ?>
+								<div class="d-flex align-items-start align-items-sm-center gap-4 imageavtar">
+
+									<!-- <img src="" alt="user-avatar" id="image" class="d-block rounded" height="100" width="100" id="uploadedAvatar"> -->
 								<?php } else { ?>
 									<img src="../assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100" width="100">
 								<?php } ?>
-							</div>
-							<div class="">
-								<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalScrollable">
-									Edit
-								</button>
-							</div>
+								</div>
+								<div class="">
+									<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalScrollable">
+										Edit
+									</button>
+								</div>
 						</div>
 
 						<hr class="my-0">
@@ -129,7 +130,7 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+							<button type="button" id="closeBtn" class="btn btn-outline-secondary" data-bs-dismiss="modal">
 								Close
 							</button>
 							<button type="submit" class="btn btn-primary">Save changes</button>
@@ -150,7 +151,7 @@
 		$('#updateProfile').submit(function(event) {
 			event.preventDefault();
 
-			fetch_admin_data();	
+			fetch_admin_data();
 
 			$('#success2').html('');
 			$('#Err').html('');
@@ -182,21 +183,28 @@
 			$.ajax({
 				url: "<?php echo base_url('Authenticate/fetchAdmin') ?>",
 				type: 'post',
-				data: {mail:usermail},
+				data: {
+					mail: usermail
+				},
 				success: function(res) {
 					var adminData = JSON.parse(res)
-					
+
+					let imageurl = "<?php echo base_url() ?>" + adminData['profilepic'];
+
+
 
 					$('#name').html(adminData['username']);
 					$('#mail').html(adminData['mail']);
 					$('#phone').html(adminData['phone']);
 					$('#altermail').html(adminData['alternative_email']);
 					$('#position').html(adminData['position']);
+					$('.imageavtar').html(`<img src="${imageurl}" alt="user-avatar" class="d-block rounded" height="100px" width="100px" id="uploadedAvatar">`);
 				}
 			})
 		}
 
-		fetch_admin_data();		
+		fetch_admin_data();
+
 
 	})
 </script>

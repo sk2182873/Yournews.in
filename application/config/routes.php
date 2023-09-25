@@ -53,6 +53,8 @@ $route['default_controller'] = 'Home';
 $route['404_override'] = 'My404';
 $route['translate_uri_dashes'] = FALSE;
 
+
+
 // admin routes
 $route['admin'] = 'admin/login';
 $route['register'] = 'admin/register';
@@ -70,7 +72,6 @@ $route['admin/category'] = 'pages/category';
 $route['admin/pages'] = 'pages/pagesList';
 $route['admin/addpage'] = 'pages/addpage';
 
-
 //user routes.
 $route['user'] = 'user/login';
 $route['user/dashboard'] = 'pages/dashboard';
@@ -81,6 +82,8 @@ $route['user/addblogs'] = 'pages/addblogs';
 $route['user/account'] = 'pages/account';
 $route['user/category'] = 'pages/category';
 
+$route['frontend/fetch_articles'] = 'frontend/fetch_articles';
+
 $route['category/search'] = 'frontend/search';
 
 
@@ -88,7 +91,7 @@ $route['category/search'] = 'frontend/search';
 $route['category/(:any)'] = 'Home/loadPages/$1';
 
 //functions route.
-$route['article/(:num)/(:any)'] = "Article/index/$1/$2";
+$route['category/(:any)/(:any)'] = "Article/index/$1/$2";
 
 
 require_once APPPATH.'cache/routes.php';

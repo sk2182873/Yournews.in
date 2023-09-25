@@ -1,5 +1,4 @@
-<?php // include('header2.php'); 
-?>
+
 
 <main>
 	<!-- Trending Area Start -->
@@ -11,7 +10,7 @@
 					<div class="col-lg-12">
 						<div class="trending-tittle">
 							<strong>Trending now</strong>
-							
+
 						</div>
 					</div>
 				</div>
@@ -53,7 +52,24 @@
 				</div>
 				<div class="row">
 					<div class="col-12">
-						<div class="recent-active dot-style d-flex dot-style">
+
+						<div class="recent-active responsive d-flex mb-5 dot-style">
+							<?php foreach ($data['articles'] as $row) { ?>
+								<div class="single-recent mb-5 mx-4" >
+									<div class="articleimage">
+										<img src="<?php echo base_url().$row['imagesurl']; ?>" alt="image not found" width="370px"  height="370px" style="border-radius:12px;">
+									</div>
+									<div class="what-cap">
+										<span class="color1"><?php echo $row['categorytitle']; ?></span>
+										<h4><a class='title' href="<?php echo base_url('category').'/'.$row['categorytitle'].'/'.$row['url_slug']; ?>" style="display:block;"><?php echo substr($row['title'],0,70); ?></a></h4>
+									</div>
+								</div>
+
+
+							<?php } ?>
+
+
+
 
 
 						</div>
@@ -66,7 +82,7 @@
 	<section>
 		<div class="container offset-md-1" id="searchPanel">
 			<div class="row">
-				<div class="col-12 search">
+				<div class="col-12 search" style="text-align: center;color:#c0392b;">
 
 				</div>
 			</div>
@@ -74,156 +90,5 @@
 	</section>
 </main>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script>
-	$(document).ready(function() {
-
-		var category = "<?php echo $data['page']; ?>";		
-
-		let index = -1;
-
-		//trending news
-		function fetch_trending_news() {
-			$.ajax({
-				url: `<?php echo base_url() . 'fetchData/fetch_articles_by_category/${category}' ?>`,
-				type: 'post',
-				success: function(res) {
-					var data = JSON.parse(res);
-					var base_url = '<?php echo base_url() ?>';
-
-					console.log(data);
-					const length = data.length;
-
-					$.each(data, function(n, ele) {
-
-						if (length - n == 1) {
-							console.log("n : ", n);
-							return false;
-						} else {
-							if (n < 4) {
-								$('#leftNews').append(`<div class="trand-right-single d-flex">
-                            <div class="trand-right-img">
-                                <img src="${base_url+ele['imagesurl']}" alt="image not found" width="100px">
-                            </div>
-                            <div class="trand-right-cap">
-                                <span class="color1">${ele['categorytitle']}</span>
-                                <h4><a href="<?php echo base_url() ?>article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
-                            </div>
-                        </div>`);
-								index++;
-							} else {
-
-								return false;
-							}
-
-						}
-					})
-
-					$('#image0').attr('src', base_url + data[index + 1]['imagesurl']);
-					$('#headingtop0').html(data[index + 1]['title']);
-					$('#headingtop0').attr('href', "<?php echo base_url() ?>article" + '/' + data[index + 1]['id'] + '/' + data[index]['url_slug']);
-					$('#tag').html(data[index + 1]['categorytitle']);
-
-				}
-
-			});
-		}
-
-		//recent news
-		function fetch_recents_news() {
-			$.ajax({
-				url: `<?php echo base_url() . 'fetchData/fetch_recent_articles_by_category/${category}' ?>`,
-				type: 'POST',
-				success: function(res) {
-					var data = JSON.parse(res);
-					var base_url = '<?php echo base_url() ?>';
-
-					$.each(data, function(n, ele) {
-						$('.recent-active').append(`<div class="single-recent mb-100">
-                                <div class="what-img">
-                                    <img src="${base_url+ele['imagesurl']}" alt="image not found" width="400px" height="300px"> 
-                                </div>
-                                <div class="what-cap">
-                                    <span class="color1">${ele['categorytitle']}</span>
-                                    <h4><a class='title' href="<?php echo base_url() ?>article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
-                                </div>
-                            </div>`);
-					});
-
-				}
-			});
-		}
-
-		function fetch_category() {
-			$.ajax({
-				url: '<?php echo base_url() . 'frontend/fetch_category' ?>',
-				type: 'POST',
-				success: function(res) {
-					var data = JSON.parse(res);
-					var base_url = "<?php echo base_url(); ?>"
-
-					$.each(data, function(n, ele) {
-
-						if (n < 7) {
-							$('#navigation').append(`<li><a href="${base_url}category/${ele['categorytitle']}">${ele['categorytitle']}</a></li>`);
-						} else {
-							$('.submenu').append(`<li><a href="${base_url}category/${ele['categorytitle']}">${ele['categorytitle']}</a></li>`);
-						}
 
 
-					})
-				}
-			});
-		}
-
-		fetch_trending_news();
-		fetch_recents_news();
-	});
-
-	
-
-	
-
-	$('#find').on('keyup', function() {
-
-		var search_term = $('#find').val();
-		//alert(search_term);
-
-		$.ajax({
-				url: "<?php echo base_url() . 'category/search' ?>",
-				type: "post",
-				data: {
-					data: search_term
-				},
-				success: function(res) {
-					var data = JSON.parse(res);
-
-					if (data == "") {
-						$('.search').html('No data found.');
-						setTimeout(function() {
-							$('#searchPanel').hide();
-						}, 3000);
-
-					} else {
-						$('#searchPanel').css('display', 'block');
-						$.each(data, function(n, ele) {
-								let id = data[n]['id'];
-								let slug = data[n]['url_slug'];
-
-								$('.search').html(`<div class="mb-2 searchresult">
-								<a href="<?php echo base_url() . 'article/${id}/${slug}'; ?>" id="titlelink" style="display:block">
-								<h6 style="color: #c0392b;">${data[n]['title']}</h6>
-								<p>
-									${data[n]['shortdescription']};
-								</p>
-								</a>
-								
-							</div>`);
-							})
-						}
-
-					}
-
-				});
-		});
-</script>

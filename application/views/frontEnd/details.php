@@ -22,11 +22,13 @@
 						</div>
 
 						<div class="about-prea">
-							<?php if ($art) {
+							<?php  
 								foreach ($art as $row) {
-									echo $row['content'];
+									if($row['article_status'] == 1){
+										echo $row['content'];
+									}
 								}
-							} ?>
+							 ?>
 						</div>
 
 
@@ -144,48 +146,53 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
-	$(document).ready(function(){
+	$(document).ready(function() {
+
+		setTimeout(function() {
+			$('#preloader-active').css('display', 'none');
+		}, 3000);
+
 		$('#find').on('keyup', function() {
 
-var search_term = $('#find').val();
-//alert(search_term);
+			var search_term = $('#find').val();
+			//alert(search_term);
 
-$.ajax({
-		url: "<?php echo base_url() . 'category/search' ?>",
-		type: "post",
-		data: {
-			data: search_term
-		},
-		success: function(res) {
-			var data = JSON.parse(res);
+			$.ajax({
+				url: "<?php echo base_url() . 'category/search' ?>",
+				type: "post",
+				data: {
+					data: search_term
+				},
+				success: function(res) {
+					var data = JSON.parse(res);
 
-			if (data == "") {
-				$('.search').html('No data found.');
-				setTimeout(function() {
-					$('#searchPanel').hide();
-				}, 3000);
+					console.log(data);
 
-			} else {
-				$('#searchPanel').css('display', 'block');
-				$.each(data, function(n, ele) {
-						let id = data[n]['id'];
-						let slug = data[n]['url_slug'];
+					if (data == "") {
+						$('.search').empty().append('No data found.');
 
-						$('.search').html(`<div class="mb-2 searchresult">
-				<a href="<?php echo base_url() . 'article/${id}/${slug}'; ?>" id="titlelink" style="display:block">
-				<h6 style="color: #c0392b;">${data[n]['title']}</h6>
-				<p>
-					${data[n]['shortdescription']};
-				</p>
-				</a>
-				
-			</div>`);
-					})
+					} else {
+						$('#searchPanel').css('display', 'block');
+						$.each(data, function(n, ele) {
+							let id = data[n]['id'];
+							let slug = data[n]['url_slug'];
+							let category = data[n]['categorytitle'];
+
+							$('.search').empty().append(`<div class="mb-2 searchresult">
+								<a href="<?php echo base_url('category') .'/${category}/${slug}'; ?>" id="titlelink" style="display:block">
+								<h6 style="color: #c0392b;">${data[n]['title']}</h6>
+								<p>
+									${data[n]['shortdescription']};
+								</p>
+								</a>
+								
+							</div>`);
+						})
+					}
+
 				}
 
-			}
-
+			});
 		});
-});
 	})
 </script>

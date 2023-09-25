@@ -11,20 +11,19 @@
 	<link rel="manifest" href="site.webmanifest">
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url() ?>asset/img/favicon.ico">
 
-	<!-- CSS here -->
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/bootstrap.min.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/ticker-style.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/flaticon.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/slicknav.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/animate.min.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/magnific-popup.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/fontawesome-all.min.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/themify-icons.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/slick.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/nice-select.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/style.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/demo.css">
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/owl.carousel.min.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/ticker-style.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/flaticon.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/slicknav.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/animate.min.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/magnific-popup.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/fontawesome-all.min.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/themify-icons.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/slick.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/nice-select.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/style.css' ?>">
+
 </head>
 
 <body>

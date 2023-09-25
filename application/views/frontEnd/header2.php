@@ -12,19 +12,19 @@
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url() ?>asset/img/favicon.ico">
 
 	<!-- CSS here -->
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/bootstrap.min.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/ticker-style.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/flaticon.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/slicknav.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/animate.min.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/magnific-popup.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/fontawesome-all.min.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/themify-icons.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/slick.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/nice-select.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/style.css">
-	<link rel="stylesheet" href="<?php echo base_url() ?>asset/css/demo.css">
+	<link rel="stylesheet" href="<?php echo base_url().'assets/css/bootstrap.min.css'?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/owl.carousel.min.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/ticker-style.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/flaticon.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/slicknav.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/animate.min.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/magnific-popup.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/fontawesome-all.min.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/themify-icons.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/slick.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/nice-select.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/style.css' ?>">
+	<link rel="stylesheet" href="<?php echo base_url() . 'asset/css/demo.css' ?>">
 </head>
 
 <body>
@@ -52,8 +52,7 @@
 							<div class="row d-flex justify-content-between align-items-center">
 								<div class="header-info-left">
 									<ul>
-										<li><img src="<?php echo base_url() ?>asset/img/icon/header_icon1.png" alt="">34ºc, Sunny </li>
-										<li><img src="<?php echo base_url() ?>asset/img/icon/header_icon1.png" alt=""><?php echo date('l') . ', ' . date('s/m/y'); ?></li>
+										<li><img src="<?php echo base_url() ?>asset/img/icon/header_icon1.png" alt=""><?php echo date('l') . ', ' . date('d/m/y'); ?></li>
 									</ul>
 								</div>
 								<div class="header-info-right">
@@ -73,7 +72,7 @@
 							<!-- Logo -->
 							<div class="col-xl-3 col-lg-3 col-md-3">
 								<div class="logo">
-									<a  href="<?php echo base_url(); ?>"><img width='200px' src="<?php echo base_url() ?>asset/img/logo/logo-no-background.png" alt=""></a>
+									<a href="<?php echo base_url(); ?>"><img width='200px' src="<?php echo base_url() ?>asset/img/logo/logo-no-background.png" alt=""></a>
 								</div>
 							</div>
 							<div class="col-xl-9 col-lg-9 col-md-9">
@@ -99,8 +98,8 @@
 											<li><a href="<?php echo base_url() ?>">Home</a></li>
 											<?php
 											$index = 0;
-											if (isset($categories)) {
-												foreach ($categories as $row) {
+											if (isset($data['categories'])) {
+												foreach ($data['categories'] as $row) {
 													if ($index <= 6) { ?>
 														<li><a href="<?php echo base_url() . 'category/' . $row['categorytitle'] ?>"><?php echo $row['categorytitle']; ?></a></li>
 													<?php $index++;
@@ -123,11 +122,11 @@
 
 							<div class="col-xl-2 col-lg-2 col-md-4">
 								<div class="header-right-btn f-right d-none d-lg-block">
-									
+
 									<div class="">
 										<form id="searchForm" class="d-flex flex-row">
 											<input type="text" value="" placeholder="Search" id="find">
-											
+
 										</form>
 									</div>
 								</div>

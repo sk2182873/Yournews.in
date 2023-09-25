@@ -46,13 +46,13 @@ class frontendmodel extends CI_Model
 		return $res->result_array();
 	}
 
-	public function fetch_article_by_id($id)
+	public function fetch_article_by_slug($slug)
 	{
 
 		$sql = "SELECT * FROM article as a
             LEFT JOIN category as c
             ON a.categoryid = c.categoryid
-            WHERE id = $id";
+            WHERE url_slug = '$slug'";
 
 		$res = $this->db->query($sql);
 

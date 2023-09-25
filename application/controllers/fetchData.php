@@ -75,10 +75,6 @@ class fetchData extends CI_Controller
 			$categoryid[] = $row['categoryid'];
 			
 		}
-
-		
-
-
 		echo json_encode(array("category" => $category, "categoryid" => $categoryid));
 	}
 

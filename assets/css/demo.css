@@ -124,12 +124,19 @@
 	border: none;
 	cursor: pointer;
 	background-color: transparent;
+	font-size: 10px;
 }
 
 .actionBtn{
 	border: none;
 	cursor: pointer;
 	background-color: transparent;
+
+}
+
+.actionBtn i{
+	outline: none;
+	border: none;
 }
 
 
