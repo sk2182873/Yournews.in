@@ -36,9 +36,12 @@ class admin extends CI_Controller
 		$this->load->view('admin_forgot_password');
 	}
 
-	public function reset_pass()
-	{
+	public function reset_pass($email)
+	{	
+		
+
 		$this->load->view('admin_gen_password');
+		$this->load->view('include/footer', ['email'=>$email]);
 	}
 
 
@@ -378,5 +381,46 @@ class admin extends CI_Controller
 		}
 
 		echo json_encode($messages);
+	}
+
+	public function fetch_messages(){
+
+		$query = $this->adminModel->fetchMessages();
+
+		// $noOfRows = $this->commonModel->get_filteredData('contact');
+
+		// echo "<pre>";
+		// print_r($noOfRows);die();
+
+		// $data = array();
+
+		foreach($query as $row){
+
+			$statusBtn = '';
+
+			if($row['message_status'] == 1){
+				$statusBtn = '<button type="button" class="btn btn-secondary bg-secondary px-2 status" value="read" data-id="' . $row['id'] . '">read</button>';
+			}else{
+				$statusBtn = '<button type="button" class="btn btn-warning bg-warning px-2 status" value="unread" data-id="' . $row['id'] . '">unread</button>';
+			}
+
+			$subarray = array();
+			$subarray[] = $row['username'];
+			$subarray[] = $row['email'];
+			$subarray[] = $row['subject'];
+			$subarray[] = $row['message'];
+			$subarray[] = $statusBtn;
+
+			$data[] = $subarray;
+
+		}
+		$output = array(
+			"draw" => intval($_POST["draw"]),
+			"recordsTotal" => $this->commonModel->get_all_data("contact"),
+			"recordsFiltered" => $this->commonModel->get_filteredData('contact'),
+			"data" => $data
+		);
+
+		echo json_encode($output);
 	}
 }

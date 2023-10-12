@@ -52,14 +52,13 @@ class frontendmodel extends CI_Model
 		$sql = "SELECT * FROM article as a
             LEFT JOIN category as c
             ON a.categoryid = c.categoryid
-            WHERE url_slug = '$slug'";
+            WHERE url_slug = '$slug' AND article_status = 1";
 
 		$res = $this->db->query($sql);
 
 		return $res->result_array();
 	}
 
-	//--------------------------------Business Page Functions----------------------------------------------------------
 
 	public function fetchArticlesByCategory($category)
 	{
@@ -110,5 +109,15 @@ class frontendmodel extends CI_Model
 		$result = $this->db->query($sql);
 
 		return $result->result_array();
+	}
+
+	public function insert_user_query($data){
+
+		$sql = $this->db->insert_string('contact', $data);
+
+		$query = $this->db->query($sql);
+
+		return $query;
+
 	}
 }

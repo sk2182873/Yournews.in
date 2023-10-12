@@ -148,7 +148,7 @@
                     type="text"
                     class="form-control"
                     id="email"
-                    name="email"
+                    name="to"
                     placeholder="Enter your email"
                     autofocus
                   />

@@ -30,8 +30,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
 
 		public function loadPages($page){
-			$data['link'] = $this->adminModel->get_all_routes();
+			
 			$categories = $this->frontendModel->fetch_categories();
+			$data['link'] = $this->adminModel->get_all_routes();
 
 			$result = $this->frontendModel->fetchRecentArticlesById($page);
 
@@ -45,9 +46,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$this->load->view('frontEnd/footer', ['data'=>$data]);
 
 		}
-
-		
-       
+	
     }
 
 ?>

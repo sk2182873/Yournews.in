@@ -46,6 +46,43 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://kit.fontawesome.com/50458f73e2.js" crossorigin="anonymous"></script>
+<script>
+
+
+
+    $(document).ready(function() {
+
+        $('#formPasswordReset').submit(function(event) {
+            event.preventDefault();
+
+            $("#cnfPass").html('');
+            $("#msg").html('');
+            $("#dbErr").html('');
+            $("#pass").html('');
+
+			var email = "<?php echo $email ?>";
+
+			// console.warn(email);
+
+            $.ajax({
+                url: `<?php echo base_url().'admin/update_pass/${email}' ?>`,
+                type: 'post',
+                data: $(this).serializeArray(),
+                success: function(response) {
+                    var res = JSON.parse(response);
+
+                    $("#dbErr").html(res['notMatched']);
+                    $("#msg").html(res['success']);
+                    $("#dbErr").html(res['dbErr']);
+                    $("#cnfPass").html(res['cnfpass']);
+                    $("#pass").html(res['pass']);
+
+                }
+            });
+        })
+
+    });
+</script>
 </body>
 
 </html>

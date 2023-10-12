@@ -22,13 +22,13 @@
 						</div>
 
 						<div class="about-prea">
-							<?php  
-								foreach ($art as $row) {
-									if($row['article_status'] == 1){
-										echo $row['content'];
-									}
+							<?php
+							foreach ($data['articles'] as $row) {
+								if ($row['article_status'] == 1) {
+									echo $row['content'];
 								}
-							 ?>
+							}
+							?>
 						</div>
 
 
@@ -46,7 +46,7 @@
 					</div>
 					<!-- From -->
 					<div class="row">
-						<div class="col-lg-8">
+						<div class="col-lg-8 px-5">
 							<form class="form-contact contact_form mb-80" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
 								<div class="row">
 									<div class="col-12">
@@ -77,50 +77,15 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4">
+				<div class="col-lg-4 px-5 mt-5">
 					<!-- Section Tittle -->
 					<div class="section-tittle mb-40">
-						<h3>Follow Us</h3>
+						<h3>Recent Articles</h3>
 					</div>
 					<!-- Flow Socail -->
 					<div class="single-follow mb-45">
-						<div class="single-box">
-							<div class="follow-us d-flex align-items-center">
-								<div class="follow-social">
-									<a href="#"><img src="assets/img/news/icon-fb.png" alt=""></a>
-								</div>
-								<div class="follow-count">
-									<span>8,045</span>
-									<p>Fans</p>
-								</div>
-							</div>
-							<div class="follow-us d-flex align-items-center">
-								<div class="follow-social">
-									<a href="#"><img src="assets/img/news/icon-tw.png" alt=""></a>
-								</div>
-								<div class="follow-count">
-									<span>8,045</span>
-									<p>Fans</p>
-								</div>
-							</div>
-							<div class="follow-us d-flex align-items-center">
-								<div class="follow-social">
-									<a href="#"><img src="assets/img/news/icon-ins.png" alt=""></a>
-								</div>
-								<div class="follow-count">
-									<span>8,045</span>
-									<p>Fans</p>
-								</div>
-							</div>
-							<div class="follow-us d-flex align-items-center">
-								<div class="follow-social">
-									<a href="#"><img src="assets/img/news/icon-yo.png" alt=""></a>
-								</div>
-								<div class="follow-count">
-									<span>8,045</span>
-									<p>Fans</p>
-								</div>
-							</div>
+						<div class="single-box" id="singlebox">
+
 						</div>
 					</div>
 					<!-- New Poster -->
@@ -144,13 +109,45 @@
 </main>
 
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
 	$(document).ready(function() {
 
 		setTimeout(function() {
 			$('#preloader-active').css('display', 'none');
 		}, 3000);
+
+		var category = "<?php //echo $data['page'] ?>";
+
+		
+		function fetch_trending_news2() {
+			$.ajax({
+				url: `<?php echo base_url() . 'fetchData/fetch_articles_by_category/${category}' ?>`,
+				type: 'post',
+				success: function(res) {
+					var data = JSON.parse(res);
+					var base_url = '<?php echo base_url() ?>';
+
+					console.log(data);
+
+					$.each(data, function(n, ele) {
+						if (ele['article_status'] == 1) {
+							$('#singlebox').append(`<a href="<?php echo base_url('category') ?>/${ele['categorytitle']}/${ele['url_slug']}">
+								<div class="trand-right-single d-flex">
+										<div class="trand-right-img">
+											<img src="${base_url+ele['imagesurl']}" alt="image not found" width="100px">
+										</div>
+										<div class="trand-right-cap">
+											<span class="color1">${ele['categorytitle']}</span>
+											<h4>${ele['title']}</h4>
+										</div>
+								</div></a>`);
+						}
+					})
+				}
+
+			});
+		}
 
 		$('#find').on('keyup', function() {
 
@@ -179,7 +176,7 @@
 							let category = data[n]['categorytitle'];
 
 							$('.search').empty().append(`<div class="mb-2 searchresult">
-								<a href="<?php echo base_url('category') .'/${category}/${slug}'; ?>" id="titlelink" style="display:block">
+								<a href="<?php echo base_url('category') . '/${category}/${slug}'; ?>" id="titlelink" style="display:block">
 								<h6 style="color: #c0392b;">${data[n]['title']}</h6>
 								<p>
 									${data[n]['shortdescription']};
@@ -194,5 +191,8 @@
 
 			});
 		});
+
+		fetch_trending_news2();
 	})
-</script>
+	
+</script> -->

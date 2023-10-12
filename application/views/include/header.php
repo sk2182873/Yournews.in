@@ -187,6 +187,13 @@
 						</li>
 
 						<li class="menu-item ">
+							<a href="<?php echo base_url('admin/messages'); ?>" class="menu-link">
+								<i class='menu-icon tf-icons bx bx-message-dots'></i>
+								<div data-i18n="Analytics">Complaints/Query</div>
+							</a>
+						</li>
+
+						<li class="menu-item ">
 							<a href="<?php echo base_url('admin/account'); ?>" class="menu-link">
 								<i class='menu-icon tf-icons bx bxs-user-account'></i>
 								<div data-i18n="Analytics">Account</div>

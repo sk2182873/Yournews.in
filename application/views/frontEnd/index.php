@@ -15,15 +15,17 @@
 				<div class="row">
 					<div class="col-lg-8">
 						<!-- Trending Top -->
+						<a href="" id="link">
 						<div class="trending-top mb-30">
 							<div class="trend-top-img">
 								<img src="" alt="" class="image" id="image0">
 								<div class="trend-top-cap">
 									<span id="tag"></span>
-									<h2><a href="" id="headingtop0"></a></h2>
+									<h2 id="headingtop0"></h2>
 								</div>
 							</div>
 						</div>
+						</a>
 						<!-- Trending Bottom -->
 					</div>
 					<!-- Riht content -->
@@ -52,17 +54,18 @@
 					<div class="col-12 ">
 						<div class="recent-active responsive d-flex mb-5 dot-style">
 							<?php foreach ($data['articles'] as $row) { ?>
+
+								<a class='title' href="<?php echo base_url('category').'/' .$row['categorytitle'] .'/' . $row['url_slug']; ?>">
 								<div class="single-recent mb-5 mx-4">
 									<div class="articleimage">
 										<img src="<?php echo base_url() . $row['imagesurl']; ?>" alt="image not found" width="370px" height="370px" style="border-radius:12px;">
 									</div>
 									<div class="what-cap">
 										<span class="color1"><?php echo $row['categorytitle']; ?></span>
-										<h4><a class='title' href="<?php echo base_url('category').'/' .$row['categorytitle'] .'/' . $row['url_slug']; ?>"><?php echo substr($row['title'], 0, 70); ?></a></h4>
+										<h4><?php echo substr($row['title'], 0, 70); ?></h4>
 									</div>
 								</div>
-
-
+								</a>
 							<?php } ?>
 						</div>
 					</div>
@@ -74,7 +77,7 @@
 			<div class="container offset-md-1" id="searchPanel">
 				<div class="row">
 					<div class="col-12 search" style="text-align: center;color:#c0392b;">
-						dfbfdbdfbfdb
+						
 					</div>
 				</div>
 			</div>
@@ -104,22 +107,23 @@
 
 
 				$('#image0').attr('src', base_url + data[4]['imagesurl']);
-				$('#headingtop0').html(data[4]['title']);
-				$('#headingtop0').attr('href', '<?php echo base_url('category') ?>/'+data[4]['categorytitle']+'/'+ data[4]['url_slug']);
+				$('#headingtop0').html(data[4]['title']).css('color', 'white');
+				$('#link').attr('href', '<?php echo base_url('category') ?>/'+data[4]['categorytitle']+'/'+ data[4]['url_slug']);
 				$('#tag').html(data[4]['categorytitle']);
 
 				$.each(data, function(n, ele) {
 
 					if(ele['article_status'] == 1){
-						$('#leftNews').append(`<div class="trand-right-single d-flex article">
+						$('#leftNews').append(`<a class="title" href="<?php echo base_url('category') ?>/${ele['categorytitle']}/${ele['url_slug']}">
+						<div class="trand-right-single d-flex article">
                             <div class="trand-right-img">
                                 <img src="${base_url+ele['imagesurl']}" alt="image not found" width="100px">
                             </div>
                             <div class="trand-right-cap ">
                                 <span class="category">${ele['categorytitle']}</span>
-                                <h4><a class="title" href="<?php echo base_url('category') ?>/${ele['categorytitle']}/${ele['url_slug']}">${ele['title']}</a></h4>
+                                <h4>${ele['title']}</h4>
                             </div>
-                        </div>`);
+                        </div></a>`);
 					}
 					
 
@@ -173,7 +177,11 @@
 									
 								</div>`);
 						})
-					};
+					}
+
+					setTimeout(function() {
+						$('#searchPanel').hide();
+					}, 7000);
 
 				}
 

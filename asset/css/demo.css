@@ -29,6 +29,22 @@
 	border-radius: 12px;
 }
 
+#singlebox .trand-right-single{
+	margin: 10px 0px;
+}
+
+#singlebox .heading4{
+	font-size: 20px;
+}
+
+#singlebox .trand-right-cap .color2{
+	background-color: #ffe7e6;
+	color: black;
+	padding: 5px;
+	text-transform: uppercase;
+	font-size: 10px;
+}
+
 /* @media screen and (max-width: 768px){
 	.articleimage img{
 		width: 200px;

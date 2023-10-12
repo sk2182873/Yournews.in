@@ -115,4 +115,9 @@ class Pages extends CI_Controller
 		$this->session_collison();
 		$this->load->view('pagesList');
 	}
+
+	public function messages(){
+		$this->session_collison();
+		$this->load->view('messages');
+	}
 }

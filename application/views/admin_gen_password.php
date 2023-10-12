@@ -5,7 +5,7 @@
         <p id="msg" class="text-center text-success"></p>
         <p id="dbErr" class="text-center text-danger"></p>
     </div>
-    <form id="formAuthentication" class="mb-3">
+    <form id="formPasswordReset" class="mb-3">
         <div class="mb-3 form-password-toggle">
             <div class="d-flex justify-content-between">
                 <label class="form-label" for="password">Password</label>
@@ -28,7 +28,7 @@
         </div>
         <p id="cnfPass" class="text-danger"></p>
 
-        <button class="btn btn-primary d-grid w-100">Update</button>
+        <button type="submit" class="btn btn-primary d-grid w-100">Update</button>
     </form>
 
     <div class="text-center">
@@ -39,35 +39,4 @@
     </div>
 </div>
 
-<?php include('include/footer.php') ?>;
 
-<script>
-    $(document).ready(function() {
-
-        $('#formAuthentication').submit(function(event) {
-            event.preventDefault();
-
-            $("#cnfPass").html('');
-            $("#msg").html('');
-            $("#dbErr").html('');
-            $("#pass").html('');
-
-            $.ajax({
-                url: "<?php echo base_url('authenticate/update_pass') ?>",
-                type: 'Post',
-                data: $(this).serializeArray(),
-                success: function(response) {
-                    var res = JSON.parse(response);
-
-                    $("#dbErr").html(res['notMatched']);
-                    $("#msg").html(res['success']);
-                    $("#dbErr").html(res['dbErr']);
-                    $("#cnfPass").html(res['cnfpass']);
-                    $("#pass").html(res['pass']);
-
-                }
-            });
-        })
-
-    });
-</script>

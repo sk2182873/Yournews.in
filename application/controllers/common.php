@@ -190,13 +190,13 @@ class common extends CI_Controller
 		// print_r($data);
 		// die();
 
-		$this->form_validation->set_rules('CatTitle', 'Category Title', 'required|alpha');
-		$this->form_validation->set_rules('Sdescp', 'Short Description', 'required');
+		$this->form_validation->set_rules('categorytitle', 'Category Title', 'required|alpha');
+		$this->form_validation->set_rules('Shortdescp', 'Short Description', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
 		
-			$messages['cate'] = form_error('CatTitle');
-			$messages['Sdecp'] = form_error('Sdescp');
+			$messages['cate'] = form_error('categorytitle');
+			$messages['Sdecp'] = form_error('Shortdescp');
 
 		} else {
 
@@ -207,11 +207,10 @@ class common extends CI_Controller
 			// die();
 
 			foreach ($res as $row) {
-				if (strtolower($row['categorytitle']) == strtolower($data['CatTitle'])) {
+				if (strtolower($row['categorytitle']) == strtolower($data['categorytitle'])) {
 					$flag = 1;
 				}
 			}
-
 
 			if ($flag) {
 				$messages['exist'] = "already exist.";
@@ -220,7 +219,7 @@ class common extends CI_Controller
 				$res = $this->commonModel->insert_category_model($data);
 
 				if ($res) {
-					$messages['success'] = "successfully created.";
+					$messages['success'] = "Successfully Created.";
 				} else {
 					$messages['dbErr'] = "Database Error.";
 				}
@@ -395,9 +394,9 @@ class common extends CI_Controller
 
 
 			if ($row['status'] == 1) {
-				$statusBtn = '<button type="button" class="text-success status" value="show" data-id="' . $row['categoryid'] . '">show</button>';
+				$statusBtn = '<button type="button" class="btn btn-success bg-success px-2 status" value="show" data-id="' . $row['categoryid'] . '">show</button>';
 			} else {
-				$statusBtn = '<button type="button" class="text-danger status" value="hide" data-id="' . $row['categoryid'] . '">hide</button>';
+				$statusBtn = '<button type="button" class="btn btn-danger bg-danger px-2 status" value="hide" data-id="' . $row['categoryid'] . '">hide</button>';
 			}
 
 			$sub_array = array();
@@ -406,7 +405,8 @@ class common extends CI_Controller
 			$sub_array[] = $row['categorydate'];
 			$sub_array[] = $row['Shortdescp'];
 			$sub_array[] = $statusBtn;
-			$sub_array[] = '<button type="button" class="text-primary actionBtn" id="edt" value="' . $row['categoryid'] . '">Edit</button>';
+			$sub_array[] = '<button type="button" class="btn btn-primary bg-primary p-2 actionBtn" id="edt" value="' . $row['categoryid'] . '"><i class="fas fa-pen border-0"></i></button>
+							<button type="button" class="btn btn-danger bg-danger px-2 actionBtn" id="del" value="' . $row['categoryid'] . '"><i class="fas fa-trash fs-5"></i></button>';
 
 			$data[] = $sub_array;
 		}
@@ -456,15 +456,19 @@ class common extends CI_Controller
 
 		$res = $this->commonModel->fetchCategoryBYid($categoryid);
 
+		// echo "<pre>";
+		// print_r($res);
+		// die();
+
 		echo json_encode($res);
 
 	}
 
 	public function update_category(){
 
-		$data =  $this->input->post();
+		$id =  $this->input->post();
 
-		$res = $this->commonModel->update_table_by_id('category', $data);	
+		$res = $this->commonModel->update_table_by_id('category', $id);	
 
 		if($res){
 			$messages['success'] = "Successfully Update.";
@@ -475,9 +479,20 @@ class common extends CI_Controller
 		echo json_encode($messages);
 	}
 
-	// public function delete_category(){
-	// 	$categoryid = $this->input->post('delId');
+	public function delete_category(){
 
-	// 	$this->commonModel->delete_row_by_id('category', 'categoryid', $categoryid);
-	// } 
+		$messages = array();
+
+		$categoryid = $this->input->post('delId');
+
+		$result = $this->commonModel->delete_row_by_id('category', 'categoryid', $categoryid);
+
+		if($result){
+			$messages['success'] = "1";
+		}else{
+			$messages['error'] = "0";
+		}
+
+		echo json_encode($messages);
+	} 
 }

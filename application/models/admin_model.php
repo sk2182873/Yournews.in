@@ -106,5 +106,33 @@ class admin_model extends CI_Model
 		return $query->result_array();
 
 	}
+
+	public function fetchMessages(){
+		
+		$this->db->select('*');
+		$this->db->from('contact');
+
+		if(isset($_POST['search']['value'])){
+			$this->db->like('username', $_POST['search']['value'] );
+			$this->db->or_like('email', $_POST['search']['value'] );
+			$this->db->or_like('subject', $_POST['search']['value'] );
+			$this->db->or_like('message', $_POST['search']['value'] );
+		}
+
+		if ($_POST["order"]) {
+
+			$this->db->order_by($_POST['order'][0]['column'], $_POST['order'][0]['dir']);
+		} else {
+			$this->db->order_by('id', 'DESC');
+		}
+
+		if ($_POST['length'] != -1) {
+			$this->db->limit($_POST['length'], $_POST['start']);
+		}
+
+		$query = $this->db->get();
+		return $query->result_array();
+		
+	}
 	
 }

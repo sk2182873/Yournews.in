@@ -48,4 +48,21 @@
 			echo json_encode($result);			
 		}
 
+		public function save_query(){
+			
+			$messages = [];
+
+			$data = $this->input->post();
+
+			$result = $this->frontendModel->insert_user_query($data);
+
+			if($result){
+				$messages['success'] = "Your query successfully sent.";
+			}else{
+				$messages['Err'] = "Sorry! Please try again query couldn't sent.";
+			}
+
+			echo json_encode($messages);
+		}
+
     }

@@ -53,7 +53,7 @@
     <form id="formAuthentication" class="mb-3">
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="text" class="form-control bg-dark" id="email" name="email" placeholder="Enter your email" autofocus />
+            <input type="text" class="form-control bg-dark" id="email" name="to" placeholder="Enter your email" autofocus />
         </div>
         <p id="emailErr" class="text-danger"></p>
         <button class="btn btn-primary d-grid w-100">Send Reset Link</button>

@@ -8,7 +8,8 @@
         }
 
         //update user password.
-        public function update_password($email,$cnfPass){
+        public function update_password($email,$cnfPass)
+		{
 
            $encpt_pass = password_hash($cnfPass, PASSWORD_DEFAULT);
 

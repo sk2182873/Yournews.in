@@ -5,20 +5,14 @@ class authenticate_model extends CI_Model
 
 
     //fetch User emails
-    public function fetch_mail($mail)
+    public function fetch_mail($mail, $table)
     {
 
-        $sql = "SELECT email from users";
+        $sql = "SELECT email from $table";
 
         $res = $this->db->query($sql);
 
-        foreach ($res->result() as $row) {
-
-            if ($row->email === $mail) {
-                return 1;
-            }
-        }
-        return 0;
+		return $res->result_array();
     }
 
     //fetch users name, mail and password.

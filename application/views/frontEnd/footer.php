@@ -3,26 +3,40 @@
 	<div class="footer-area footer-padding fix">
 		<div class="container">
 			<div class="row d-flex justify-content-around">
-				<div>
+
+				<div class="col-md-4 order-1 mt-5">
 					<h6 class="text-danger">Pages</h6>
 					<ul>
+						<li><a href="<?php echo base_url() ?>">Home</a></li>
 						<?php foreach ($data['link'] as $link) { ?>
 
 							<li><a href="<?php echo base_url() . $link['p_slug'] ?>"><?php echo $link['page_name']; ?></a></li>
 
 						<?php } ?>
+
 					</ul>
 				</div>
 
-				<div>
-					<h6 class="text-danger">Navigations</h6>
+				<div class="col-md-4 order-2">
+					<h6 class="text-danger mt-5">Navigations</h6>
+					<li><a href="<?php echo base_url() ?>">Home</a></li>
 					<ul>
 						<?php foreach ($data['categories'] as $row) { ?>
 
-							<li class="mb-2"><a href="<?php echo base_url() . 'category/' . $row['categorytitle'] ?>"><?php echo ucfirst($row['categorytitle']); ?></a></li>
+							<li><a href="<?php echo base_url() . 'category/' . $row['categorytitle'] ?>"><?php echo ucfirst($row['categorytitle']); ?></a></li>
 
 						<?php } ?>
 					</ul>
+				</div>
+
+				<div class="col-md-4 d-flex flex-column order-0">
+					<div class="text-white">
+						<img src="<?php echo base_url() . 'asset/img/logo/logo-no-background.png' ?>" alt="company-logo" width="250px">
+					</div>
+					<div class="text-white mt-4">
+						Bring out the turth in fornt of Society is our belief.
+						We not represent any tampered fact to the society.
+					</div>
 				</div>
 
 
@@ -33,7 +47,7 @@
 	<div class="footer-bottom-area">
 		<div class="container">
 			<div class="footer-border">
-				<p class="text-light">All rights reserved @aznews</p>
+				<p class="text-light">All rights reserved @<span class="text-warning">YourNews</span></p>
 			</div>
 		</div>
 	</div>
@@ -89,47 +103,35 @@
 		}, 1000);
 
 
-		// $(window).on('load', function() {
-		// 	$.ajax({
 
-		// 		url: "<?php echo base_url() . 'frontend/fetch_articles' ?>",
-		// 		type: 'post',
-		// 		success: function(res) {
-		// 			var data = JSON.parse(res);
-		// 			var base_url = '<?php echo base_url() ?>';
+		$('#contactForm').submit(function() {
 
-		// 			$('#image0').attr('src', base_url + data[4]['imagesurl']);
-		// 			$('#headingtop0').html(data[4]['title']);
-		// 			$('#headingtop0').attr('href', '<?php echo base_url() ?>article' + '/' + data[4]['id'] + '/' + data[4]['url_slug']);
-		// 			$('#tag').html(data[4]['categorytitle']);
+			$('#success').html('');
+			$('#Err').html('');
 
-		// 			$.each(data, function(n, ele) {
-		// 				$('#leftNews').append(`<div class="trand-right-single d-flex article">
-		// 						<div class="trand-right-img">
-		// 							<img src="${base_url+ele['imagesurl']}" alt="image not found" width="100px">
-		// 						</div>
-		// 						<div class="trand-right-cap ">
-		// 							<span class="category">${ele['categorytitle']}</span>
-		// 							<h4><a class="title" href="<?php echo base_url() ?>article/${ele['id']}/${ele['url_slug']}">${ele['title']}</a></h4>
-		// 						</div>
-		// 						</div>`);
+			$.ajax({
+				url: "<?php echo base_url('frontend/save_query'); ?>",
+				type: 'post',
+				data: $(this).serialize(),
+				success: function(res) {
+					var data = JSON.parse(res);
 
+					console.log(data);
 
+					$('#success').html(data['success']);
+					$('#Err').html(data['Err']);
 
-		// 				if (n == 3) {
-		// 					return false;
-		// 				}
+					$('#contactForm')[0].reset();
+				}
+			});
+		});
 
-		// 			})
-
-		// 		}
-
-		// 	});
-		// })
 
 		var category = "<?php echo $data['page'] ?>";
 
 		let index = -1;
+
+		console.log("data");
 
 		//trending news
 		function fetch_trending_news() {
@@ -142,6 +144,14 @@
 
 					const length = data.length;
 
+					if (length == 0) {
+						$('#image0').attr('src', base_url + 'asset/img/news/upload_soon.png');
+						$('#headingtop0').html("Sorry for inconvience.\nWe will upload articles soon").css('color', 'white');
+
+						return false;
+					}
+
+
 					$.each(data, function(n, ele) {
 
 						if (length - n == 1) {
@@ -150,18 +160,19 @@
 							if (n < 4) {
 
 								if (ele['article_status'] == 1) {
-									$('#leftNews').append(`<div class="trand-right-single d-flex">
+									$('#leftNews').append(`<a href="<?php echo base_url('category') ?>/${ele['categorytitle']}/${ele['url_slug']}">
+									<div class="trand-right-single d-flex">
 											<div class="trand-right-img">
 												<img src="${base_url+ele['imagesurl']}" alt="image not found" width="100px">
 											</div>
 											<div class="trand-right-cap">
 												<span class="color1">${ele['categorytitle']}</span>
-												<h4><a href="<?php echo base_url('category') ?>/${ele['categorytitle']}/${ele['url_slug']}">${ele['title']}</a></h4>
+												<h4>${ele['title']}</h4>
 											</div>
-										</div>`);
-										index++;
+										</div></a>`);
+									index++;
 								}
-								
+
 							} else {
 
 								return false;
@@ -174,8 +185,8 @@
 					// console.log("Index  =", index);
 
 					$('#image0').attr('src', base_url + data[index + 1]['imagesurl']);
-					$('#headingtop0').html(data[index + 1]['title']);
-					$('#headingtop0').attr('href', "<?php echo base_url() ?>category" + '/' + data[index + 1]['categorytitle'] + '/' + data[index+1]['url_slug']);
+					$('#headingtop0').html(data[index + 1]['title']).css('color', 'white');
+					$('#link').attr('href', "<?php echo base_url() ?>category" + '/' + data[index + 1]['categorytitle'] + '/' + data[index + 1]['url_slug']);
 					$('#tag').html(data[index + 1]['categorytitle']);
 
 				}
@@ -183,6 +194,36 @@
 			});
 		}
 
+		function fetch_trending_news2() {
+			$.ajax({
+				url: `<?php echo base_url() . 'frontend/fetch_recents' ?>`,
+				type: 'post',
+				success: function(res) {
+					var data = JSON.parse(res);
+					var base_url = '<?php echo base_url() ?>';
+
+					console.log(data);
+
+					$.each(data, function(n, ele) {
+						if (ele['article_status'] == 1) {
+							$('#singlebox').append(`<a href="<?php echo base_url('category') ?>/${ele['categorytitle']}/${ele['url_slug']}">
+								<div class="trand-right-single d-flex">
+										<div class="trand-right-img">
+											<img src="${base_url+ele['imagesurl']}" alt="image not found" width="100px" height="50px" style="border-radius:5px;">
+										</div>
+										<div class="trand-right-cap pl-2">
+											<span class="color2 py-2">${ele['categorytitle']}</span>
+											<h4 class="heading4 py-2">${ele['title']}</h4>
+										</div>
+								</div></a>`);
+						}
+					})
+				}
+
+			});
+		}
+
+		//search Functionality.
 		$('#find').on('keyup', function() {
 
 			var search_term = $('#find').val();
@@ -222,14 +263,19 @@
 						})
 					}
 
+					setTimeout(function() {
+						$('#searchPanel').hide();
+					}, 7000);
+
 				}
 
 			});
 		});
 
 		fetch_trending_news();
+		fetch_trending_news2();
 
-
+		//slick responsive script
 		$('.responsive').slick({
 			dots: true,
 			infinite: false,
@@ -252,12 +298,9 @@
 						slidesToScroll: 1
 					}
 				}
-				// You can unslick at a given breakpoint now by adding:
-				// settings: "unslick"
-				// instead of a settings object
+			
 			]
 		});
-
 	});
 </script>
 </body>

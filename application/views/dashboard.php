@@ -97,58 +97,58 @@
 		</div>
 		<!-- / Content -->
 
+	</div>
+</div>
 
+<?php include('include/footer.php'); ?>
 
-		<?php include('include/footer.php'); ?>
-
-		<script type="text/javascript">
-
-			function fetch_total_articles() {
-				$.ajax({
-					url: "<?php echo base_url('admin/fetch_article_data'); ?>",
-					type: "post",
-					success: function(res) {
-						$('#articlenum').html(res);
-					}
-				});
+<script type="text/javascript">
+	function fetch_total_articles() {
+		$.ajax({
+			url: "<?php echo base_url('admin/fetch_article_data'); ?>",
+			type: "post",
+			success: function(res) {
+				$('#articlenum').html(res);
 			}
+		});
+	}
 
-			function fetch_total_category() {
-				$.ajax({
-					url: "<?php echo base_url('admin/fetch_category_data'); ?>",
-					type: "post",
-					success: function(res) {
-						var data = JSON.parse(res);
-						$('#categorynum').html(data['total']);
+	function fetch_total_category() {
+		$.ajax({
+			url: "<?php echo base_url('admin/fetch_category_data'); ?>",
+			type: "post",
+			success: function(res) {
+				var data = JSON.parse(res);
+				$('#categorynum').html(data['total']);
 
-					}
-				});
 			}
+		});
+	}
 
-			function fetch_total_page() {
-				$.ajax({
-					url: "<?php echo base_url('admin/total_page'); ?>",
-					type: "post",
-					success: function(res) {
-						$('#pagenum').html(res);
+	function fetch_total_page() {
+		$.ajax({
+			url: "<?php echo base_url('admin/total_page'); ?>",
+			type: "post",
+			success: function(res) {
+				$('#pagenum').html(res);
 
-					}
-				});
 			}
+		});
+	}
 
-			function fetch_total_user() {
-				$.ajax({
-					url: "<?php echo base_url('admin/total_user'); ?>",
-					type: "post",
-					success: function(res) {
-						$('#usernum').html(res);
+	function fetch_total_user() {
+		$.ajax({
+			url: "<?php echo base_url('admin/total_user'); ?>",
+			type: "post",
+			success: function(res) {
+				$('#usernum').html(res);
 
-					}
-				});
 			}
+		});
+	}
 
-			fetch_total_articles();
-			fetch_total_category();
-			fetch_total_page();
-			fetch_total_user();
-		</script>
+	fetch_total_articles();
+	fetch_total_category();
+	fetch_total_page();
+	fetch_total_user();
+</script>

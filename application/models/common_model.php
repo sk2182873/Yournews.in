@@ -73,9 +73,9 @@ class common_model extends CI_Model
 		$user = $this->session->userdata('roll');
 
 		if ($user == 'admin') {
-			$sql = array('title' => $data['title'], 'url_slug' => $url_slug, 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path, 'meta_keywords' => $data['meta_keys'], 'adminid' => $_SESSION['id'], 'categoryid' => $category_id, 'status' => 1);
+			$sql = array('title' => $data['title'], 'url_slug' => $url_slug, 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path, 'meta_keywords' => $data['meta_keys'], 'adminid' => $_SESSION['id'], 'categoryid' => $category_id, 'article_status' => 1);
 		} else {
-			$sql = array('title' => $data['title'], 'url_slug' => $url_slug, 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path, 'meta_keywords' => $data['meta_keys'], 'userid' => $_SESSION['userid'], 'categoryid' => $category_id, 'status' => 1);
+			$sql = array('title' => $data['title'], 'url_slug' => $url_slug, 'shortdescription' => $data['Sdescp'], 'content' => $data['content'], 'imagesurl' => $path, 'meta_keywords' => $data['meta_keys'], 'userid' => $_SESSION['userid'], 'categoryid' => $category_id, 'article_status' => 1);
 		}
 
 
@@ -120,12 +120,12 @@ class common_model extends CI_Model
 
 		$user = $this->session->userdata('roll');
 
-		$category_title = strtolower($data['CatTitle']);
+		$category_title = strtolower($data['categorytitle']);
 
 		if ($user == 'admin') {
-			$sql = array('categorytitle' => $category_title, 'Shortdescp' => $data['Sdescp'], 'adminid' => $_SESSION['id']);
+			$sql = array('categorytitle' => $category_title, 'Shortdescp' => $data['Shortdescp'], 'adminid' => $_SESSION['id']);
 		} else {
-			$sql = array('categorytitle' => $category_title, 'Shortdescp' => $data['Sdescp'], 'userid' => $_SESSION['userid']);
+			$sql = array('categorytitle' => $category_title, 'Shortdescp' => $data['Shortdescp'], 'userid' => $_SESSION['userid']);
 		}
 
 		$str = $this->db->insert_string('category', $sql);
@@ -137,9 +137,12 @@ class common_model extends CI_Model
 		$user = $this->session->userdata('roll');
 		$res = "";
 
+		// echo $user;
+		// die();
+
 		$path = "";
 		if (!empty($filename)) {
-			$path = './uploads/admin/' . $filename;
+			$path = 'uploads/admin/' . $filename;
 		}
 
 		//echo $path;die();
@@ -202,7 +205,23 @@ class common_model extends CI_Model
 	}
 
 	public function delete_row_by_id($table, $column, $id){
-		return $this->db->delete($table, array($column => $id));
+
+
+		if($table == 'category'){
+			$sql = "SET FOREIGN_KEY_CHECKS=OFF";
+			$this->db->query($sql);
+			$sql = " DELETE from article WHERE categoryid = $id";
+			$this->db->query($sql);
+			$sql = " DELETE from category WHERE categoryid = $id";
+			$this->db->query($sql);
+			$sql = " SET FOREIGN_KEY_CHECKS=ON";
+			$this->db->query($sql);
+			
+		}else{
+			$result = $this->db->delete($table, array($column => $id));
+		}
+
+		return 1;
 	}
 
 	public function update_table_by_id($table, $data){
@@ -273,7 +292,7 @@ class common_model extends CI_Model
 		$this->db->select("*");
 		$this->db->from($table1);
 
-		if (($table1 != 'pages') && ($table1 != 'users') && ($table1 != 'category') ) {
+		if (($table1 != 'pages') && ($table1 != 'users') && ($table1 != 'category') && ($table1 != 'contact')) {
 
 			$this->db->join($table2, ".$table1.categoryid = $table2.categoryid", "left");
 		}

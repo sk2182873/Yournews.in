@@ -65,7 +65,12 @@
 									<p class="text-primary" id="position"></p>
 								</div>
 								<div class="mb-3 col-md-6">
-									<input type="hidden" id="sessionId" value="<?php echo $_SESSION['id']; ?>">
+									<input type="hidden" id="sessionId" value="<?php if (isset($_SESSION['id'])) {
+																					echo $_SESSION['id'];
+																				} else {
+																					echo $_SESSION['userid'];
+																				}
+																				?>">
 								</div>
 							</div>
 						</div>
@@ -103,7 +108,7 @@
 								</div>
 								<div class="mb-3 d-flex flex-column">
 									<label for="profile" class="form-label fs-6">Choose Profile</label>
-									<input type="file" class="form-control" name="profile" id="profile">
+									<input type="file" class="form-control" name="profile" id="profile" >
 									<p id="fileErr" class="text-danger"></p>
 								</div>
 								<div class="mb-3 d-flex flex-column">
@@ -151,34 +156,57 @@
 		$('#updateProfile').submit(function(event) {
 			event.preventDefault();
 
-			fetch_admin_data();
+			// fetch_admin_data();
 
 			$('#success2').html('');
 			$('#Err').html('');
 			$('#fileErr').html('');
 			$('#emailErr').html('');
 
-			$.ajax({
-				url: "<?php echo base_url('common/update_profile') ?>",
-				type: "POST",
-				data: new FormData(this),
-				contentType: false,
-				cache: false,
-				processData: false,
-				success: function(res) {
-					var data = JSON.parse(res);
-					$('#success2').html(data['success']);
-					$('#Err').html(data['dbErr']);
-					$('#fileErr').html(data['imageErr']);
-					$('#emailErr').html(data['alteremail']);
+			<?php if (isset($_SESSION['id'])) { ?>
 
-				}
-			});
+				$.ajax({
+					url: "<?php echo base_url('common/update_profile') ?>",
+					type: "POST",
+					data: new FormData(this),
+					contentType: false,
+					cache: false,
+					processData: false,
+					success: function(res) {
+						var data = JSON.parse(res);
+						$('#success2').html(data['success']);
+						$('#Err').html(data['dbErr']);
+						$('#fileErr').html(data['imageErr']);
+						$('#emailErr').html(data['alteremail']);
+
+					}
+				});
+			<?php } else { ?>
+
+				$.ajax({
+					url: "<?php echo base_url('common/update_profile') ?>",
+					type: "POST",
+					data: new FormData(this),
+					contentType: false,
+					cache: false,
+					processData: false,
+					success: function(res) {
+						var data = JSON.parse(res);
+						$('#success2').html(data['success']);
+						$('#Err').html(data['dbErr']);
+						$('#fileErr').html(data['imageErr']);
+						$('#emailErr').html(data['alteremail']);
+
+					}
+				});
+			<?php } ?>
+
 		});
 
 		function fetch_admin_data() {
 
 			var usermail = $('#mail').attr('data-id');
+
 
 			$.ajax({
 				url: "<?php echo base_url('Authenticate/fetchAdmin') ?>",
@@ -187,24 +215,50 @@
 					mail: usermail
 				},
 				success: function(res) {
-					var adminData = JSON.parse(res)
+					var userData = JSON.parse(res)
 
-					let imageurl = "<?php echo base_url() ?>" + adminData['profilepic'];
+					let imageurl = "<?php echo base_url() ?>" + userData['profilepic'];
 
-
-
-					$('#name').html(adminData['username']);
-					$('#mail').html(adminData['mail']);
-					$('#phone').html(adminData['phone']);
-					$('#altermail').html(adminData['alternative_email']);
-					$('#position').html(adminData['position']);
+					$('#name').html(userData['username']);
+					$('#mail').html(userData['mail']);
+					$('#phone').html(userData['phone']);
+					$('#altermail').html(userData['alternative_email']);
+					$('#position').html(userData['position']);
 					$('.imageavtar').html(`<img src="${imageurl}" alt="user-avatar" class="d-block rounded" height="100px" width="100px" id="uploadedAvatar">`);
 				}
 			})
 		}
 
-		fetch_admin_data();
+		function fetch_user_data() {
+			var usermail = $('#mail').attr('data-id');
 
+
+			$.ajax({
+				url: "<?php echo base_url('Authenticate/fetchUser') ?>",
+				type: 'post',
+				data: {
+					mail: usermail
+				},
+				success: function(res) {
+					var userData = JSON.parse(res)
+
+					let imageurl = "<?php echo base_url() ?>" + userData['profilepic'];
+
+					$('#name').html(userData['username']);
+					$('#mail').html(userData['mail']);
+					$('#phone').html(userData['phone']);
+					$('#altermail').html(userData['alternative_email']);
+					$('#position').html(userData['position']);
+					$('.imageavtar').html(`<img src="${imageurl}" alt="user-avatar" class="d-block rounded" height="100px" width="100px" id="uploadedAvatar">`);
+				}
+			})
+		}
+
+		<?php if (isset($_SESSION['id'])) { ?>
+			fetch_admin_data();
+		<?php	} else { ?>
+			fetch_user_data();
+		<?php } ?>
 
 	})
 </script>

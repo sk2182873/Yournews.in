@@ -60,6 +60,7 @@ $route['admin'] = 'admin/login';
 $route['register'] = 'admin/register';
 $route['profile'] = 'admin/profile';
 $route['admin/forgot-password'] = 'admin/forgot_pass';
+$route['admin/update_pass/(:any)'] = 'authenticate/update_pass/$1';
 $route['admin/dashboard'] = 'pages/dashboard';
 $route['admin/articles'] = 'pages/articles';
 $route['admin/addarticle'] = 'pages/addarticle';
@@ -71,6 +72,8 @@ $route['admin/account'] = 'pages/account';
 $route['admin/category'] = 'pages/category';
 $route['admin/pages'] = 'pages/pagesList';
 $route['admin/addpage'] = 'pages/addpage';
+$route['admin/messages'] = 'pages/messages';
+
 
 //user routes.
 $route['user'] = 'user/login';
@@ -81,11 +84,11 @@ $route['user/blogs'] = 'pages/blogs';
 $route['user/addblogs'] = 'pages/addblogs';
 $route['user/account'] = 'pages/account';
 $route['user/category'] = 'pages/category';
+$route['user/update_password/(:any)'] = 'authenticate/user_update_pass/$1';
 
 $route['frontend/fetch_articles'] = 'frontend/fetch_articles';
 
 $route['category/search'] = 'frontend/search';
-
 
 //pages route.
 $route['category/(:any)'] = 'Home/loadPages/$1';

@@ -15,8 +15,10 @@ class user extends CI_Controller
         $this->load->view('userlogin');
     }
 
-    public function reset_pass(){
-        $this->load->view('genPassword');
+    public function reset_pass($email){
+
+		
+        $this->load->view('genPassword', ['email'=>$email]);
     }
 
     public function forgot_password(){

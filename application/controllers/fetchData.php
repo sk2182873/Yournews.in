@@ -101,28 +101,6 @@ class fetchData extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function fetch_blog_data()
-	{
-
-
-		$userdata = $this->fetchModel->fetch_blog();
-
-		$data = array();
-		foreach ($userdata as $key => $value) {
-			$data['data'][] = array(
-				$value['title'],
-				$value['date'],
-				$value['shortdescp'],
-				strip_tags(substr($value['content'], 0, 100)) . " ......",
-				$value['categorytitle'],
-				$value['status'],
-				"<div><a href='#' class='badge text-primary'>edit</a> <a href='#' class='badge text-danger'>delete</a> </div>"
-			);
-		}
-
-		echo json_encode($data);
-	}
-
 	public function fetch_articles_by_category($category)
 	{
 

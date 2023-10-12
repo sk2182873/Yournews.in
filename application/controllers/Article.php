@@ -21,11 +21,13 @@ class Article extends CI_Controller
 
 		$categories = $this->frontendModel->fetch_categories();
 
+		$data['page'] = '';
 		$data['categories'] = $categories;
+		$data['articles'] = $article;
 
 		
 		$this->load->view('frontEnd/header2', ['data'=>$data]);
-		$this->load->view('frontEnd/details', ['art' => $article]);
+		$this->load->view('frontEnd/details', ['data'=>$data]);
 		$this->load->view('frontEnd/footer',  ['data'=>$data]);
 	 }
 }
