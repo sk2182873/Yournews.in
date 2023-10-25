@@ -38,6 +38,10 @@ Server Requirements
 
 PHP version 8.2.4
 
+Used Technologies
+Framework : Codeigniter 3
+
+
 
 
 
