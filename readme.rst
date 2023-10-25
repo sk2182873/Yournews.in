@@ -1,71 +1,44 @@
 ###################
-What is CodeIgniter
+Yournews.in
 ###################
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+Yournews.in a platform to publish news and articles on the web world.
 
 *******************
 Release Information
 *******************
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
-
 **************************
-Changelog and New Features
+Features
 **************************
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
+SEO Friendly URL
+Dynamic Pages
+Dynamic Routing
+Dynamic URL
+
+********************************
+Controllers and Their Functions
+********************************
+
+1.	Admin - Load admin related pages and functions.
+2.	Article - fetch and display articles on end-user view.
+3. 	Authenticate - authentication related functions for admin and user.
+4.	Common - have common function for admin and users.
+5.	FetchData - fetch data from database.
+6.	FrontEnd - fetch data and articles from database for general user view.  
+7. 	Home - load general user pages and fetch categories and articles from database.
+8.	My404 -  used to show in place of not existing pages.
+9.	Pages - Load pages for admin and user panel.
+10. User - load pages and function related to user. 
 
 *******************
 Server Requirements
 *******************
 
-PHP version 5.6 or newer is recommended.
+PHP version 8.2.4
 
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
 
-************
-Installation
-************
 
-Please see the `installation section <https://codeigniter.com/userguide3/installation/index.html>`_
-of the CodeIgniter User Guide.
 
-*******
-License
-*******
 
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
-
-*********
-Resources
-*********
-
--  `User Guide <https://codeigniter.com/docs>`_
--  `Contributing Guide <https://github.com/bcit-ci/CodeIgniter/blob/develop/contributing.md>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community Slack Channel <https://codeigniterchat.slack.com>`_
-
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
-
-***************
-Acknowledgement
-***************
-
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
